@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6dbe03c875600b34d83abe8598a2206e, type: 3}
+  m_Name: SteamVR_Input_ActionSet_default_In
+  m_EditorClassIdentifier: 
+  actionSet: {fileID: 0}
+  listDirection: 0
+  actions:
+  - {fileID: 11400000, guid: 888b9b817ad8218429a76444cb68b785, type: 2}
+  - {fileID: 11400000, guid: be0e1d1a3debfc34c971a17d9249c419, type: 2}
+  - {fileID: 11400000, guid: b9686b79e95c1af4aa7fde6425cac534, type: 2}
+  - {fileID: 11400000, guid: 600e6dd07f19f0f4188fd208d4971901, type: 2}
+  - {fileID: 11400000, guid: accd2c9f59da19a44b2ce8ee53c305f3, type: 2}
+  - {fileID: 11400000, guid: a0ba537626155854aa78e0039bf0bb95, type: 2}
+  TriggerPress: {fileID: 11400000, guid: 888b9b817ad8218429a76444cb68b785, type: 2}
+  TrackPadPress: {fileID: 11400000, guid: be0e1d1a3debfc34c971a17d9249c419, type: 2}
+  GripPress: {fileID: 11400000, guid: b9686b79e95c1af4aa7fde6425cac534, type: 2}
+  MenuPress: {fileID: 11400000, guid: 600e6dd07f19f0f4188fd208d4971901, type: 2}
+  TrackPadPos: {fileID: 11400000, guid: accd2c9f59da19a44b2ce8ee53c305f3, type: 2}
+  Pose: {fileID: 11400000, guid: a0ba537626155854aa78e0039bf0bb95, type: 2}

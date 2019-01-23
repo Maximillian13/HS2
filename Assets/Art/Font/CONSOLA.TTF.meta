@@ -1,0 +1,20 @@
+fileFormatVersion: 2
+guid: 25acff7249cd61544b9e6154fc6eebc7
+timeCreated: 1479446729
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 30
+  forceTextureCase: -1
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Consolas
+  fallbackFontReferences: []
+  customCharacters: q,we rtyuioplkjhgfdsazxcvbnm
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
