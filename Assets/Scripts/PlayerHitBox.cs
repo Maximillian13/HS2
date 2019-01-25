@@ -8,7 +8,7 @@ public class PlayerHitBox : MonoBehaviour
     private int score; // Player score
     public TextMesh tScore; // Text mesh for the score
     public LeaderBoard leaderBoard; // For setting the leader board
-    private CheckUp checkUp; // If the user went up after a wall
+    public CheckUp checkUp; // If the user went up after a wall
     private int checkUpCounter; // For when there are the multi-walls
     private bool gameOver;
 
@@ -29,13 +29,9 @@ public class PlayerHitBox : MonoBehaviour
 		score = 0;
 		tScore.text = score.ToString();
 
-		if (cardioMode == false)
-		{
-			checkUp = GameObject.Find("CheckUp").GetComponent<CheckUp>();
-			//sc = GameObject.Find("SquatWallCounterAchievments").GetComponent<SquatCounter>();
-			//tsc = GameObject.Find("TotalSquatCount").GetComponent<TotalSquatCount>();
-			//slbu = GameObject.Find("UpdateSteamLeaderBoard").GetComponent<SteamLeaderBoardUpdater>();
-		}
+		//sc = GameObject.Find("SquatWallCounterAchievments").GetComponent<SquatCounter>();
+		//tsc = GameObject.Find("TotalSquatCount").GetComponent<TotalSquatCount>();
+		//slbu = GameObject.Find("UpdateSteamLeaderBoard").GetComponent<SteamLeaderBoardUpdater>();
 	}
 
 	/// <summary>
@@ -68,13 +64,14 @@ public class PlayerHitBox : MonoBehaviour
 					//sc.UpdateStats(); // Increase the score by one (For achievements)
 					//tsc.UpdateStats();
 
+					// Todo: Bug: multi walls blow up randomly? 
 					// If it is a normal sized squat wall make the player stand back up right away
 					if (other.transform.parent.parent == null)
 						checkUp.Ready = false;
-					else if (other.transform.parent.parent.name == "SquatWallx3(Clone)")    // If squat wall is 3 long, allow 3
+					else if (other.transform.parent.parent.name == "SquatWallx2(Clone)")    // If squat wall is 2 long, allow 2
+						this.ResetAfterNumberOfWalls(2);
+					else                                                                    // If squat wall is 3 long, allow 3	
 						this.ResetAfterNumberOfWalls(3);
-					else                                                                    // If squat wall is 5 long, allow 5	
-						this.ResetAfterNumberOfWalls(5);
 
 				}
 				else // Did not come up from a squat
@@ -154,17 +151,8 @@ public class PlayerHitBox : MonoBehaviour
                 }
             }
 
-			if (cardioMode == false)
-			{
-				// Get the wall spawner and tell it to stop the game
-				WallSpawner wallSpawner = GameObject.Find("WallSpawner").GetComponent<WallSpawner>();
-				wallSpawner.EndGame();
-			}
-			else
-			{
-				WallSpawnerCardio wallSpawnerCardio = GameObject.Find("WallSpawnerCardio").GetComponent<WallSpawnerCardio>();
-				wallSpawnerCardio.EndGame();
-			}
+			GameModeMaster gameMaster = GameObject.Find("GameModeMaster").GetComponent<GameModeMaster>();
+			gameMaster.EndGame();
 
             gameOver = true;
         }
