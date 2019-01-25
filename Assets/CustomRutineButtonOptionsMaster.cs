@@ -9,6 +9,8 @@ public class CustomRutineButtonOptionsMaster : MonoBehaviour
 	public BreakOptionsButton[] xSecondButtons;
 	public BreakOptionsButton[] everyXWallsButtons;
 	public WallDensityButton[] wallDensityButtons;
+	public bool[] wallCardioButtons = new bool[3];
+	public bool switchOnBreak;
 
 	// Start is called before the first frame update
 	void Start()
@@ -88,7 +90,7 @@ public class CustomRutineButtonOptionsMaster : MonoBehaviour
 	/// <returns></returns>
 	public string[] GetCustomRutineSummary()
 	{
-		string[] customRutineStrings = new string[3];
+		string[] customRutineStrings = new string[5];
 
 		// If warmUpButton[0] is selected then warm up == true 
 		customRutineStrings[0] = warmUpButtons[0].IsSelected().ToString();
@@ -114,6 +116,11 @@ public class CustomRutineButtonOptionsMaster : MonoBehaviour
 		customRutineStrings[2] = wallDensityButtons[0].IsSelected() == true ? "True" : "False";
 		customRutineStrings[2] += wallDensityButtons[1].IsSelected() == true ? " True " : " False ";
 		customRutineStrings[2] += wallDensityButtons[2].IsSelected() == true ? "True" : "False";
+
+		// Check all the different wall types for cardio and fill them in order of left, mid, right (true if button is active, false if not)
+		customRutineStrings[3] = wallCardioButtons[0] + " " + wallCardioButtons[1] + " " + wallCardioButtons[2];
+
+		customRutineStrings[4] = switchOnBreak.ToString();
 
 		return customRutineStrings;
 	}

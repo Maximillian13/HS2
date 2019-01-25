@@ -10,9 +10,11 @@ public class DailyChallengeMaster : MonoBehaviour
 	private System.Random seededRand;
 
 	private bool warmUp;
-	private bool[] wallType = new bool[3];
+	private bool[] squatWallTypes = new bool[3];
+	private bool[] cardioWallTypes = new bool[3];
 	private int breakAfter;
 	private int breakFor;
+	private bool switchModesOnBreak;
 
 	private List<string> songs = new List<string>();
 
@@ -23,9 +25,20 @@ public class DailyChallengeMaster : MonoBehaviour
 		for (int i = 0; i < tms.Length; i++)
 			tms[i] = this.transform.GetChild(i).GetComponent<TextMeshPro>();
 
+		// Init all arrays 
+		for (int i = 0; i < squatWallTypes.Length; i++)
+			squatWallTypes[i] = false;
+		for (int i = 0; i < cardioWallTypes.Length; i++)
+			cardioWallTypes[i] = false;
+
+		// Fill out the description
 		this.FillDescription();
 	}
 
+
+	/// <summary>
+	/// Fill the description of the daily challenge
+	/// </summary>
 	public void FillDescription()
 	{
 		if (tms[0] == null)
@@ -47,9 +60,9 @@ public class DailyChallengeMaster : MonoBehaviour
 				tms[0].text = "Three-some";
 				tms[1].text = "Challenge Description:\nThe only wall coming towards you will be in sets of 3 and you wont have any proper warm-up. Good luck!";
 				warmUp = false;
-				wallType[0] = false;
-				wallType[1] = false;
-				wallType[2] = true;
+				squatWallTypes[0] = false;
+				squatWallTypes[1] = false;
+				squatWallTypes[2] = true;
 
 				// Add songs
 				songs.Add("909");
@@ -68,9 +81,9 @@ public class DailyChallengeMaster : MonoBehaviour
 				tms[0].text = "Hot Singles In Your Area";
 				tms[1].text = "Challenge Description:\nIn this challenge you will only be facing singe walls, no warm up no breaks, Good luck!";
 				warmUp = false;
-				wallType[0] = true;
-				wallType[1] = false;
-				wallType[2] = false;
+				squatWallTypes[0] = true;
+				squatWallTypes[1] = false;
+				squatWallTypes[2] = false;
 
 				// Add songs
 				songs.Add("Sgo");
@@ -90,9 +103,9 @@ public class DailyChallengeMaster : MonoBehaviour
 				tms[0].text = "Long Jump";
 				tms[1].text = "Challenge Description:\nNo middle opening, get read to side step far...";
 				warmUp = true;
-				wallType[0] = true;
-				wallType[1] = false;
-				wallType[2] = true;
+				cardioWallTypes[0] = true;
+				cardioWallTypes[1] = false;
+				cardioWallTypes[2] = true;
 
 				// Add songs
 				songs.Add("909");
@@ -108,11 +121,17 @@ public class DailyChallengeMaster : MonoBehaviour
 			if (r == 1)
 			{
 				tms[0].text = "Hot Singles In Your Area";
-				tms[1].text = "Challenge Description:\nNo middle opening, get read to side step far... (Also no warm up)";
+				tms[1].text = "Challenge Description:\nNo middle opening, get read to side step far. Switches mode every break";
 				warmUp = false;
-				wallType[0] = true;
-				wallType[1] = false;
-				wallType[2] = true;
+
+				squatWallTypes[0] = true;
+				squatWallTypes[1] = true;
+				squatWallTypes[2] = true;
+				cardioWallTypes[0] = true;
+				cardioWallTypes[1] = false;
+				cardioWallTypes[2] = true;
+
+				switchModesOnBreak = true;
 
 				// Add songs
 				songs.Add("909");
@@ -134,7 +153,7 @@ public class DailyChallengeMaster : MonoBehaviour
 	/// </summary>
 	public string[] GetDailyChallengeSummary()
 	{
-		string[] customRutineStrings = new string[3];
+		string[] customRutineStrings = new string[5];
 
 		// If warmUpButton[0] is selected then warm up == true 
 		customRutineStrings[0] = warmUp.ToString();
@@ -144,7 +163,13 @@ public class DailyChallengeMaster : MonoBehaviour
 		customRutineStrings[1] += breakAfter;
 
 		// Check all the different wall densities and fill them in order of 1, 2, 3 (true if button is active, false if not)
-		customRutineStrings[2] = wallType[0] + " " + wallType[1] + " " + wallType[2];
+		customRutineStrings[2] = squatWallTypes[0] + " " + squatWallTypes[1] + " " + squatWallTypes[2];
+
+		// Check all the different wall types for cardio and fill them in order of 1, 2, 3 (true if button is active, false if not)
+		customRutineStrings[3] = cardioWallTypes[0] + " " + cardioWallTypes[1] + " " + cardioWallTypes[2];
+
+		// If we should switch game modes during breaks 
+		customRutineStrings[4] = switchModesOnBreak.ToString();
 
 		return customRutineStrings;
 	}
