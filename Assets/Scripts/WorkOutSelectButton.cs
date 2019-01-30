@@ -9,7 +9,7 @@ public class WorkOutSelectButton : MonoBehaviour, IInteractibleButton
 	private MeshRenderer mr; // For highlighting
 	private bool selected;
 
-	private WorkOutSelectControl master;
+	private IButtonMaster master;
 
 	// Setup
 	void Start()
@@ -42,14 +42,14 @@ public class WorkOutSelectButton : MonoBehaviour, IInteractibleButton
 		if (master == null)
 			this.Start();
 
-		master.ClearAllButtons(); // Clear all highlighted buttons 
+		//master.ClearAllButtons(); // Clear all highlighted buttons 
 
 		highlighted = true;
 		mr.material = mats[1];
 		mr.enabled = true;
 		selected = true;
 
-		master.SetGameModePlayerPref();
+		//master.SetGameModePlayerPref();
 	}
 
 	/// <summary>

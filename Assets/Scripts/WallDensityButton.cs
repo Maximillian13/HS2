@@ -38,8 +38,8 @@ public class WallDensityButton : MonoBehaviour, IInteractibleButton
 		{
 			this.Deselect();
 			// If nothing is selected now, reselect this button
-			if (master.WallDensityButtonSelected() == false)
-				this.Select();
+			//if (master.WallDensityButtonSelected() == false)
+			//	this.Select();
 		}
 	}
 

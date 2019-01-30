@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CustomRutineButtonOptionsMaster : MonoBehaviour
+public class CustomRutineButtonOptionsMaster : MonoBehaviour, IButtonMaster
 {
 	// All the button sections
-	public WarmUpSelectButton[] warmUpButtons;
-	public BreakOptionsButton[] xSecondButtons;
-	public BreakOptionsButton[] everyXWallsButtons;
-	public WallDensityButton[] wallDensityButtons;
+	public GenericButton[] warmUpButtons;
+	public GenericButton[] xSecondButtons;
+	public GenericButton[] everyXWallsButtons;
+	public GenericButton[] wallDensityButtons;
 	public bool[] wallCardioButtons = new bool[3];
 	public bool switchOnBreak;
 
@@ -35,11 +35,28 @@ public class CustomRutineButtonOptionsMaster : MonoBehaviour
 			wallDensityButtons[i].Select();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+	public void ButtonPress(string token)
+	{
+		if (token == "WarmYes" || token == "WarmNo")
+			this.DeselectAllWarmUpButtons();
+		if (token.Contains("Seconds"))
+			this.DeselectAllXSecondButtons();
+		if (token.Contains("Walls"))
+			this.DeselectAllEveryXWallsButtons();
+		if (token.Contains("Thickness"))
+		{
+			GenericButton gb = this.FindButtonWithToken(token, wallDensityButtons);
+			if (gb.IsSelected() == false)
+			{
+				if (this.AtleastOneSelected(wallDensityButtons) == false)
+				{
+					gb.ForceSelect();
+					gb.Select();
+				}
+			}
+		}
+
+	}
 
 	/// <summary>
 	/// Deselect all the warm up buttons 
@@ -71,14 +88,27 @@ public class CustomRutineButtonOptionsMaster : MonoBehaviour
 	/// <summary>
 	/// Check if any of the buttons are active 
 	/// </summary>
-	public bool WallDensityButtonSelected()
+	public bool AtleastOneSelected(GenericButton[] buttonSet)
 	{
-		for(int i = 0; i < wallDensityButtons.Length; i++)
+		for(int i = 0; i < buttonSet.Length; i++)
 		{
-			if(wallDensityButtons[i].IsSelected() == true)
+			if(buttonSet[i].IsSelected() == true)
 				return true;
 		}
 		return false;
+	}
+
+	/// <summary>
+	/// Find the button in the passed array that has the passed token
+	/// </summary>
+	private GenericButton FindButtonWithToken(string token, GenericButton[] buttonSet)
+	{
+		for(int i = 0; i < buttonSet.Length; i++)
+		{
+			if (buttonSet[i].GetToken() == token)
+				return buttonSet[i];
+		}
+		return null;
 	}
 
 	/// <summary>

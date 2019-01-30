@@ -2,23 +2,29 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class OptionButton : MonoBehaviour, IInteractibleButton
+public class GenericButton : MonoBehaviour, IInteractibleButton
 {
-	public int id;
+	public string token;
 	public bool highlightingWanted;
+	public bool multiHighlightAllow;
 	public Material[] mats; // 0 = green, 1 = blue 
 	private bool highlighted;
 	private MeshRenderer mr; // For highlighting
 	private bool selected;
 
-	private OptionButtonMaster master;
+	public IButtonMaster master;
 
 	// Setup
 	public void Start()
 	{
 		mr = this.GetComponent<MeshRenderer>();
 		mr.enabled = false;
-		master = this.transform.parent.parent.parent.GetComponent<OptionButtonMaster>();
+
+		// Grab the master script wherever it is 
+		if (this.transform.parent.parent.GetComponent<IButtonMaster>() != null)
+			master = this.transform.parent.parent.GetComponent<IButtonMaster>();
+		else
+			master = this.transform.parent.parent.parent.GetComponent<IButtonMaster>();
 	}
 
 	void FixedUpdate()
@@ -32,10 +38,20 @@ public class OptionButton : MonoBehaviour, IInteractibleButton
 	public void PressButton()
 	{
 		// Select or deselect button
-		if(highlightingWanted == true)
-			this.Select();
-		else if (highlighted == false)
-			this.Select();
+		if (multiHighlightAllow == false)
+		{
+			if (highlightingWanted == true)
+				this.Select();
+			else if (highlighted == false)
+				this.Select();
+		}
+		else
+		{
+			if (highlighted == false)
+				this.Select();
+			else
+				this.Deselect(true);
+		}
 	}
 
 	/// <summary>
@@ -43,7 +59,7 @@ public class OptionButton : MonoBehaviour, IInteractibleButton
 	/// </summary>
 	public void Select()
 	{
-		master.OptionButtonPress(id);
+		master.ButtonPress(token);
 		if (highlightingWanted == true)
 		{
 			highlighted = true;
@@ -53,15 +69,22 @@ public class OptionButton : MonoBehaviour, IInteractibleButton
 		selected = true;
 	}
 
+	public void ForceSelect()
+	{
+		selected = true;
+	}
+
 	/// <summary>
 	/// De-select this button
 	/// </summary>
-	public void Deselect()
+	public void Deselect(bool checkMaster = false)
 	{
 		highlighted = false;
 		mr.material = mats[0];
 		mr.enabled = false;
 		selected = false;
+		if (checkMaster == true)
+			master.ButtonPress(token);
 	}
 
 	/// <summary>
@@ -82,5 +105,10 @@ public class OptionButton : MonoBehaviour, IInteractibleButton
 	public bool IsSelected()
 	{
 		return selected;
+	}
+
+	public string GetToken()
+	{
+		return this.token;
 	}
 }
