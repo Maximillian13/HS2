@@ -22,8 +22,7 @@ public class PlayerHitBox : MonoBehaviour
 	void Start () 
     {
 		// If we are not in a gym destroy this component 
-		GameObject cugo = GameObject.Find("CheckUp");
-		if (cugo == null)
+		if (tScore == null)
 			Destroy(this);
 
 		score = 0;

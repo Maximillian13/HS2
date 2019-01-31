@@ -76,7 +76,7 @@ public class GameModeMaster : MonoBehaviour
 		// If the file doesnt exist then load the normal defaults, else read from file 
 		if (File.Exists(CUSTOM_ROUTINE_PATH) == false)
 		{
-			warmUp = false;
+			warmUp = true;
 
 			// Enable all walls by default
 			for (int i = 0; i < 3; i++)
