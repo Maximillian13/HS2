@@ -1,27 +1,35 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class CustomRutineButtonOptionsMaster : MonoBehaviour, IButtonMaster
 {
 	// All the button sections
 	public GenericButton warmUpButton;
+	public GenericButton haveBreaksButton;
 	public GenericButton switchGameModeButton;
-	public GenericButton[] xSecondButtons;
-	public GenericButton[] everyXWallsButtons;
+	public GenericButton[] breakLengthDownUp;
+	public GenericButton[] wallsUntilBreakDownUp;
 	public GenericButton[] wallDensityButtons;
 	public GenericButton[] wallOpeningButtons;
+
+	public TextMeshPro[] breakTexts;
+
+	private int breakLengthCounter;
+	private int wallsUntilBreakCounter;
 
 	// Start is called before the first frame update
 	void Start()
     {
 		// Set up all buttons 
 		warmUpButton.Start();
+		haveBreaksButton.Start();
 		switchGameModeButton.Start();
-		for (int i = 0; i < xSecondButtons.Length; i++)
-			xSecondButtons[i].Start();
-		for (int i = 0; i < everyXWallsButtons.Length; i++)
-			everyXWallsButtons[i].Start();
+		for (int i = 0; i < breakLengthDownUp.Length; i++)
+			breakLengthDownUp[i].Start();
+		for (int i = 0; i < wallsUntilBreakDownUp.Length; i++)
+			wallsUntilBreakDownUp[i].Start();
 		for (int i = 0; i < wallDensityButtons.Length; i++)
 			wallDensityButtons[i].Start();
 		for (int i = 0; i < wallOpeningButtons.Length; i++)
@@ -30,24 +38,28 @@ public class CustomRutineButtonOptionsMaster : MonoBehaviour, IButtonMaster
 		// Default settings 
 		warmUpButton.Select();
 		switchGameModeButton.Deselect();
-		xSecondButtons[0].Select();
-		everyXWallsButtons[3].Select();
+		haveBreaksButton.Deselect();
+		this.EnableOrDisableBreakButtons(false);
 
 		// Select all the wall densities 
 		for (int i = 0; i < wallDensityButtons.Length; i++)
 			wallDensityButtons[i].Select();
 		for (int i = 0; i < wallOpeningButtons.Length; i++)
 			wallOpeningButtons[i].Select();
+
+		// Set up for the counters
+		breakLengthCounter = 30;
+		wallsUntilBreakCounter = 50;
 	}
 
 	public void ButtonPress(string token)
 	{
-		if (token == "WarmYes" || token == "WarmNo")
-			return;
-		if (token.Contains("Seconds"))
-			this.DeselectButtonSet(xSecondButtons);
-		if (token.Contains("Walls"))
-			this.DeselectButtonSet(everyXWallsButtons);
+		if(token == "HaveBreaksYes")
+			this.EnableOrDisableBreakButtons(!haveBreaksButton.IsSelected());
+		if (token.Contains("BreakLength"))
+			this.HandleBreakLength(token);
+		if (token.Contains("WallsUntilBreak"))
+			this.HandleWallUntilBreak(token);
 		if (token.Contains("Thickness"))
 		{
 			GenericButton gb = this.FindButtonWithToken(token, wallDensityButtons);
@@ -76,9 +88,76 @@ public class CustomRutineButtonOptionsMaster : MonoBehaviour, IButtonMaster
 	}
 
 	/// <summary>
+	/// Handles the up and down presses for the Break length option
+	/// </summary>
+	private void HandleBreakLength(string token)
+	{
+		if(token.Contains("Down"))
+		{
+			breakLengthCounter -= 5;
+			if (breakLengthCounter < 10)
+				breakLengthCounter = 10;
+		}
+		else
+		{
+			breakLengthCounter += 5;
+			if (breakLengthCounter > 120)
+				breakLengthCounter = 120;
+		}
+		breakTexts[0].text = breakLengthCounter.ToString();
+	}
+
+	/// <summary>
+	/// Handles the up and down presses for the wall until break option
+	/// </summary>
+	private void HandleWallUntilBreak(string token)
+	{
+		if (token.Contains("Down"))
+		{
+			wallsUntilBreakCounter -= 5;
+			if (wallsUntilBreakCounter < 10)
+				wallsUntilBreakCounter = 10;
+		}
+		else
+		{
+			wallsUntilBreakCounter += 5;
+			if (wallsUntilBreakCounter > 999)
+				wallsUntilBreakCounter = 999;
+		}
+		breakTexts[1].text = wallsUntilBreakCounter.ToString();
+	}
+
+	/// <summary>
+	/// Enables or disables the break option buttons and sets the text accordingly 
+	/// </summary>
+	/// <param name="en"></param>
+	private void EnableOrDisableBreakButtons(bool en)
+	{
+		for (int i = 0; i < breakLengthDownUp.Length; i++)
+			breakLengthDownUp[i].gameObject.SetActive(en);
+
+		for (int i = 0; i < wallsUntilBreakDownUp.Length; i++)
+			wallsUntilBreakDownUp[i].gameObject.SetActive(en);
+
+		switchGameModeButton.gameObject.SetActive(en);
+
+		// Switch text to display correctly depending on the active state 
+		if(en == true)
+		{
+			breakTexts[0].text = breakLengthCounter.ToString();
+			breakTexts[1].text = wallsUntilBreakCounter.ToString();
+		}
+		else
+		{
+			breakTexts[0].text = "N/A";
+			breakTexts[1].text = "N/A";
+		}
+	}
+
+	/// <summary>
 	/// Deselect all the warm up buttons 
 	/// </summary>
-	public void DeselectButtonSet(GenericButton[] bSet)
+	private void DeselectButtonSet(GenericButton[] bSet)
 	{
 		for (int i = 0; i < bSet.Length; i++)
 			bSet[i].Deselect();
@@ -87,7 +166,7 @@ public class CustomRutineButtonOptionsMaster : MonoBehaviour, IButtonMaster
 	/// <summary>
 	/// Check if any of the buttons are active 
 	/// </summary>
-	public bool AtleastOneSelected(GenericButton[] buttonSet)
+	private bool AtleastOneSelected(GenericButton[] buttonSet)
 	{
 		for(int i = 0; i < buttonSet.Length; i++)
 		{
@@ -100,7 +179,7 @@ public class CustomRutineButtonOptionsMaster : MonoBehaviour, IButtonMaster
 	/// <summary>
 	/// Check if any two buttons are active 
 	/// </summary>
-	public bool AtleastTwoSelected(GenericButton[] buttonSet)
+	private bool AtleastTwoSelected(GenericButton[] buttonSet)
 	{
 		// Loop through all buttons in button set incrementing counter when finding a selected button
 		int counter = 0;
@@ -141,22 +220,14 @@ public class CustomRutineButtonOptionsMaster : MonoBehaviour, IButtonMaster
 		// If warmUpButton[0] is selected then warm up == true 
 		customRutineStrings[0] = warmUpButton.IsSelected().ToString();
 		
-		// Loop through the x second break and save how many seconds by taking the index and mult by 10
-		for(int i = 0; i < xSecondButtons.Length; i++)
-		{
-			if (xSecondButtons[i].IsSelected() == true)
-				customRutineStrings[1] = ((i + 1) * 10) + " ";
-		}
+		// Set the value of the break length
+		customRutineStrings[1] = breakLengthCounter + " ";
 
-		// Check Every X Wall and append that value on to the end of the string
-		if(everyXWallsButtons[0].IsSelected() == true)
-			customRutineStrings[1] += 25;
-		if (everyXWallsButtons[1].IsSelected() == true)
-			customRutineStrings[1] += 50;
-		if (everyXWallsButtons[2].IsSelected() == true)
-			customRutineStrings[1] += 100;
-		if (everyXWallsButtons[3].IsSelected() == true)
+		// If we do not have breaks set the wall count to int.Max, else set it to the specified value
+		if(haveBreaksButton.IsSelected() == false)
 			customRutineStrings[1] += int.MaxValue;
+		else
+			customRutineStrings[1] += wallsUntilBreakCounter;
 
 		// Check all the different wall densities and fill them in order of 1, 2, 3 (true if button is active, false if not)
 		customRutineStrings[2] = wallDensityButtons[0].IsSelected() == true ? "True" : "False";
