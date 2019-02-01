@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class OptionButtonMaster : MonoBehaviour
+public class OptionButtonMaster : MonoBehaviour, IButtonMaster
 {
 	// A lot of this stuff seems backwards and weird but it is because PlayerPrefs starts at 0 when
 	// the game is loaded for the first time. So by doing it this way we dont need any additional set up
 
 	// All the button sections
-	public OptionButton[] domHandButtons;
-	public OptionButton[] musicVolButtons;
-	public OptionButton[] snapTeleButtons;
+	public GenericButton[] domHandButtons;
+	public GenericButton[] musicVolButtons;
+	public GenericButton[] snapTeleButtons;
 
 	public TextMeshPro musicVolText;
 
@@ -53,30 +53,30 @@ public class OptionButtonMaster : MonoBehaviour
 			snapTeleButtons[0].Select();
 	}
 
-	public void OptionButtonPress(int buttonId)
+	public void ButtonPress(string buttonToken)
 	{
 		// Set the dom hand
-		if (buttonId == 0 || buttonId == 1)
+		if (buttonToken == "DomLeft" || buttonToken == "DomRight")
 		{
 			this.DeslectDomHandButtons();
-			this.DomHandPress(buttonId);
+			this.DomHandPress(buttonToken);
 		}
 
-		if (buttonId == 2 || buttonId == 3)
-			this.MusicVolumePress(buttonId);
+		if (buttonToken == "VolDown" || buttonToken == "VolUp")
+			this.MusicVolumePress(buttonToken);
 
-		if (buttonId == 4 || buttonId == 5)
+		if (buttonToken == "SnapTeleNo" || buttonToken == "SnapTeleYes")
 		{
 			this.DeslectSnapTeleButtons();
-			this.SnapTeleportPress(buttonId);
+			this.SnapTeleportPress(buttonToken);
 		}
 	}
 
 	// Set the dom hand based off what button is pressed
-	private void DomHandPress(int buttonId)
+	private void DomHandPress(string buttonToken)
 	{
 		// If left set DomHand to 1 and if right set DomHand to 0 
-		if (buttonId == 0) 
+		if (buttonToken == "DomLeft") 
 			PlayerPrefs.SetInt("DomHand", 1);
 		else
 			PlayerPrefs.SetInt("DomHand", 0);
@@ -89,15 +89,15 @@ public class OptionButtonMaster : MonoBehaviour
 	}
 
 	// Pressing on the volume button
-	private void MusicVolumePress(int buttonId)
+	private void MusicVolumePress(string buttonToken)
 	{
-		if(buttonId == 2)
+		if(buttonToken == "VolDown")
 		{
 			musicVol--;
 			if (musicVol < 0)
 				musicVol = 0;
 		}
-		if (buttonId == 3)
+		if (buttonToken == "VolUp")
 		{
 			musicVol++;
 			if (musicVol > 10)
@@ -110,9 +110,9 @@ public class OptionButtonMaster : MonoBehaviour
 		volControl.UpdateVolume();
 	}
 
-	private void SnapTeleportPress(int buttonId)
+	private void SnapTeleportPress(string buttonToken)
 	{
-		if (buttonId == 4)
+		if (buttonToken == "SnapTeleNo")
 			PlayerPrefs.SetInt("SnapTele", 1);
 		else
 			PlayerPrefs.SetInt("SnapTele", 0);

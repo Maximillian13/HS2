@@ -31,8 +31,9 @@ public class MainMenuControl : MonoBehaviour
 
 	private float quitTimer;
 
-	private GymSelectButtonControl gymSelectControl;
-	private SongSelectButtonControl songSelectControl;
+	//private GymSelectButtonControl gymSelectControl;
+	//private SongSelectButtonControl songSelectControl;
+	private GymAndSongSelectControl gymAndSongSelectControl;
 	private WorkOutSelectControl gameModeSelector;
 	// The start and back buttons for the gym select (will change depending on 
 	// if we are coming from main menu or if we are coming from Custom Routine) 
@@ -80,8 +81,7 @@ public class MainMenuControl : MonoBehaviour
 			buttonSet[i].SetActive(true);
 
 		// Get control objects
-		gymSelectControl = buttonSet[1].transform.Find("GymSelection").GetComponent<GymSelectButtonControl>();
-		songSelectControl = buttonSet[1].transform.Find("SongSelection").GetComponent<SongSelectButtonControl>();
+		gymAndSongSelectControl = buttonSet[1].transform.Find("GymSongSelect").GetComponent<GymAndSongSelectControl>();
 		gymSongStart = buttonSet[1].transform.Find("Start").GetChild(0).GetComponent<MainMenuButton>();
 		gymSongBack = buttonSet[1].transform.Find("Back").GetChild(0).GetComponent<MainMenuButton>();
 
@@ -101,9 +101,9 @@ public class MainMenuControl : MonoBehaviour
 	void Update()
 	{
 		if (Input.GetKeyDown(KeyCode.Q))
-			this.TransitionToMenu("Outfits");
+			this.TransitionToMenu("CustomRoutine");
 		if (Input.GetKeyDown(KeyCode.W))
-			this.TransitionToMenu("LoadLevel dc");
+			this.TransitionToMenu("LoadLevel cr");
 
 		// If we need to move the walls up or down
 		this.MoveWall();
@@ -319,8 +319,8 @@ public class MainMenuControl : MonoBehaviour
 			loadTimer = Time.time + 2;
 
 			// Make the song file based off buttons
-			songSelectControl.MakeSongFile(); 
-			//Debug.Log(gymSelectControl.GetSelectedGym());
+			gymAndSongSelectControl.MakeSongFile(); 
+			Debug.Log(gymAndSongSelectControl.GetSelectedGym());
 		}
 
 		if(loadType.ToLower() == "cr")
@@ -329,7 +329,7 @@ public class MainMenuControl : MonoBehaviour
 			loadTimer = Time.time + 2;
 
 			// Make the song file based off buttons
-			songSelectControl.MakeSongFile();
+			gymAndSongSelectControl.MakeSongFile();
 
 			// Fill out the data for the custom routine
 			string[] custR = customRutineControl.GetCustomRutineSummary();
@@ -342,7 +342,7 @@ public class MainMenuControl : MonoBehaviour
 			loadTimer = Time.time + 2;
 
 			// Make the song file based off the daily challenge
-			songSelectControl.MakeSongFile(dailyChallengeControl.GetDailyChallengeSongs());
+			gymAndSongSelectControl.MakeSongFile(dailyChallengeControl.GetDailyChallengeSongs());
 
 			// Save the daily challenge info
 			string[] dailyC = dailyChallengeControl.GetDailyChallengeSummary();

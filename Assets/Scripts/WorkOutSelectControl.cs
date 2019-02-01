@@ -2,17 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WorkOutSelectControl : MonoBehaviour
+public class WorkOutSelectControl : MonoBehaviour, IButtonMaster
 {
-	public WorkOutSelectButton[] buttons;
+	public GenericButton[] buttons;
 	public MainMenuButton continueButton;
 
 	void Start()
 	{
+		for (int i = 0; i < buttons.Length; i++)
+			buttons[i].Start();
 		buttons[0].Select(); // Select squat as default 
 	}
 
-	public void ClearAllButtons()
+	private void ClearAllButtons()
 	{
 		for (int i = 0; i < buttons.Length; i++)
 			buttons[i].Deselect();
@@ -21,13 +23,13 @@ public class WorkOutSelectControl : MonoBehaviour
 	/// <summary>
 	/// Set the game mode via player prefs
 	/// </summary>
-	public void SetGameModePlayerPref()
+	public void ButtonPress(string token)
 	{
-		for (int i = 0; i < buttons.Length; i++)
-		{
-			if (buttons[i].IsSelected() == true)
-				PlayerPrefs.SetInt("GameMode", i);
-		}
+		this.ClearAllButtons();
+		if(token == "Squat")
+			PlayerPrefs.SetInt("GameMode", 0);
+		else
+			PlayerPrefs.SetInt("GameMode", 1);
 	}
 
 	/// <summary>
