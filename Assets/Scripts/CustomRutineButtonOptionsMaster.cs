@@ -5,44 +5,49 @@ using UnityEngine;
 public class CustomRutineButtonOptionsMaster : MonoBehaviour, IButtonMaster
 {
 	// All the button sections
-	public GenericButton[] warmUpButtons;
+	public GenericButton warmUpButton;
+	public GenericButton switchGameModeButton;
 	public GenericButton[] xSecondButtons;
 	public GenericButton[] everyXWallsButtons;
 	public GenericButton[] wallDensityButtons;
-	public bool[] wallCardioButtons = new bool[3];
-	public bool switchOnBreak;
+	public GenericButton[] wallOpeningButtons;
 
 	// Start is called before the first frame update
 	void Start()
     {
 		// Set up all buttons 
-		for (int i = 0; i < warmUpButtons.Length; i++)
-			warmUpButtons[i].Start();
+		warmUpButton.Start();
+		switchGameModeButton.Start();
 		for (int i = 0; i < xSecondButtons.Length; i++)
 			xSecondButtons[i].Start();
 		for (int i = 0; i < everyXWallsButtons.Length; i++)
 			everyXWallsButtons[i].Start();
 		for (int i = 0; i < wallDensityButtons.Length; i++)
 			wallDensityButtons[i].Start();
+		for (int i = 0; i < wallOpeningButtons.Length; i++)
+			wallOpeningButtons[i].Start();
 
 		// Default settings 
-		warmUpButtons[0].Select();
+		warmUpButton.Select();
+		switchGameModeButton.Deselect();
 		xSecondButtons[0].Select();
 		everyXWallsButtons[3].Select();
 
 		// Select all the wall densities 
 		for (int i = 0; i < wallDensityButtons.Length; i++)
 			wallDensityButtons[i].Select();
-    }
+		for (int i = 0; i < wallOpeningButtons.Length; i++)
+			wallOpeningButtons[i].Select();
+	}
 
 	public void ButtonPress(string token)
 	{
 		if (token == "WarmYes" || token == "WarmNo")
-			this.DeselectAllWarmUpButtons();
+			return;
 		if (token.Contains("Seconds"))
-			this.DeselectAllXSecondButtons();
+			this.DeselectButtonSet(xSecondButtons);
 		if (token.Contains("Walls"))
-			this.DeselectAllEveryXWallsButtons();
+			this.DeselectButtonSet(everyXWallsButtons);
 		if (token.Contains("Thickness"))
 		{
 			GenericButton gb = this.FindButtonWithToken(token, wallDensityButtons);
@@ -55,34 +60,28 @@ public class CustomRutineButtonOptionsMaster : MonoBehaviour, IButtonMaster
 				}
 			}
 		}
+		if (token.Contains("Opening"))
+		{
+			GenericButton gb = this.FindButtonWithToken(token, wallOpeningButtons);
+			if (gb.IsSelected() == false)
+			{
+				if (this.AtleastTwoSelected(wallOpeningButtons) == false)
+				{
+					gb.ForceSelect();
+					gb.Select();
+				}
+			}
+		}
 
 	}
 
 	/// <summary>
 	/// Deselect all the warm up buttons 
 	/// </summary>
-	public void DeselectAllWarmUpButtons()
+	public void DeselectButtonSet(GenericButton[] bSet)
 	{
-		for (int i = 0; i < warmUpButtons.Length; i++)
-			warmUpButtons[i].Deselect();
-	}
-
-	/// <summary>
-	/// Deselect all the all x second buttons
-	/// </summary>
-	public void DeselectAllXSecondButtons()
-	{
-		for (int i = 0; i < xSecondButtons.Length; i++)
-			xSecondButtons[i].Deselect();
-	}
-
-	/// <summary>
-	/// Deselect all the every x walls buttons
-	/// </summary>
-	public void DeselectAllEveryXWallsButtons()
-	{
-		for (int i = 0; i < everyXWallsButtons.Length; i++)
-			everyXWallsButtons[i].Deselect();
+		for (int i = 0; i < bSet.Length; i++)
+			bSet[i].Deselect();
 	}
 
 	/// <summary>
@@ -96,6 +95,23 @@ public class CustomRutineButtonOptionsMaster : MonoBehaviour, IButtonMaster
 				return true;
 		}
 		return false;
+	}
+
+	/// <summary>
+	/// Check if any two buttons are active 
+	/// </summary>
+	public bool AtleastTwoSelected(GenericButton[] buttonSet)
+	{
+		// Loop through all buttons in button set incrementing counter when finding a selected button
+		int counter = 0;
+		for (int i = 0; i < buttonSet.Length; i++)
+		{
+			if (buttonSet[i].IsSelected() == true)
+				counter++;
+		}
+
+		// If less than 2 selected return false
+		return counter > 1;
 	}
 
 	/// <summary>
@@ -123,7 +139,7 @@ public class CustomRutineButtonOptionsMaster : MonoBehaviour, IButtonMaster
 		string[] customRutineStrings = new string[5];
 
 		// If warmUpButton[0] is selected then warm up == true 
-		customRutineStrings[0] = warmUpButtons[0].IsSelected().ToString();
+		customRutineStrings[0] = warmUpButton.IsSelected().ToString();
 		
 		// Loop through the x second break and save how many seconds by taking the index and mult by 10
 		for(int i = 0; i < xSecondButtons.Length; i++)
@@ -148,9 +164,10 @@ public class CustomRutineButtonOptionsMaster : MonoBehaviour, IButtonMaster
 		customRutineStrings[2] += wallDensityButtons[2].IsSelected() == true ? "True" : "False";
 
 		// Check all the different wall types for cardio and fill them in order of left, mid, right (true if button is active, false if not)
-		customRutineStrings[3] = wallCardioButtons[0] + " " + wallCardioButtons[1] + " " + wallCardioButtons[2];
+		customRutineStrings[3] = wallOpeningButtons[0].IsSelected() + " " + wallOpeningButtons[1].IsSelected() + " " + wallOpeningButtons[2].IsSelected();
 
-		customRutineStrings[4] = switchOnBreak.ToString();
+		// Fill in the 
+		customRutineStrings[4] = switchGameModeButton.IsSelected().ToString();
 
 		return customRutineStrings;
 	}

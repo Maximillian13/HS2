@@ -7,6 +7,7 @@ public class GenericButton : MonoBehaviour, IInteractibleButton
 	public string token;
 	public bool highlightingWanted;
 	public bool multiHighlightAllow;
+	public bool toggleButton;
 	public Material[] mats; // 0 = green, 1 = blue 
 	private bool highlighted;
 	private MeshRenderer mr; // For highlighting
@@ -37,6 +38,16 @@ public class GenericButton : MonoBehaviour, IInteractibleButton
 	// At the start of an interaction
 	public void PressButton()
 	{
+		// If a toggle button just turn it on and off
+		if(toggleButton == true)
+		{
+			if (highlighted == false)
+				this.Select();
+			else
+				this.Deselect();
+			return;
+		}
+
 		// Select or deselect button
 		if (multiHighlightAllow == false)
 		{
