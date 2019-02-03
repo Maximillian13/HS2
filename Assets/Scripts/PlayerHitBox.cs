@@ -12,9 +12,9 @@ public class PlayerHitBox : MonoBehaviour
     private int checkUpCounter; // For when there are the multi-walls
     private bool gameOver;
 
-	//private SquatCounter sc;
-	//private TotalSquatCount tsc;
-	//private SteamLeaderBoardUpdater slbu;
+	//private SquatCounter squatCounter;
+	private TotalSquatCount totalSquatCounter;
+	private SteamLeaderBoardUpdater SteamLeaderBoardUpdater;
 
 	private string GAME_MODE_PATH;
 
@@ -28,9 +28,9 @@ public class PlayerHitBox : MonoBehaviour
 		score = 0;
 		tScore.text = score.ToString();
 
-		//sc = GameObject.Find("SquatWallCounterAchievments").GetComponent<SquatCounter>();
-		//tsc = GameObject.Find("TotalSquatCount").GetComponent<TotalSquatCount>();
-		//slbu = GameObject.Find("UpdateSteamLeaderBoard").GetComponent<SteamLeaderBoardUpdater>();
+		//squatCounter = GameObject.Find("SquatWallCounterAchievments").GetComponent<SquatCounter>();
+		totalSquatCounter = GameObject.Find("TotalSquatCount").GetComponent<TotalSquatCount>();
+		SteamLeaderBoardUpdater = GameObject.Find("UpdateSteamLeaderBoard").GetComponent<SteamLeaderBoardUpdater>();
 	}
 
 	/// <summary>
@@ -60,12 +60,14 @@ public class PlayerHitBox : MonoBehaviour
 					score++;
 					tScore.text = score.ToString();
 
-					//sc.UpdateStats(); // Increase the score by one (For achievements)
-					//tsc.UpdateStats();
+					// Check if we have reached any consecutive achivments
+					// Todo: Test to make sure this is actually working (Stat set)
+					AchivmentAndStatControl.SetConsecutiveSquatStat(score);
+					AchivmentAndStatControl.CheckAllConsecutiveSquatAchivments(score);
+					totalSquatCounter.UpdateTotalSquatStats();
 
-					// Todo: Bug: multi walls blow up randomly? 
 					// If it is a normal sized squat wall make the player stand back up right away
-					if (other.transform.parent.parent == null)
+					if (other.transform.parent.parent == null || other.transform.parent.parent.name == "SquatWall(Clone)")
 						checkUp.Ready = false;
 					else if (other.transform.parent.parent.name == "SquatWallx2(Clone)")    // If squat wall is 2 long, allow 2
 						this.ResetAfterNumberOfWalls(2);
@@ -116,10 +118,12 @@ public class PlayerHitBox : MonoBehaviour
     {
         if (gameOver == false)
         {
-            // Save Score
-			if(cardioMode == false)
+			// Save Score
+			if (cardioMode == false)
+			{
 				leaderBoard.SaveStats(score);
-				//slbu.UpdateLeaderBoard(score);
+				SteamLeaderBoardUpdater.UpdateLeaderBoard(score);
+			}
 
             if (GameObject.Find("GuideRail") != null)
             {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using Steamworks;
 
 
 public class MainMenuControl : MonoBehaviour
@@ -47,7 +48,7 @@ public class MainMenuControl : MonoBehaviour
 
 	// Start is called before the first frame update
 	void Start()
-    {
+	{
 		// Where the Custom Routine data should be located 
 		CUSTOM_DATA_PATH = Application.persistentDataPath + "/CustomRoutineData.txt";
 
@@ -100,6 +101,18 @@ public class MainMenuControl : MonoBehaviour
 
 	void Update()
 	{
+		// Todo: For the love of god dont forget to delete this
+		// Reset all achievements
+		if (Input.GetKeyDown(KeyCode.Escape))
+		{
+			if (SteamManager.Initialized == true)
+			{
+				SteamUserStats.ResetAllStats(true);
+				SteamUserStats.StoreStats();
+				Debug.Log("Achiv deleted");
+			}
+		}
+
 		if (Input.GetKeyDown(KeyCode.Q))
 			this.TransitionToMenu("CustomRoutine");
 		if (Input.GetKeyDown(KeyCode.W))

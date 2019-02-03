@@ -54,9 +54,6 @@ public class GameModeMaster : MonoBehaviour
 	private string CUSTOM_ROUTINE_PATH;
 	#endregion
 
-
-	// Todo: Make sure the script execution orders are correct. also have the hight calibrate for either game mode
-
 	// Start is called before the first frame update
 	void Start()
     {
