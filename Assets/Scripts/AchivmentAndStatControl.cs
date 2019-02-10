@@ -26,28 +26,13 @@ public static class AchivmentAndStatControl
 	/// </summary>
 	public static void CheckAllConsecutiveSquatAchivments(int amountOfSquats)
 	{
-		ChechAndUnlockConsecutiveAchivment(amountOfSquats, SQUAT_CONSEC0, Achievement.SQUAT_CONSEC0);
-		ChechAndUnlockConsecutiveAchivment(amountOfSquats, SQUAT_CONSEC1, Achievement.SQUAT_CONSEC1);
-		ChechAndUnlockConsecutiveAchivment(amountOfSquats, SQUAT_CONSEC2, Achievement.SQUAT_CONSEC2);
-		ChechAndUnlockConsecutiveAchivment(amountOfSquats, SQUAT_CONSEC3, Achievement.SQUAT_CONSEC3);
-		ChechAndUnlockConsecutiveAchivment(amountOfSquats, SQUAT_CONSEC4, Achievement.SQUAT_CONSEC4);
-		ChechAndUnlockConsecutiveAchivment(amountOfSquats, SQUAT_CONSEC5, Achievement.SQUAT_CONSEC5);
-		ChechAndUnlockConsecutiveAchivment(amountOfSquats, SQUAT_CONSEC6, Achievement.SQUAT_CONSEC6);
-	}
-
-	/// <summary>
-	/// Unlock consecutive squat achievement if it has been made 
-	/// </summary>
-	private static void ChechAndUnlockConsecutiveAchivment(int currentSquats, int achivSquats, Achievement achivName)
-	{
-		if (currentSquats == achivSquats)
-		{
-			if (SteamManager.Initialized == true)
-			{
-				UnlockAchievement(m_Achievements[(int)achivName]);
-				SteamUserStats.StoreStats();
-			}
-		}
+		ChechAndUnlockAchivment(amountOfSquats, SQUAT_CONSEC0, Achievement.SQUAT_CONSEC0);
+		ChechAndUnlockAchivment(amountOfSquats, SQUAT_CONSEC1, Achievement.SQUAT_CONSEC1);
+		ChechAndUnlockAchivment(amountOfSquats, SQUAT_CONSEC2, Achievement.SQUAT_CONSEC2);
+		ChechAndUnlockAchivment(amountOfSquats, SQUAT_CONSEC3, Achievement.SQUAT_CONSEC3);
+		ChechAndUnlockAchivment(amountOfSquats, SQUAT_CONSEC4, Achievement.SQUAT_CONSEC4);
+		ChechAndUnlockAchivment(amountOfSquats, SQUAT_CONSEC5, Achievement.SQUAT_CONSEC5);
+		ChechAndUnlockAchivment(amountOfSquats, SQUAT_CONSEC6, Achievement.SQUAT_CONSEC6);
 	}
 
 	/// <summary>
@@ -55,19 +40,35 @@ public static class AchivmentAndStatControl
 	/// </summary>
 	public static void CheckAllTotalSquatAchivments(int totalSquats)
 	{
-		ChechAndUnlockTotalAchivment(totalSquats, SQUAT_CONSEC0, Achievement.SQUAT_TOTAL0);
-		ChechAndUnlockTotalAchivment(totalSquats, SQUAT_CONSEC1, Achievement.SQUAT_TOTAL1);
-		ChechAndUnlockTotalAchivment(totalSquats, SQUAT_CONSEC2, Achievement.SQUAT_TOTAL2);
-		ChechAndUnlockTotalAchivment(totalSquats, SQUAT_CONSEC3, Achievement.SQUAT_TOTAL3);
-		ChechAndUnlockTotalAchivment(totalSquats, SQUAT_CONSEC4, Achievement.SQUAT_TOTAL4);
-		ChechAndUnlockTotalAchivment(totalSquats, SQUAT_CONSEC5, Achievement.SQUAT_TOTAL5);
-		ChechAndUnlockTotalAchivment(totalSquats, SQUAT_CONSEC6, Achievement.SQUAT_TOTAL6);
+		ChechAndUnlockAchivment(totalSquats, SQUAT_CONSEC0, Achievement.SQUAT_TOTAL0);
+		ChechAndUnlockAchivment(totalSquats, SQUAT_CONSEC1, Achievement.SQUAT_TOTAL1);
+		ChechAndUnlockAchivment(totalSquats, SQUAT_CONSEC2, Achievement.SQUAT_TOTAL2);
+		ChechAndUnlockAchivment(totalSquats, SQUAT_CONSEC3, Achievement.SQUAT_TOTAL3);
+		ChechAndUnlockAchivment(totalSquats, SQUAT_CONSEC4, Achievement.SQUAT_TOTAL4);
+		ChechAndUnlockAchivment(totalSquats, SQUAT_CONSEC5, Achievement.SQUAT_TOTAL5);
+		ChechAndUnlockAchivment(totalSquats, SQUAT_CONSEC6, Achievement.SQUAT_TOTAL6);
+	}
+
+	/// <summary>
+	/// Check if any of the Consecutive cardio achievements have been made yet
+	/// </summary>
+	public static void CheckAllConsecutiveCardioAchivments(int amountOfCardioWalls)
+	{
+		// Todo: Add total Cardio Achievements
+	}
+
+	/// <summary>
+	/// Check if any of the total cardio achievements have been made yet
+	/// </summary>
+	public static void CheckAllTotalCardioAchivments(int totalCardioWalls)
+	{
+		// Todo: Add total Cardio Achievements
 	}
 
 	/// <summary>
 	/// Unlock total squat achievement if it has been made 
 	/// </summary>
-	private static void ChechAndUnlockTotalAchivment(int totalSquats, int achivSquats, Achievement achivName)
+	private static void ChechAndUnlockAchivment(int totalSquats, int achivSquats, Achievement achivName)
 	{
 		if (totalSquats == achivSquats)
 		{
@@ -80,12 +81,32 @@ public static class AchivmentAndStatControl
 	}
 
 	/// <summary>
-	/// Set the consecutive squat stat
+	/// Set a stat
 	/// </summary>
-	public static void SetConsecutiveSquatStat(int numberOfSquats)
+	public static void SetStat(string statName, int statVal)
 	{
-		SteamUserStats.SetStat("HighestSquatConsec", numberOfSquats);
-		SteamUserStats.StoreStats();
+		if (SteamManager.Initialized == true)
+		{
+			SteamUserStats.SetStat(statName, statVal);
+			Debug.Log("set succ -> " + SteamUserStats.StoreStats());
+		}
+	}
+
+	/// <summary>
+	/// Increments stat by 1
+	/// </summary>
+	public static void IncrementStat(string statName)
+	{
+		// Take current stat val, if we successfully get it, set that stat to that value + 1
+		if (SteamManager.Initialized == true)
+		{
+			int statVal = 0;
+			if (SteamUserStats.GetStat(statName, out statVal) == true)
+			{
+				SteamUserStats.SetStat(statName, statVal + 1);
+				Debug.Log("Inc succ -> " + SteamUserStats.StoreStats());
+			}
+		}
 	}
 
 	#region Achiv

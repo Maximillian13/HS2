@@ -7,7 +7,7 @@ public class PlayerHitBox : MonoBehaviour
 	private bool cardioMode;
     private int score; // Player score
     public TextMesh tScore; // Text mesh for the score
-    public LeaderBoard leaderBoard; // For setting the leader board
+    public PersonalHighScore leaderBoard; // For setting the leader board
     public CheckUp checkUp; // If the user went up after a wall
     private int checkUpCounter; // For when there are the multi-walls
     private bool gameOver;
@@ -44,7 +44,7 @@ public class PlayerHitBox : MonoBehaviour
     // If something hits the player
     void OnTriggerEnter(Collider other)
     {
-		// For the noremal game
+		// For the normal game
 		if (cardioMode == false)
 		{
 			// If its the Top of the wall reload level (Eventually explode boxes and show player high-score)
@@ -60,10 +60,16 @@ public class PlayerHitBox : MonoBehaviour
 					score++;
 					tScore.text = score.ToString();
 
-					// Check if we have reached any consecutive achivments
-					// Todo: Test to make sure this is actually working (Stat set)
-					AchivmentAndStatControl.SetConsecutiveSquatStat(score);
-					AchivmentAndStatControl.CheckAllConsecutiveSquatAchivments(score);
+					// If we are in classic mode, update the consecutive squat
+					if (PlayerPrefs.GetInt("GameMode") == 0)
+					{
+						// Check if we have reached any consecutive achievements and set stat
+						// Todo: Test to make sure this is actually working (Stat set)
+						AchivmentAndStatControl.SetStat("HighestSquatConsec", score); // (Will only update stat if larger)
+						AchivmentAndStatControl.CheckAllConsecutiveSquatAchivments(score);
+					}
+
+					// Update total squats and Check for achievements
 					totalSquatCounter.UpdateTotalSquatStats();
 
 					// If it is a normal sized squat wall make the player stand back up right away
@@ -93,6 +99,17 @@ public class PlayerHitBox : MonoBehaviour
 			{
 				score++;
 				tScore.text = score.ToString();
+
+				// If we are in classic mode, update the consecutive cardio
+				if (PlayerPrefs.GetInt("GameMode") == 0)
+				{
+					// Check if we have reached any consecutive achievements and set stat
+					AchivmentAndStatControl.SetStat("HighestCardioConsec", score); // (Will only update stat if larger)
+					AchivmentAndStatControl.CheckAllConsecutiveCardioAchivments(score);
+				}
+
+				// Update total cardio and Check for achievements
+				totalSquatCounter.UpdateTotalCardioStats();
 			}
 		}
     }
@@ -118,8 +135,8 @@ public class PlayerHitBox : MonoBehaviour
     {
         if (gameOver == false)
         {
-			// Save Score
-			if (cardioMode == false)
+			// Save Score if in classic mode or if in daily challenge 
+			if (PlayerPrefs.GetInt("GameMode") != 2)
 			{
 				leaderBoard.SaveStats(score);
 				SteamLeaderBoardUpdater.UpdateLeaderBoard(score);

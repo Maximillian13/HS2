@@ -27,9 +27,9 @@ public class WorkOutSelectControl : MonoBehaviour, IButtonMaster
 	{
 		this.ClearAllButtons();
 		if(token == "Squat")
-			PlayerPrefs.SetInt("GameMode", 0);
+			PlayerPrefs.SetInt("CardioMode", 0);
 		else
-			PlayerPrefs.SetInt("GameMode", 1);
+			PlayerPrefs.SetInt("CardioMode", 1);
 	}
 
 	/// <summary>

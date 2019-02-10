@@ -54,6 +54,7 @@ public class GameModeMaster : MonoBehaviour
 	private string CUSTOM_ROUTINE_PATH;
 	#endregion
 
+	private bool customRoutineStatCheck;
 	// Start is called before the first frame update
 	void Start()
     {
@@ -89,6 +90,10 @@ public class GameModeMaster : MonoBehaviour
 			pauseAfterXWaves = int.MaxValue;
 			secondsToPauseFor = 0;
 			switchModesOnBreak = false;
+
+			// If we are in custom mode, check to update the stat
+			if (PlayerPrefs.GetInt("GameMode") == 2)
+				customRoutineStatCheck = true;
 		}
 		else
 		{
@@ -254,6 +259,16 @@ public class GameModeMaster : MonoBehaviour
 
 			this.StartWallMovment(wallClone, wallSpeed); // Start the movement of the wall
 			timer = 0; // Reset timer for next spawn
+
+			// Update the custom routine stat if we are in that mode and 5 walls have passed (To avoid boosting) 
+			if(customRoutineStatCheck == true)
+			{
+				if (wallSpawnCount >= 5)
+				{
+					AchivmentAndStatControl.IncrementStat("TotalCustomRoutines");
+					customRoutineStatCheck = false;
+				}
+			}
 		}
 	}
 
@@ -263,7 +278,7 @@ public class GameModeMaster : MonoBehaviour
 	private void ActivateGameMode()
 	{
 		// Check the game mode using player prefs
-		cardioMode = PlayerPrefs.GetInt("GameMode") == 1 ? true : false;
+		cardioMode = PlayerPrefs.GetInt("CardioMode") == 1 ? true : false;
 
 		if (cardioMode == true)
 		{
@@ -446,6 +461,16 @@ public class GameModeMaster : MonoBehaviour
 
 			this.StartWallMovment(wallClone, wallSpeed); // Start the movement of the wall
 			timer = 0; // Reset timer for next spawn
+
+			// Update the custom routine stat if we are in that mode and 5 walls have passed (To avoid boosting) 
+			if (customRoutineStatCheck == true)
+			{
+				if (wallSpawnCount >= 5)
+				{
+					AchivmentAndStatControl.IncrementStat("TotalCustomRoutines");
+					customRoutineStatCheck = false;
+				}
+			}
 		}
 	}
 
@@ -461,6 +486,7 @@ public class GameModeMaster : MonoBehaviour
 		moveWall.SetGibReady();
 	}
 
+
 	/// <summary>
 	/// Will tell the game to stop spawning waves and reset the level
 	/// </summary>
@@ -475,8 +501,8 @@ public class GameModeMaster : MonoBehaviour
 	{
 		if(Input.GetKeyDown(KeyCode.L))
 		{
-			int newVal = PlayerPrefs.GetInt("GameMode") == 0 ? 1 : 0;
-			PlayerPrefs.SetInt("GameMode", newVal);
+			int newVal = PlayerPrefs.GetInt("CardioMode") == 0 ? 1 : 0;
+			PlayerPrefs.SetInt("CardioMode", newVal);
 		}
 
 		if (Input.GetKeyDown(KeyCode.R))

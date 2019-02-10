@@ -5,23 +5,121 @@ using Steamworks;
 
 public class SteamLeaderBoard : MonoBehaviour
 {
-	public TextMesh tm; // The text mesh that will display the leader board
-	private bool haveLeaderBoard; // The bool that is responsible for knowing when the leader board is downloaded 
+	public string lbName;
+	private TextMesh titleText; // The text mesh that will display the title
+	private TextMesh bodyText; // The text mesh that will display the leader board
+	private string handleName;
 
 	private SteamLeaderboard_t m_SteamLeaderboard;
 	private CallResult<LeaderboardFindResult_t> LeaderboardFindResult;
 	private CallResult<LeaderboardScoresDownloaded_t> LeaderboardScoresDownloaded;
 
+	// Bug: Seems like it isnt displaying in game on the very first time after a clean install (Clear registry)
+
 	public void OnEnable()
 	{
-		LeaderboardFindResult = CallResult<LeaderboardFindResult_t>.Create(OnLeaderboardFindResult);
-		LeaderboardScoresDownloaded = CallResult<LeaderboardScoresDownloaded_t>.Create(onLeaderboardScoresDownloaded);
+		// Find the text mesh
+		titleText = this.transform.Find("Title").GetComponent<TextMesh>();
+		bodyText = this.transform.Find("Body").GetComponent<TextMesh>();
+		handleName = lbName;
+
+		// IF there is nothing default to the classic mode 
+		if (handleName == "")
+			handleName = "HS2ClassicModeLeaderBoard";
+
+		// Todo: Make sure that all this daily scoreboard buisness is working how we want it
+		// Daily challenge pulling from player prefs 
+		if (handleName == "DailyChallengeSquat")
+		{
+			if (DaySinceUnixTime.GetDaySinceUnixTime() == PlayerPrefs.GetInt("DailyChallengeID"))
+				handleName = "Squat" + PlayerPrefs.GetInt("DailyChallengeID");
+			else
+				handleName = "Empty";
+		}
+		if (handleName == "DailyChallengeCardio")
+		{
+			if (DaySinceUnixTime.GetDaySinceUnixTime() == PlayerPrefs.GetInt("DailyChallengeID"))
+				handleName = "Cardio" + PlayerPrefs.GetInt("DailyChallengeID");
+			else
+				handleName = "Empty";
+		}
+
+		// If its "BasedOffMode" then check what game mode we are on and get that 
+		if (lbName == "BasedOffMode")
+			this.SetCorrectLeaderBoard();
+
+		// Set up for the leader board to be updated
+		GameObject lbUpdateGO = GameObject.Find("UpdateSteamLeaderBoard");
+		if (lbUpdateGO != null)
+			lbUpdateGO.GetComponent<SteamLeaderBoardUpdater>().InitLeaderboard(handleName);
+
+		LeaderboardFindResult = CallResult<LeaderboardFindResult_t>.Create(this.OnLeaderboardFindResult);
+		LeaderboardScoresDownloaded = CallResult<LeaderboardScoresDownloaded_t>.Create(this.OnLeaderboardScoresDownloaded);
 
 		// Check if the steam connection is good 
 		if (SteamManager.Initialized == true)
 		{
-			SteamAPICall_t handle = SteamUserStats.FindLeaderboard("HS2ClassicModeLeaderBoard");
+			SteamAPICall_t handle = SteamUserStats.FindOrCreateLeaderboard(handleName, ELeaderboardSortMethod.k_ELeaderboardSortMethodDescending, ELeaderboardDisplayType.k_ELeaderboardDisplayTypeNumeric);
 			LeaderboardFindResult.Set(handle);
+		}
+
+		// Set the leader board to be the one around the player
+		this.ChangeScoreBoardType(false);
+	}
+
+	// Closes all sockets and kills all threads (This prevents unity from freezing)
+	private void OnApplicationQuit()
+	{
+		if (SteamManager.Initialized == true)
+		{
+			SteamAPI.RunCallbacks();
+			SteamAPI.ReleaseCurrentThreadMemory();
+			SteamAPI.Shutdown();
+		}
+	}
+
+	private void SetCorrectLeaderBoard()
+	{
+		// Get what game mode (Classic, Daily, Custom) and if we are in cardio mode 
+		int gameMode = PlayerPrefs.GetInt("GameMode");
+		bool cardioMode = PlayerPrefs.GetInt("CardioMode") == 1;
+
+		if (gameMode == 0)      // Classic Mode
+		{
+			if (cardioMode == true)
+			{
+				titleText.text = "CLASSIC MODE (CARDIO)";
+				handleName = "HS2ClassicModeCardioLeaderBoard";
+			}
+			else
+			{
+				titleText.text = "CLASSIC MODE (SQUAT)";
+				handleName = "HS2ClassicModeLeaderBoard";
+			}
+		}
+		else if (gameMode == 1) // Daily Challenge
+		{
+			if (cardioMode == true)
+			{
+				titleText.text = "DAILY CHALLENGE (CARDIO)";
+				if(DaySinceUnixTime.GetDaySinceUnixTime() == PlayerPrefs.GetInt("DailyChallengeID"))
+					handleName = "Cardio" + PlayerPrefs.GetInt("DailyChallengeID");
+				else
+					handleName = "Empty";
+			}
+			else
+			{
+				titleText.text = "DAILY CHALLENGE (SQUAT)";
+				if (DaySinceUnixTime.GetDaySinceUnixTime() == PlayerPrefs.GetInt("DailyChallengeID"))
+					handleName = "Squat" + PlayerPrefs.GetInt("DailyChallengeID");
+				else
+					handleName = "Empty";
+			}
+		}
+		else                    // Custom Routine
+		{
+			// Delete score board because there is not one for custom routine 
+			Destroy(this.gameObject);
 		}
 	}
 
@@ -32,22 +130,9 @@ public class SteamLeaderBoard : MonoBehaviour
 		{
 			SteamAPI.RunCallbacks();
 		}
-
-		// After .5 seconds load in the leader board
-		if (Time.timeSinceLevelLoad > .5f && haveLeaderBoard == false)
-		{
-			// Check if the steam connection is good 
-			if (SteamManager.Initialized == true)
-			{
-				SteamAPICall_t handle = SteamUserStats.DownloadLeaderboardEntries(m_SteamLeaderboard, ELeaderboardDataRequest.k_ELeaderboardDataRequestGlobalAroundUser, -2, 2);
-				// Set the downloaded score 
-				LeaderboardScoresDownloaded.Set(handle);
-				haveLeaderBoard = true;
-			}
-		}
 	}
 
-	void onLeaderboardScoresDownloaded(LeaderboardScoresDownloaded_t param, bool ioError)
+	void OnLeaderboardScoresDownloaded(LeaderboardScoresDownloaded_t param, bool ioError)
 	{
 		if (ioError)
 		{
@@ -58,8 +143,9 @@ public class SteamLeaderBoard : MonoBehaviour
 
 		// You should probably check whether param.m_hSteamLeaderboard is
 		// the one you want to handle.
+		bool entryAdded = false;
+		bodyText.text = "";
 
-		tm.text = "";
 		List<string> entries = new List<string>();
 		for (int i = 0; i < param.m_cEntryCount; ++i)
 		{
@@ -68,12 +154,16 @@ public class SteamLeaderBoard : MonoBehaviour
 			// Not sure if the array is required to be non-null
 			if (SteamUserStats.GetDownloadedLeaderboardEntry(param.m_hSteamLeaderboardEntries, i, out entry, null, 0))
 			{
+				entryAdded = true;
 				string playerName = SteamFriends.GetFriendPersonaName(entry.m_steamIDUser);
-				entries.Add(string.Format("Position {0} || {1} with {2} squats", entry.m_nGlobalRank, playerName, entry.m_nScore));
+				entries.Add(string.Format("Position {0}  |  {1} With {2} Walls", entry.m_nGlobalRank, playerName, entry.m_nScore));
 				//entries.Add(string.Format("{0}: rank {1}, score {2}", playerName, entry.m_nGlobalRank, entry.m_nScore));
-				tm.text = tm.text + " " + entries[i] + "\n";
+				bodyText.text = bodyText.text + " " + entries[i] + "\n";
 			}
 		}
+
+		if(entryAdded == false)
+			bodyText.text = "Exercise to see where you land...";
 	}
 
 
@@ -82,6 +172,30 @@ public class SteamLeaderBoard : MonoBehaviour
 		if (pCallback.m_bLeaderboardFound != 0)
 		{
 			m_SteamLeaderboard = pCallback.m_hSteamLeaderboard;
+		}
+	}
+
+	/// <summary>
+	/// Change if this leader board displays in high score mode or around user mode
+	/// </summary>
+	public void ChangeScoreBoardType(bool hScore)
+	{
+		if (SteamManager.Initialized == true)
+		{
+			if (hScore == true)
+			{
+				SteamAPICall_t handle = SteamUserStats.DownloadLeaderboardEntries(m_SteamLeaderboard, ELeaderboardDataRequest.k_ELeaderboardDataRequestGlobal, 1, 1);
+
+				// Set the downloaded score 
+				LeaderboardScoresDownloaded.Set(handle);
+			}
+			else
+			{
+				SteamAPICall_t handle = SteamUserStats.DownloadLeaderboardEntries(m_SteamLeaderboard, ELeaderboardDataRequest.k_ELeaderboardDataRequestGlobalAroundUser, -2, 2);
+
+				// Set the downloaded score 
+				LeaderboardScoresDownloaded.Set(handle);
+			}
 		}
 	}
 

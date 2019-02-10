@@ -37,7 +37,7 @@ public class WandControlMenuInteraction : MonoBehaviour
 		}
 	}
 
-	// Todo: Bug: When hovering over multiple option v fast it breaks button presses. (Keep testing but it might be fixed)
+	// Bug: When hovering over multiple option v fast it breaks button presses. (Keep testing but it might be fixed)
 
 	// Enters button
 	void OnTriggerEnter(Collider other)

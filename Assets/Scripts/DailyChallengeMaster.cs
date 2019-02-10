@@ -3,6 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
+public static class DaySinceUnixTime
+{
+	// Seed the random with todays date added up so that it is a unique random every time
+	public static int GetDaySinceUnixTime()
+	{
+		System.DateTimeOffset dto = new System.DateTimeOffset(System.DateTime.Now);
+		return (int)(dto.ToUnixTimeSeconds() / 86400);  // Check back in 2038 to see if its broken 🤔
+	}
+}
+
 public class DailyChallengeMaster : MonoBehaviour
 {
 	private TextMeshPro[] tms = new TextMeshPro[3];
@@ -35,6 +45,11 @@ public class DailyChallengeMaster : MonoBehaviour
 		this.FillDescription();
 	}
 
+	private void OnEnable()
+	{
+		this.FillDescription();
+	}
+
 
 	/// <summary>
 	/// Fill the description of the daily challenge
@@ -43,17 +58,22 @@ public class DailyChallengeMaster : MonoBehaviour
 	{
 		if (tms[0] == null)
 			this.Start();
+		bool inCardioMode = false;
+		if (PlayerPrefs.GetInt("CardioMode") == 1)
+			inCardioMode = true;
 
 		// Seed the random with todays date added up so that it is a unique random every time
-		System.DateTimeOffset dto = new System.DateTimeOffset(System.DateTime.Now);
-		int daysOfUnix = (int)(dto.ToUnixTimeSeconds() / 86400);  // Check back in 2038 to see if its broken 🤔
-		Debug.Log(daysOfUnix); // (17909 on 1-13-2018) todo (might need an offset to deal with time zones)
+		int daysOfUnix = DaySinceUnixTime.GetDaySinceUnixTime();
+		// (17909 on 1-13-2018) todo (might need an offset to deal with time zones)
+		PlayerPrefs.SetInt("DailyChallengeID", daysOfUnix);
+
 		seededRand = new System.Random(daysOfUnix);
 
 		int r = seededRand.Next(2);
 
-		if (PlayerPrefs.GetInt("GameMode") == 0) // Normal squat mode 
+		if (inCardioMode == false) // Normal squat mode 
 		{
+			PlayerPrefs.SetInt("DailySquatID", daysOfUnix);
 			if (r == 0)
 			{
 				// Normal Challenge
@@ -120,7 +140,7 @@ public class DailyChallengeMaster : MonoBehaviour
 			}
 			if (r == 1)
 			{
-				tms[0].text = "Hot Singles In Your Area";
+				tms[0].text = "Spread Eagle Cross the Block";
 				tms[1].text = "Challenge Description:\nNo middle opening, get read to side step far. Switches mode every break";
 				warmUp = false;
 
@@ -172,6 +192,24 @@ public class DailyChallengeMaster : MonoBehaviour
 		customRutineStrings[4] = switchModesOnBreak.ToString();
 
 		return customRutineStrings;
+	}
+
+	/// <summary>
+	/// Increment the score if it is the first time doing this daily challenge (one for squat and one for cardio)
+	/// </summary>
+	public void IncrementDailyChallengeStat()
+	{
+		// Get what player pref we are looking for (either cardio or squat)
+		string playerPrefToFind = "DailySquatID";
+		if (PlayerPrefs.GetInt("CardioMode") == 1) 
+			playerPrefToFind = "DailyCardioID";
+
+		// If the player pref does not match the current day. It must be a new day, increment score
+		if (PlayerPrefs.GetInt(playerPrefToFind) != DaySinceUnixTime.GetDaySinceUnixTime())
+		{
+			AchivmentAndStatControl.IncrementStat("TotalDailyChallenges");
+			PlayerPrefs.SetInt(playerPrefToFind, DaySinceUnixTime.GetDaySinceUnixTime());
+		}
 	}
 
 	/// <summary>

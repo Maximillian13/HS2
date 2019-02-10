@@ -8,19 +8,27 @@ public class SteamLeaderBoardUpdater : MonoBehaviour
 	private CallResult<LeaderboardScoreUploaded_t> LeaderboardScoreUploaded;
 	private CallResult<LeaderboardFindResult_t> LeaderboardFindResult;
 
-
-	public void OnEnable()
+	public void InitLeaderboard(string lbName)
 	{
 		if (SteamManager.Initialized == true)
 		{
-			LeaderboardScoreUploaded = CallResult<LeaderboardScoreUploaded_t>.Create(OnLeaderboardScoreUploaded);
-			LeaderboardFindResult = CallResult<LeaderboardFindResult_t>.Create(OnLeaderboardFindResult);
-
-			SteamAPICall_t handle = SteamUserStats.FindLeaderboard("HS2ClassicModeLeaderBoard");
+			LeaderboardScoreUploaded = CallResult<LeaderboardScoreUploaded_t>.Create(this.OnLeaderboardScoreUploaded);
+			LeaderboardFindResult = CallResult<LeaderboardFindResult_t>.Create(this.OnLeaderboardFindResult);
+			SteamAPICall_t handle = SteamUserStats.FindLeaderboard(lbName);
 			LeaderboardFindResult.Set(handle);
 		}
 	}
 
+	// Closes all sockets and kills all threads (This prevents unity from freezing)
+	private void OnApplicationQuit()
+	{
+		if (SteamManager.Initialized == true)
+		{
+			SteamAPI.RunCallbacks();
+			SteamAPI.ReleaseCurrentThreadMemory();
+			SteamAPI.Shutdown();
+		}
+	}
 
 	// Update is called once per frame
 	void Update()

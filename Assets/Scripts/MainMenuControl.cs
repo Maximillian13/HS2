@@ -10,7 +10,7 @@ public class MainMenuControl : MonoBehaviour
 	private GameObject[] randScenes;
 	private int lastRandInd;
 
-	private GameObject[] specailScenes;
+	public GameObject[] specailScenes;
 
 	public GameObject[] buttonSet;
 	public Transform wall;
@@ -70,10 +70,6 @@ public class MainMenuControl : MonoBehaviour
 			this.randScenes[i].SetActive(false);
 
 		// Set up for Special scenes 
-		GameObject specailScenes = this.transform.Find("Special").gameObject;
-		this.specailScenes = new GameObject[specailScenes.transform.childCount];
-		for (int i = 0; i < this.specailScenes.Length; i++)
-			this.specailScenes[i] = specailScenes.transform.GetChild(i).gameObject;
 		for (int i = 0; i < this.specailScenes.Length; i++)
 			this.specailScenes[i].SetActive(false);
 
@@ -114,9 +110,9 @@ public class MainMenuControl : MonoBehaviour
 		}
 
 		if (Input.GetKeyDown(KeyCode.Q))
-			this.TransitionToMenu("CustomRoutine");
+			this.TransitionToMenu("Outfits");
 		if (Input.GetKeyDown(KeyCode.W))
-			this.TransitionToMenu("LoadLevel cr");
+			this.TransitionToMenu("Stats");
 
 		// If we need to move the walls up or down
 		this.MoveWall();
@@ -228,6 +224,13 @@ public class MainMenuControl : MonoBehaviour
 			specailMoveUp = true;
 			specailCase = true;
 		}
+		else if (token == "Stats")
+		{
+			// Pick special outfit scene 
+			this.PickScene(1);
+			specailMoveUp = true;
+			specailCase = true;
+		}
 		else
 		{
 			// If it was previously a special case dont randomize yet
@@ -302,13 +305,13 @@ public class MainMenuControl : MonoBehaviour
 		// Just loads the option stuff
 		if (setToActivate == "Options")
 		{
-			buttonSet[6].SetActive(true);
+			buttonSet[5].SetActive(true);
 		}
 
 		// Load the buttons for the wall and activate whatever this load type is
 		if (setToActivate.Contains("LoadLevel"))
 		{
-			buttonSet[7].SetActive(true);
+			buttonSet[6].SetActive(true);
 			// Load the right level and info with the info token given after the load "LoadLevel" keyword
 			this.LoadLevel(setToActivate.Split(' ')[1]);
 		}
@@ -316,7 +319,7 @@ public class MainMenuControl : MonoBehaviour
 		// Load the buttons for the wall and activate whatever this load type is
 		if (setToActivate == "Quit")
 		{
-			buttonSet[8].SetActive(true);
+			buttonSet[7].SetActive(true);
 			quitTimer = Time.time + 2;
 		}
 	}
@@ -326,20 +329,42 @@ public class MainMenuControl : MonoBehaviour
 	/// </summary>
 	private void LoadLevel(string loadType)
 	{
+		// Classic Mode
 		if(loadType.ToLower() == "cm")
 		{
 			loadIndex = 2;
 			loadTimer = Time.time + 2;
+			PlayerPrefs.SetInt("GameMode", 0);
 
 			// Make the song file based off buttons
 			gymAndSongSelectControl.MakeSongFile(); 
 			Debug.Log(gymAndSongSelectControl.GetSelectedGym());
 		}
 
-		if(loadType.ToLower() == "cr")
+		// Daily Challenge 
+		if (loadType.ToLower() == "dc")
 		{
 			loadIndex = 2;
 			loadTimer = Time.time + 2;
+			PlayerPrefs.SetInt("GameMode", 1);
+
+			// Make the song file based off the daily challenge
+			gymAndSongSelectControl.MakeSongFile(dailyChallengeControl.GetDailyChallengeSongs());
+
+			// Save the daily challenge info
+			string[] dailyC = dailyChallengeControl.GetDailyChallengeSummary();
+			this.WriteDataToFile(dailyC, CUSTOM_DATA_PATH);
+
+			// Save that we did a daily challenge 
+			dailyChallengeControl.IncrementDailyChallengeStat();
+		}
+
+		// Custom Routine
+		if (loadType.ToLower() == "cr")
+		{
+			loadIndex = 2;
+			loadTimer = Time.time + 2;
+			PlayerPrefs.SetInt("GameMode", 2);
 
 			// Make the song file based off buttons
 			gymAndSongSelectControl.MakeSongFile();
@@ -349,18 +374,7 @@ public class MainMenuControl : MonoBehaviour
 			this.WriteDataToFile(custR, CUSTOM_DATA_PATH);
 		}
 
-		if (loadType.ToLower() == "dc")
-		{
-			loadIndex = 2;
-			loadTimer = Time.time + 2;
-
-			// Make the song file based off the daily challenge
-			gymAndSongSelectControl.MakeSongFile(dailyChallengeControl.GetDailyChallengeSongs());
-
-			// Save the daily challenge info
-			string[] dailyC = dailyChallengeControl.GetDailyChallengeSummary();
-			this.WriteDataToFile(dailyC, CUSTOM_DATA_PATH);
-		}
+		
 	}
 
 	/// <summary>

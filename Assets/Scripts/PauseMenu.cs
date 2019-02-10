@@ -15,9 +15,12 @@ public class PauseMenu : MonoBehaviour
 
 	private WandControlMenuInteraction[] menuInterations = new WandControlMenuInteraction[2];
 
+	private PlayerHitBox hitBox;
 
 	private void Start()
 	{
+		hitBox = GameObject.Find("Player").GetComponent<PlayerHitBox>();
+
 		if (leftHand == true)
 			hand = SteamVR_Input_Sources.LeftHand;
 		else
@@ -65,6 +68,8 @@ public class PauseMenu : MonoBehaviour
 
 	public void ResetLevel()
 	{
+		// Save info and reload the level
+		hitBox.EndGame();
 		GameObject.Find("[CameraRig]").transform.Find("Camera").GetComponent<EyeFadeControl>().CloseEyes(2);
 		this.Unpause();
 		forceClose = true;
@@ -72,6 +77,8 @@ public class PauseMenu : MonoBehaviour
 
 	public void MainMenu()
 	{
+		// Save info and load the main menu
+		hitBox.EndGame();
 		GameObject.Find("[CameraRig]").transform.Find("Camera").GetComponent<EyeFadeControl>().CloseEyes(1, true);
 		this.Unpause();
 		forceClose = true;

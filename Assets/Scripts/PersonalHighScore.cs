@@ -3,7 +3,7 @@ using UnityEngine;
 using System.Collections;
 using System.IO;
 
-public class LeaderBoard : MonoBehaviour 
+public class PersonalHighScore : MonoBehaviour 
 {
     private BinaryWriter bw;
     private BinaryReader br;
