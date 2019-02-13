@@ -15,7 +15,10 @@ public class EyeFadeControl : MonoBehaviour
 	private float mult = 0; // mult to slow the fade at the begging of opening 
 
 	// Level to load at the end of closing eyes (int.MinValue if no level to load)
-	private int levelToLoad = int.MinValue; 
+	private int levelToLoad = int.MinValue;
+
+	private AudioSource music;
+	private float currentVolume;
 
 	// Start is called before the first frame update
 	void Start()
@@ -33,7 +36,7 @@ public class EyeFadeControl : MonoBehaviour
 	void Update()
 	{
 		if (Input.GetKeyDown(KeyCode.Space))
-			this.CloseEyes();
+			this.CloseEyes(2, true);
 
 		// Solve stalemates by opening the eyes 
 		if(open == true && close == true)
@@ -59,6 +62,11 @@ public class EyeFadeControl : MonoBehaviour
 		// Close eyes
 		if(close == true)
 		{
+			if(music != null)
+			{
+				currentVolume /= 1.011f + Time.deltaTime;
+				music.volume = currentVolume;
+			}
 			// Subtract mult so we have a slow end 
 			if(mult > 0)
 				mult -= Time.deltaTime / 2.1f;
@@ -107,11 +115,14 @@ public class EyeFadeControl : MonoBehaviour
 		curAlpha = 0;
 		mult = 1;
 
-		if(killMusic == true)
+		if (killMusic == true)
 		{
 			GameObject musicObj = GameObject.FindWithTag("Music");
 			if (musicObj != null)
-				Destroy(musicObj);
+			{
+				music = musicObj.GetComponent<AudioSource>();
+				currentVolume = music.volume;
+			}
 		}
 
 		this.levelToLoad = loadLevel;

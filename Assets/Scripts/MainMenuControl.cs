@@ -133,7 +133,7 @@ public class MainMenuControl : MonoBehaviour
 		// If we are ready to load a level, close eyes and load level
 		if (Time.time > timer)
 		{
-			GameObject.Find("[CameraRig]").transform.Find("Camera").GetComponent<EyeFadeControl>().CloseEyes(loadIndex);
+			GameObject.Find("[CameraRig]").transform.Find("Camera").GetComponent<EyeFadeControl>().CloseEyes(loadIndex, true);
 			timer = float.PositiveInfinity;
 		}
 	}

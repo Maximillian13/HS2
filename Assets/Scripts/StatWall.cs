@@ -22,13 +22,13 @@ public class StatWall : MonoBehaviour
 			statSummary = "Total Squat Walls Passed: " + statValue + "\n";
 
 			SteamUserStats.GetStat("HighestSquatConsec", out statValue);
-			statSummary += "Highest Consecutive Squats: " + statValue + "\n";
+			statSummary += "Classic Mode Highest Consecutive Squats: " + statValue + "\n";
 
 			SteamUserStats.GetStat("TotalCardioWallCount", out statValue);
 			statSummary += "Total Cardio Walls Passed: " + statValue + "\n";
 
 			SteamUserStats.GetStat("HighestCardioConsec", out statValue);
-			statSummary += "Highest Consecutive Cardio Walls: " + statValue + "\n";
+			statSummary += "Classic Mode Highest Consecutive Cardio Walls: " + statValue + "\n";
 
 			SteamUserStats.GetStat("TotalDailyChallenges", out statValue);
 			statSummary += "Number of Daily Challenges Completed: " + statValue + "\n";

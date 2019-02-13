@@ -67,7 +67,7 @@ public class HandTypeController : MonoBehaviour
 		if (SteamVR_Input._default.inActions.MenuPress.GetState(SteamVR_Input_Sources.RightHand) && SceneManager.GetActiveScene().buildIndex == 2)
 		{
 			if(music != null)
-				music.enabled = !music.enabled;
+				music.mute = !music.mute;
 		}
 		if (SteamVR_Input._default.inActions.TriggerPress.GetState(hand)) // If the user presses the "trigger" button
 		{

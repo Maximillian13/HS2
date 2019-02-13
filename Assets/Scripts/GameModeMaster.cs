@@ -90,14 +90,14 @@ public class GameModeMaster : MonoBehaviour
 			pauseAfterXWaves = int.MaxValue;
 			secondsToPauseFor = 0;
 			switchModesOnBreak = false;
-
-			// If we are in custom mode, check to update the stat
-			if (PlayerPrefs.GetInt("GameMode") == 2)
-				customRoutineStatCheck = true;
 		}
 		else
 		{
 			this.SetCustomRoutineData();
+
+			// If we are in custom mode, check to update the stat
+			if (PlayerPrefs.GetInt("GameMode") == 2)
+				customRoutineStatCheck = true;
 		}
 
 		this.ActivateGameMode();
@@ -265,6 +265,7 @@ public class GameModeMaster : MonoBehaviour
 			{
 				if (wallSpawnCount >= 5)
 				{
+					Debug.Log("Increased");
 					AchivmentAndStatControl.IncrementStat("TotalCustomRoutines");
 					customRoutineStatCheck = false;
 				}
@@ -467,6 +468,7 @@ public class GameModeMaster : MonoBehaviour
 			{
 				if (wallSpawnCount >= 5)
 				{
+					Debug.Log("Increased");
 					AchivmentAndStatControl.IncrementStat("TotalCustomRoutines");
 					customRoutineStatCheck = false;
 				}

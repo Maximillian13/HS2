@@ -18,6 +18,9 @@ public class SteamLeaderBoard : MonoBehaviour
 
 	public void OnEnable()
 	{
+		if (this == null)
+			return;
+
 		// Find the text mesh
 		titleText = this.transform.Find("Title").GetComponent<TextMesh>();
 		bodyText = this.transform.Find("Body").GetComponent<TextMesh>();
@@ -134,6 +137,10 @@ public class SteamLeaderBoard : MonoBehaviour
 
 	void OnLeaderboardScoresDownloaded(LeaderboardScoresDownloaded_t param, bool ioError)
 	{
+		// IF the score board has been destroyed 
+		if (bodyText == null)
+			return;
+
 		if (ioError)
 		{
 			// Handle score download failure
