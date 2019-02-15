@@ -55,7 +55,6 @@ public class SteamLeaderBoardUpdater : MonoBehaviour
 	{
 		if (SteamManager.Initialized == true)
 		{
-			// Todo: Continue to test this. Seems to be an issue sending info to the steam server but will work on restarting steam (maybe just a dev issue) 
 			SteamAPICall_t handle = SteamUserStats.UploadLeaderboardScore(m_SteamLeaderboard, ELeaderboardUploadScoreMethod.k_ELeaderboardUploadScoreMethodKeepBest, (int)numOfSquats, null, 0);
 			LeaderboardScoreUploaded.Set(handle);
 			Debug.Log("Scores uploaded");

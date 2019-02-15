@@ -34,15 +34,15 @@ public class SteamLeaderBoard : MonoBehaviour
 		// Daily challenge pulling from player prefs 
 		if (handleName == "DailyChallengeSquat")
 		{
-			if (DaySinceUnixTime.GetDaySinceUnixTime() == PlayerPrefs.GetInt("DailyChallengeID"))
-				handleName = "Squat" + PlayerPrefs.GetInt("DailyChallengeID");
+			if (DaySinceUnixTime.GetDaySinceUnixTime() == PlayerPrefs.GetInt(Constants.dailyChallengeIDToken))
+				handleName = "Squat" + PlayerPrefs.GetInt(Constants.dailyChallengeIDToken);
 			else
 				handleName = "Empty";
 		}
 		if (handleName == "DailyChallengeCardio")
 		{
-			if (DaySinceUnixTime.GetDaySinceUnixTime() == PlayerPrefs.GetInt("DailyChallengeID"))
-				handleName = "Cardio" + PlayerPrefs.GetInt("DailyChallengeID");
+			if (DaySinceUnixTime.GetDaySinceUnixTime() == PlayerPrefs.GetInt(Constants.dailyChallengeIDToken))
+				handleName = "Cardio" + PlayerPrefs.GetInt(Constants.dailyChallengeIDToken);
 			else
 				handleName = "Empty";
 		}
@@ -84,10 +84,10 @@ public class SteamLeaderBoard : MonoBehaviour
 	private void SetCorrectLeaderBoard()
 	{
 		// Get what game mode (Classic, Daily, Custom) and if we are in cardio mode 
-		int gameMode = PlayerPrefs.GetInt("GameMode");
+		int gameMode = PlayerPrefs.GetInt(Constants.gameMode);
 		bool cardioMode = PlayerPrefs.GetInt("CardioMode") == 1;
 
-		if (gameMode == 0)      // Classic Mode
+		if (gameMode == Constants.gameModeClassic) 
 		{
 			if (cardioMode == true)
 			{
@@ -100,21 +100,21 @@ public class SteamLeaderBoard : MonoBehaviour
 				handleName = "HS2ClassicModeLeaderBoard";
 			}
 		}
-		else if (gameMode == 1) // Daily Challenge
+		else if (gameMode == Constants.gameModeDaily) 
 		{
 			if (cardioMode == true)
 			{
 				titleText.text = "DAILY CHALLENGE (CARDIO)";
-				if(DaySinceUnixTime.GetDaySinceUnixTime() == PlayerPrefs.GetInt("DailyChallengeID"))
-					handleName = "Cardio" + PlayerPrefs.GetInt("DailyChallengeID");
+				if(DaySinceUnixTime.GetDaySinceUnixTime() == PlayerPrefs.GetInt(Constants.dailyChallengeIDToken))
+					handleName = "Cardio" + PlayerPrefs.GetInt(Constants.dailyChallengeIDToken);
 				else
 					handleName = "Empty";
 			}
 			else
 			{
 				titleText.text = "DAILY CHALLENGE (SQUAT)";
-				if (DaySinceUnixTime.GetDaySinceUnixTime() == PlayerPrefs.GetInt("DailyChallengeID"))
-					handleName = "Squat" + PlayerPrefs.GetInt("DailyChallengeID");
+				if (DaySinceUnixTime.GetDaySinceUnixTime() == PlayerPrefs.GetInt(Constants.dailyChallengeIDToken))
+					handleName = "Squat" + PlayerPrefs.GetInt(Constants.dailyChallengeIDToken);
 				else
 					handleName = "Empty";
 			}

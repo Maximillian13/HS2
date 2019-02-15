@@ -83,10 +83,6 @@ public class GameModeMaster : MonoBehaviour
 				cardioWallTypesAllowed[i] = true;
 			}
 
-			//wallTypesAllowed[0] = false;
-			//wallTypesAllowed[1] = true;
-			//wallTypesAllowed[2] = true;
-
 			pauseAfterXWaves = int.MaxValue;
 			secondsToPauseFor = 0;
 			switchModesOnBreak = false;
@@ -96,7 +92,7 @@ public class GameModeMaster : MonoBehaviour
 			this.SetCustomRoutineData();
 
 			// If we are in custom mode, check to update the stat
-			if (PlayerPrefs.GetInt("GameMode") == 2)
+			if (PlayerPrefs.GetInt(Constants.gameMode) == Constants.gameModeCustom)
 				customRoutineStatCheck = true;
 		}
 
@@ -260,13 +256,12 @@ public class GameModeMaster : MonoBehaviour
 			this.StartWallMovment(wallClone, wallSpeed); // Start the movement of the wall
 			timer = 0; // Reset timer for next spawn
 
-			// Update the custom routine stat if we are in that mode and 5 walls have passed (To avoid boosting) 
+			// Update the custom routine stat if we are in that mode and 10 walls have spawned (To avoid boosting) 
 			if(customRoutineStatCheck == true)
 			{
-				if (wallSpawnCount >= 5)
+				if (wallSpawnCount >= 10)
 				{
-					Debug.Log("Increased");
-					AchivmentAndStatControl.IncrementStat("TotalCustomRoutines");
+					AchivmentAndStatControl.IncrementStat(Constants.totalCustomRoutines);
 					customRoutineStatCheck = false;
 				}
 			}
@@ -279,7 +274,7 @@ public class GameModeMaster : MonoBehaviour
 	private void ActivateGameMode()
 	{
 		// Check the game mode using player prefs
-		cardioMode = PlayerPrefs.GetInt("CardioMode") == 1 ? true : false;
+		cardioMode = PlayerPrefs.GetInt(Constants.cardioMode) == 1 ? true : false;
 
 		if (cardioMode == true)
 		{
@@ -463,13 +458,12 @@ public class GameModeMaster : MonoBehaviour
 			this.StartWallMovment(wallClone, wallSpeed); // Start the movement of the wall
 			timer = 0; // Reset timer for next spawn
 
-			// Update the custom routine stat if we are in that mode and 5 walls have passed (To avoid boosting) 
+			// Update the custom routine stat if we are in that mode and 10 walls have spawned (To avoid boosting) 
 			if (customRoutineStatCheck == true)
 			{
-				if (wallSpawnCount >= 5)
+				if (wallSpawnCount >= 10)
 				{
-					Debug.Log("Increased");
-					AchivmentAndStatControl.IncrementStat("TotalCustomRoutines");
+					AchivmentAndStatControl.IncrementStat(Constants.totalCustomRoutines);
 					customRoutineStatCheck = false;
 				}
 			}
@@ -503,8 +497,8 @@ public class GameModeMaster : MonoBehaviour
 	{
 		if(Input.GetKeyDown(KeyCode.L))
 		{
-			int newVal = PlayerPrefs.GetInt("CardioMode") == 0 ? 1 : 0;
-			PlayerPrefs.SetInt("CardioMode", newVal);
+			int newVal = PlayerPrefs.GetInt(Constants.cardioMode) == 0 ? 1 : 0;
+			PlayerPrefs.SetInt(Constants.cardioMode, newVal);
 		}
 
 		if (Input.GetKeyDown(KeyCode.R))

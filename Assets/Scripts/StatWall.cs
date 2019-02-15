@@ -18,35 +18,25 @@ public class StatWall : MonoBehaviour
 		if (SteamManager.Initialized == true)
 		{
 			int statValue = -1;
-			Debug.Log(SteamUserStats.GetStat("TotalSquatWallCount", out statValue));
+			Debug.Log(SteamUserStats.GetStat(Constants.totalSquatWallCount, out statValue));
 			statSummary = "Total Squat Walls Passed: " + statValue + "\n";
 
-			SteamUserStats.GetStat("HighestSquatConsec", out statValue);
+			SteamUserStats.GetStat(Constants.highestSquatConsec, out statValue);
 			statSummary += "Classic Mode Highest Consecutive Squats: " + statValue + "\n";
 
-			SteamUserStats.GetStat("TotalCardioWallCount", out statValue);
+			SteamUserStats.GetStat(Constants.totalCardioWallCount, out statValue);
 			statSummary += "Total Cardio Walls Passed: " + statValue + "\n";
 
-			SteamUserStats.GetStat("HighestCardioConsec", out statValue);
+			SteamUserStats.GetStat(Constants.highestCardioConsec, out statValue);
 			statSummary += "Classic Mode Highest Consecutive Cardio Walls: " + statValue + "\n";
 
-			SteamUserStats.GetStat("TotalDailyChallenges", out statValue);
+			SteamUserStats.GetStat(Constants.totalDailyChallenges, out statValue);
 			statSummary += "Number of Daily Challenges Completed: " + statValue + "\n";
 
-			SteamUserStats.GetStat("TotalCustomRoutines", out statValue);
+			SteamUserStats.GetStat(Constants.totalCustomRoutines, out statValue);
 			statSummary += "Number of Custom Routines Played: " + statValue;
 		}
 
 		statText.text = statSummary;
-	}
-
-	private void Update()
-	{
-		if(Input.GetKeyDown(KeyCode.N))
-		{
-			AchivmentAndStatControl.SetStat("TotalCustomRoutines", 1);
-			Debug.Log("Out of static -> " + SteamUserStats.SetStat("TotalCustomRoutines", 1));
-			this.Start();
-		}
 	}
 }

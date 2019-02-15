@@ -113,6 +113,8 @@ public class MainMenuControl : MonoBehaviour
 			this.TransitionToMenu("Outfits");
 		if (Input.GetKeyDown(KeyCode.W))
 			this.TransitionToMenu("Stats");
+		if(Input.GetKeyDown(KeyCode.D))
+			this.TransitionToMenu("DailyChallenge");
 
 		// If we need to move the walls up or down
 		this.MoveWall();
@@ -334,7 +336,7 @@ public class MainMenuControl : MonoBehaviour
 		{
 			loadIndex = 2;
 			loadTimer = Time.time + 2;
-			PlayerPrefs.SetInt("GameMode", 0);
+			PlayerPrefs.SetInt(Constants.gameMode, Constants.gameModeClassic);
 
 			// Make the song file based off buttons
 			gymAndSongSelectControl.MakeSongFile(); 
@@ -346,7 +348,7 @@ public class MainMenuControl : MonoBehaviour
 		{
 			loadIndex = 2;
 			loadTimer = Time.time + 2;
-			PlayerPrefs.SetInt("GameMode", 1);
+			PlayerPrefs.SetInt(Constants.gameMode, Constants.gameModeDaily);
 
 			// Make the song file based off the daily challenge
 			gymAndSongSelectControl.MakeSongFile(dailyChallengeControl.GetDailyChallengeSongs());
@@ -364,7 +366,7 @@ public class MainMenuControl : MonoBehaviour
 		{
 			loadIndex = 2;
 			loadTimer = Time.time + 2;
-			PlayerPrefs.SetInt("GameMode", 2);
+			PlayerPrefs.SetInt(Constants.gameMode, Constants.gameModeCustom);
 
 			// Make the song file based off buttons
 			gymAndSongSelectControl.MakeSongFile();

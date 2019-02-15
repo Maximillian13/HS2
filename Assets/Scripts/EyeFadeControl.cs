@@ -35,9 +35,6 @@ public class EyeFadeControl : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		if (Input.GetKeyDown(KeyCode.Space))
-			this.CloseEyes(2, true);
-
 		// Solve stalemates by opening the eyes 
 		if(open == true && close == true)
 		{
@@ -92,6 +89,7 @@ public class EyeFadeControl : MonoBehaviour
 	// Open eyes 
 	private void OpenEyes()
 	{
+		close = false;
 		open = true;
 		editMat = origMat;
 		editMat.color = new Color(0, 0, 0, 1);
@@ -107,6 +105,7 @@ public class EyeFadeControl : MonoBehaviour
 	/// </summary>
 	public void CloseEyes(int loadLevel = int.MinValue, bool killMusic = false)
 	{
+		open = false;
 		close = true;
 		editMat = origMat;
 		editMat.color = new Color(0, 0, 0, 0);

@@ -58,9 +58,9 @@ public class DailyChallengeMaster : MonoBehaviour
 	{
 		if (tms[0] == null)
 			this.Start();
-		bool inCardioMode = false;
-		if (PlayerPrefs.GetInt("CardioMode") == 1)
-			inCardioMode = true;
+
+		// Figure if we are in cardio mode 
+		bool inCardioMode = PlayerPrefs.GetInt(Constants.cardioMode) == 1;
 
 		// Seed the random with todays date added up so that it is a unique random every time
 		int daysOfUnix = DaySinceUnixTime.GetDaySinceUnixTime();
@@ -194,6 +194,30 @@ public class DailyChallengeMaster : MonoBehaviour
 		return customRutineStrings;
 	}
 
+	private void Update()
+	{
+		//if(Input.GetKey(KeyCode.R))
+		//{
+		//	// Todo: Delete for testing daily challenges
+		//	PlayerPrefs.SetInt("DailySquatID", 0);
+		//	PlayerPrefs.SetInt("DailyCardioID", 0);
+		//	Debug.Log("reset");
+		//}
+
+		//if (Input.GetKey(KeyCode.S))
+		//{
+		//	PlayerPrefs.SetInt(Constants.cardioMode, 0);
+		//	this.IncrementDailyChallengeStat();
+		//}
+
+		//if (Input.GetKey(KeyCode.C))
+		//{
+		//	PlayerPrefs.SetInt(Constants.cardioMode, 1);
+		//	this.IncrementDailyChallengeStat();
+		//}
+
+	}
+
 	/// <summary>
 	/// Increment the score if it is the first time doing this daily challenge (one for squat and one for cardio)
 	/// </summary>
@@ -201,13 +225,16 @@ public class DailyChallengeMaster : MonoBehaviour
 	{
 		// Get what player pref we are looking for (either cardio or squat)
 		string playerPrefToFind = "DailySquatID";
-		if (PlayerPrefs.GetInt("CardioMode") == 1) 
+		if (PlayerPrefs.GetInt(Constants.cardioMode) == 1) 
 			playerPrefToFind = "DailyCardioID";
+
+		int pp = PlayerPrefs.GetInt(playerPrefToFind);
+		int ud = DaySinceUnixTime.GetDaySinceUnixTime();
 
 		// If the player pref does not match the current day. It must be a new day, increment score
 		if (PlayerPrefs.GetInt(playerPrefToFind) != DaySinceUnixTime.GetDaySinceUnixTime())
 		{
-			AchivmentAndStatControl.IncrementStat("TotalDailyChallenges");
+			AchivmentAndStatControl.IncrementStat(Constants.totalDailyChallenges);
 			PlayerPrefs.SetInt(playerPrefToFind, DaySinceUnixTime.GetDaySinceUnixTime());
 		}
 	}

@@ -7,13 +7,12 @@ public class PlayerHitBox : MonoBehaviour
 	private bool cardioMode;
     private int score; // Player score
     public TextMesh tScore; // Text mesh for the score
-    public PersonalHighScore leaderBoard; // For setting the leader board
+    public PersonalHighScore personalHighScoreLB; // For setting the leader board
     public CheckUp checkUp; // If the user went up after a wall
     private int checkUpCounter; // For when there are the multi-walls
     private bool gameOver;
 
 	//private SquatCounter squatCounter;
-	private TotalSquatCount totalSquatCounter;
 	private SteamLeaderBoardUpdater SteamLeaderBoardUpdater;
 
 	private string GAME_MODE_PATH;
@@ -29,7 +28,6 @@ public class PlayerHitBox : MonoBehaviour
 		tScore.text = score.ToString();
 
 		//squatCounter = GameObject.Find("SquatWallCounterAchievments").GetComponent<SquatCounter>();
-		totalSquatCounter = GameObject.Find("TotalSquatCount").GetComponent<TotalSquatCount>();
 		SteamLeaderBoardUpdater = GameObject.Find("UpdateSteamLeaderBoard").GetComponent<SteamLeaderBoardUpdater>();
 	}
 
@@ -60,17 +58,11 @@ public class PlayerHitBox : MonoBehaviour
 					score++;
 					tScore.text = score.ToString();
 
-					// If we are in classic mode, update the consecutive squat
-					if (PlayerPrefs.GetInt("GameMode") == 0)
-					{
-						// Check if we have reached any consecutive achievements and set stat
-						// Todo: Test to make sure this is actually working (Stat set)
-						AchivmentAndStatControl.SetStat("HighestSquatConsec", score); // (Will only update stat if larger)
-						AchivmentAndStatControl.CheckAllConsecutiveSquatAchivments(score);
-					}
-
-					// Update total squats and Check for achievements
-					totalSquatCounter.UpdateTotalSquatStats();
+					// Save the total stat and check for achievements 
+					AchivmentAndStatControl.IncrementStat(Constants.totalSquatWallCount);
+					int totalSquatStat = AchivmentAndStatControl.GetStat(Constants.totalSquatWallCount);
+					if (totalSquatStat != -1)
+						AchivmentAndStatControl.CheckAllTotalSquatAchivments(totalSquatStat);
 
 					// If it is a normal sized squat wall make the player stand back up right away
 					if (other.transform.parent.parent == null || other.transform.parent.parent.name == "SquatWall(Clone)")
@@ -100,16 +92,11 @@ public class PlayerHitBox : MonoBehaviour
 				score++;
 				tScore.text = score.ToString();
 
-				// If we are in classic mode, update the consecutive cardio
-				if (PlayerPrefs.GetInt("GameMode") == 0)
-				{
-					// Check if we have reached any consecutive achievements and set stat
-					AchivmentAndStatControl.SetStat("HighestCardioConsec", score); // (Will only update stat if larger)
-					AchivmentAndStatControl.CheckAllConsecutiveCardioAchivments(score);
-				}
-
-				// Update total cardio and Check for achievements
-				totalSquatCounter.UpdateTotalCardioStats();
+				// Save the total stat and check for achievements 
+				AchivmentAndStatControl.IncrementStat(Constants.totalCardioWallCount);
+				int totalCardioStats = AchivmentAndStatControl.GetStat(Constants.totalCardioWallCount);
+				if (totalCardioStats != -1)
+					AchivmentAndStatControl.CheckAllTotalCardioAchivments(totalCardioStats);
 			}
 		}
     }
@@ -135,12 +122,25 @@ public class PlayerHitBox : MonoBehaviour
     {
         if (gameOver == false)
         {
-			// Save Score if in classic mode or if in daily challenge 
-			if (PlayerPrefs.GetInt("GameMode") != 2)
+			// If we are in classic mode, update the consecutive cardio
+			if (PlayerPrefs.GetInt(Constants.gameMode) == Constants.gameModeClassic)
 			{
-				leaderBoard.SaveStats(score);
-				SteamLeaderBoardUpdater.UpdateLeaderBoard(score);
+				if (PlayerPrefs.GetInt(Constants.cardioMode) == 1)
+				{
+					// Check if we have reached any consecutive achievements and set stat
+					AchivmentAndStatControl.SetStat(Constants.highestCardioConsec, score); // (Will only update stat if larger)
+					AchivmentAndStatControl.CheckAllConsecutiveCardioAchivments(score);
+				}
+				else
+				{
+					AchivmentAndStatControl.SetStat(Constants.highestSquatConsec, score); // (Will only update stat if larger)
+					AchivmentAndStatControl.CheckAllConsecutiveSquatAchivments(score);
+				}
 			}
+
+			// Save Score if in classic mode or if in daily challenge 
+			if (PlayerPrefs.GetInt(Constants.gameMode) != Constants.gameModeCustom)
+				SteamLeaderBoardUpdater.UpdateLeaderBoard(score);
 
             if (GameObject.Find("GuideRail") != null)
             {

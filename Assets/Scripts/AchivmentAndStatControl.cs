@@ -73,10 +73,7 @@ public static class AchivmentAndStatControl
 		if (totalSquats == achivSquats)
 		{
 			if (SteamManager.Initialized == true)
-			{
 				UnlockAchievement(m_Achievements[(int)achivName]);
-				SteamUserStats.StoreStats();
-			}
 		}
 	}
 
@@ -86,10 +83,25 @@ public static class AchivmentAndStatControl
 	public static void SetStat(string statName, int statVal)
 	{
 		if (SteamManager.Initialized == true)
-		{
 			SteamUserStats.SetStat(statName, statVal);
-			Debug.Log("set succ -> " + SteamUserStats.StoreStats());
-		}
+	}
+
+	/// <summary>
+	/// Get stat (-1 if error)
+	/// </summary>
+	public static int GetStat(string statName)
+	{
+		// Check we got steam up and running 
+		if (SteamManager.Initialized == false)
+			return -1;
+
+		// Get stat, if failed, return -1
+		int statOut;
+		if (SteamUserStats.GetStat(statName, out statOut) == false)
+			return -1;
+
+		// Return stat
+		return statOut;
 	}
 
 	/// <summary>
@@ -186,4 +198,26 @@ public static class AchivmentAndStatControl
 		}
 	}
 	#endregion
+}
+
+/// <summary>
+/// Constants in this project, mostly player pref strings and tokens for stats
+/// </summary>
+public static class Constants
+{
+	public static string gameMode = "GameMode";
+	public static string cardioMode = "CardioMode";
+	public static string totalSquatWallCount = "TotalSquatWallCount";
+	public static string totalCardioWallCount = "TotalCardioWallCount";
+	public static string highestCardioConsec = "HighestCardioConsec";
+	public static string highestSquatConsec = "HighestCardioConsec";
+	public static string totalDailyChallenges = "TotalDailyChallenges";
+	public static string totalCustomRoutines = "TotalCustomRoutines";
+
+	public static string dailyChallengeIDToken = "DailyChallengeID";
+
+
+	public static int gameModeClassic = 0;
+	public static int gameModeDaily = 1;
+	public static int gameModeCustom = 2;
 }
