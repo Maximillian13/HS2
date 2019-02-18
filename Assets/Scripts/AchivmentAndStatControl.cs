@@ -105,17 +105,17 @@ public static class AchivmentAndStatControl
 	}
 
 	/// <summary>
-	/// Increments stat by 1
+	/// Increments stat by 1 (or by specified amount)
 	/// </summary>
-	public static void IncrementStat(string statName)
+	public static void IncrementStat(string statName, int amount = 1)
 	{
-		// Take current stat val, if we successfully get it, set that stat to that value + 1
+		// Take current stat val, if we successfully get it, set that stat to that value + 1 (or specified val)
 		if (SteamManager.Initialized == true)
 		{
 			int statVal = 0;
 			if (SteamUserStats.GetStat(statName, out statVal) == true)
 			{
-				SteamUserStats.SetStat(statName, statVal + 1);
+				SteamUserStats.SetStat(statName, statVal + amount);
 				Debug.Log("Inc succ -> " + SteamUserStats.StoreStats());
 			}
 		}
@@ -213,6 +213,8 @@ public static class Constants
 	public static string highestSquatConsec = "HighestCardioConsec";
 	public static string totalDailyChallenges = "TotalDailyChallenges";
 	public static string totalCustomRoutines = "TotalCustomRoutines";
+	public static string totalCaloriesBurned = "TotalCaloriesBurned";
+
 
 	public static string dailyChallengeIDToken = "DailyChallengeID";
 

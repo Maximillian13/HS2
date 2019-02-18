@@ -93,6 +93,10 @@ public class MainMenuControl : MonoBehaviour
 		loadTimer = float.PositiveInfinity;
 		quitTimer = float.PositiveInfinity;
 		bottomTimer = float.PositiveInfinity;
+
+		// Make sure weight is set properly 
+		if (PlayerPrefs.GetInt("PlayerWeight") == 0)
+			PlayerPrefs.SetInt("PlayerWeight", 160);
 	}
 
 	void Update()

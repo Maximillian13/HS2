@@ -12,6 +12,8 @@ public class GameModeMaster : MonoBehaviour
 
 	private WaveShooter waveShooter;
 	private DestroyWall destroyWall;
+	private CalorieCounter calorieCounter;
+
 
 	#region private fields
 	private int wallSpawnCount; // How many walls have spawned 
@@ -63,6 +65,10 @@ public class GameModeMaster : MonoBehaviour
 		hCal = GameObject.Find("HeightCalibrator").GetComponent<HeightCalibrator>();
 		waveShooter = GameObject.Find("WaveShooter").GetComponent<WaveShooter>();
 		destroyWall = GameObject.Find("WallDestroyer").GetComponent<DestroyWall>();
+		GameObject ccgo = GameObject.Find("CalorieCounterOrig");
+		if (ccgo != null)
+			calorieCounter = ccgo.GetComponent<CalorieCounter>();
+
 		loadingReset = false;
 
 		for (int i = 0; i < waveTransiton.Length; i++)
@@ -355,6 +361,15 @@ public class GameModeMaster : MonoBehaviour
 				waveSpawns[wtIndex] = true;
 				waveTransiton[wtIndex] = false;
 				transitionTimer = 0;
+
+				// Check to see if we are using the calorie counter
+				if (calorieCounter != null)
+				{
+					// todo: test to make sure this is working when level gets reset
+					// Reset the calorie time so it doesnt count time when you are not squatting 
+					Debug.Log("reset time: " + Time.time);
+					calorieCounter.SetPrevTime(Time.time);
+				}
 			}
 		}
 	}
@@ -366,7 +381,12 @@ public class GameModeMaster : MonoBehaviour
 	{
 		// Check to see if we are ready to go back in the game 
 		if (Time.time >= onBreakTimer)
+		{
 			onBreak = false;
+			// Check to see if we are using the calorie counter
+			if (calorieCounter != null)
+				calorieCounter.SetPrevTime(Time.time);
+		}
 
 		// 3 second before the waves start again, give a warning 
 		if (Time.time >= onBreakTimer - 2.5f && breakEndingPopped == false)
@@ -377,6 +397,7 @@ public class GameModeMaster : MonoBehaviour
 
 			waveShooter.PopWave(3);
 			breakEndingPopped = true;
+
 		}
 
 		// Pop up message telling we are on break 5 seconds after wave start (5 so we are standing and not currently squatting through a wall)
@@ -482,6 +503,23 @@ public class GameModeMaster : MonoBehaviour
 		moveWall.SetGibReady();
 	}
 
+
+	/// <summary>
+	/// Called when the player passes through a wall
+	/// </summary>
+	public void PassedThroughWall(bool cardio)
+	{
+
+		float calOffset = 0;
+		if (warmUp == true)
+			calOffset = -.002f;
+
+		Debug.Log("Pass through time: " + Time.time);
+
+		// Check to see if we are using the calorie counter
+		if (calorieCounter != null)
+			calorieCounter.UpdateCount(Time.time, cardio, calOffset);
+	}
 
 	/// <summary>
 	/// Will tell the game to stop spawning waves and reset the level

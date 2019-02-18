@@ -11,7 +11,7 @@ public class PersonalHighScore : MonoBehaviour
 	// Use this for initialization
 	void Start()
 	{
-		if (PlayerPrefs.GetInt("GameMode") != 0)
+		if (PlayerPrefs.GetInt(Constants.gameMode) != Constants.gameModeClassic)
 		{
 			Destroy(this.gameObject);
 			return;

@@ -12,6 +12,8 @@ public class PlayerHitBox : MonoBehaviour
     private int checkUpCounter; // For when there are the multi-walls
     private bool gameOver;
 
+	private GameModeMaster gameModeMaster;
+
 	//private SquatCounter squatCounter;
 	private SteamLeaderBoardUpdater SteamLeaderBoardUpdater;
 
@@ -23,6 +25,8 @@ public class PlayerHitBox : MonoBehaviour
 		// If we are not in a gym destroy this component 
 		if (tScore == null)
 			Destroy(this);
+
+		gameModeMaster = GameObject.Find("GameModeMaster").GetComponent<GameModeMaster>();
 
 		score = 0;
 		tScore.text = score.ToString();
@@ -58,6 +62,8 @@ public class PlayerHitBox : MonoBehaviour
 					score++;
 					tScore.text = score.ToString();
 
+					gameModeMaster.PassedThroughWall(false);
+
 					// Save the total stat and check for achievements 
 					AchivmentAndStatControl.IncrementStat(Constants.totalSquatWallCount);
 					int totalSquatStat = AchivmentAndStatControl.GetStat(Constants.totalSquatWallCount);
@@ -91,6 +97,8 @@ public class PlayerHitBox : MonoBehaviour
 			{
 				score++;
 				tScore.text = score.ToString();
+
+				gameModeMaster.PassedThroughWall(true);
 
 				// Save the total stat and check for achievements 
 				AchivmentAndStatControl.IncrementStat(Constants.totalCardioWallCount);

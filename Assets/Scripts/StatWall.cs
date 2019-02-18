@@ -34,7 +34,10 @@ public class StatWall : MonoBehaviour
 			statSummary += "Number of Daily Challenges Completed: " + statValue + "\n";
 
 			SteamUserStats.GetStat(Constants.totalCustomRoutines, out statValue);
-			statSummary += "Number of Custom Routines Played: " + statValue;
+			statSummary += "Number of Custom Routines Played: " + statValue + "\n";
+
+			SteamUserStats.GetStat(Constants.totalCaloriesBurned, out statValue);
+			statSummary += "Total Calories Burned: " + statValue;
 		}
 
 		statText.text = statSummary;

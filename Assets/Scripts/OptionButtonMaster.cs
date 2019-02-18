@@ -11,12 +11,15 @@ public class OptionButtonMaster : MonoBehaviour, IButtonMaster
 	// All the button sections
 	public GenericButton[] domHandButtons;
 	public GenericButton[] musicVolButtons;
-	public GenericButton[] snapTeleButtons;
+	public GenericButton calorieCounterButton;
+	public GenericButton[] weightUpDown;
 
 	public TextMeshPro musicVolText;
+	public TextMeshPro weightText;
 
 	private TeleportControl[] handTport = new TeleportControl[2];
 
+	private int weight = 160;
 	private int musicVol = 10;
 
 	private MusicVolumeControl volControl;
@@ -43,14 +46,15 @@ public class OptionButtonMaster : MonoBehaviour, IButtonMaster
 
 		volControl = GameObject.Find("MainMenuMusic").GetComponent<MusicVolumeControl>();
 
+		calorieCounterButton.Start();
+		// Turn on cal counter button if its has been told to be on in the past
+		int useCalCounterInt = PlayerPrefs.GetInt("UseCalorieCounter");
+		if (useCalCounterInt == 1)
+			calorieCounterButton.SelectHighLight();
+
 		// Set up buttons for snapTele
-		for (int i = 0; i < snapTeleButtons.Length; i++)
-			snapTeleButtons[i].Start();
-		// Select the correct one
-		if (PlayerPrefs.GetInt("SnapTele") == 0)
-			snapTeleButtons[1].Select();
-		else
-			snapTeleButtons[0].Select();
+		for (int i = 0; i < weightUpDown.Length; i++)
+			weightUpDown[i].Start();
 	}
 
 	public void ButtonPress(string buttonToken)
@@ -65,11 +69,11 @@ public class OptionButtonMaster : MonoBehaviour, IButtonMaster
 		if (buttonToken == "VolDown" || buttonToken == "VolUp")
 			this.MusicVolumePress(buttonToken);
 
-		if (buttonToken == "SnapTeleNo" || buttonToken == "SnapTeleYes")
-		{
-			this.DeslectSnapTeleButtons();
-			this.SnapTeleportPress(buttonToken);
-		}
+		if (buttonToken == "WeightDown" || buttonToken == "WeightUp")
+			this.WeightUpDownPress(buttonToken);
+
+		if (buttonToken == "CalorieCounter")
+			this.CalorieCounterPress();
 	}
 
 	// Set the dom hand based off what button is pressed
@@ -110,15 +114,31 @@ public class OptionButtonMaster : MonoBehaviour, IButtonMaster
 		volControl.UpdateVolume();
 	}
 
-	private void SnapTeleportPress(string buttonToken)
+	private void WeightUpDownPress(string buttonToken)
 	{
-		if (buttonToken == "SnapTeleNo")
-			PlayerPrefs.SetInt("SnapTele", 1);
-		else
-			PlayerPrefs.SetInt("SnapTele", 0);
+		if (buttonToken == "WeightDown")
+		{
+			weight -= 5;
+			if (weight < 100)
+				weight = 100;
+		}
+		if (buttonToken == "WeightUp")
+		{
+			weight += 5;
+			if (weight > 500)
+				weight = 500;
+		}
 
-		handTport[0].UpdateSnapTeleport();
-		handTport[1].UpdateSnapTeleport();
+		weightText.text = weight.ToString();
+		PlayerPrefs.SetInt("PlayerWeight", weight);
+	}
+
+	private void CalorieCounterPress()
+	{
+
+		int useCalCounterInt = PlayerPrefs.GetInt("UseCalorieCounter") == 0 ? 1 : 0;
+		Debug.Log(useCalCounterInt);
+		PlayerPrefs.SetInt("UseCalorieCounter", useCalCounterInt);
 	}
 
 	/// <summary>
@@ -128,14 +148,5 @@ public class OptionButtonMaster : MonoBehaviour, IButtonMaster
 	{
 		for (int i = 0; i < domHandButtons.Length; i++)
 			domHandButtons[i].Deselect();
-	}
-
-	/// <summary>
-	/// Deselect all the snap tele buttons
-	/// </summary>
-	private void DeslectSnapTeleButtons()
-	{
-		for (int i = 0; i < snapTeleButtons.Length; i++)
-			snapTeleButtons[i].Deselect();
 	}
 }
