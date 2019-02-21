@@ -42,19 +42,19 @@ public class HandTypeController : MonoBehaviour
 		// Get all the hands 
 		string whichHand = leftHand == true ? "Left" : "Right";
 		hands[0] = Instantiate<GameObject>(Resources.Load<GameObject>("Hands/Hands" + modelIndex + "/" + whichHand + "/HandRest"), this.transform);
-		hands[1] = Instantiate<GameObject>(Resources.Load<GameObject>("Hands/Hands" + modelIndex + "/" + whichHand + "/HandThumbUp"), this.transform);
-		hands[2] = Instantiate<GameObject>(Resources.Load<GameObject>("Hands/Hands" + modelIndex + "/" + whichHand + "/HandFlip"), this.transform);
-		hands[3] = Instantiate<GameObject>(Resources.Load<GameObject>("Hands/Hands" + modelIndex + "/" + whichHand + "/HandClenched"), this.transform);
-		hands[4] = Instantiate<GameObject>(Resources.Load<GameObject>("Hands/Hands" + modelIndex + "/" + whichHand + "/HandClap"), this.transform);
-		hands[5] = Instantiate<GameObject>(Resources.Load<GameObject>("Hands/Hands" + modelIndex + "/" + whichHand + "/HandPoint"), this.transform);
+		hands[1] = Instantiate<GameObject>(Resources.Load<GameObject>("Hands/Hands" + modelIndex + "/" + whichHand + "/HandPoint"), this.transform);
+		hands[2] = Instantiate<GameObject>(Resources.Load<GameObject>("Hands/Hands" + modelIndex + "/" + whichHand + "/HandClenched"), this.transform);
+		hands[3] = Instantiate<GameObject>(Resources.Load<GameObject>("Hands/Hands" + modelIndex + "/" + whichHand + "/HandThumbUp"), this.transform);
+		hands[4] = Instantiate<GameObject>(Resources.Load<GameObject>("Hands/Hands" + modelIndex + "/" + whichHand + "/HandFlip"), this.transform);
+		hands[5] = Instantiate<GameObject>(Resources.Load<GameObject>("Hands/Hands" + modelIndex + "/" + whichHand + "/HandClap"), this.transform);
 
 		// Rename everything
 		hands[0].name = "HandRest";
-		hands[1].name = "HandThumbUp";
-		hands[2].name = "HandFlip";
-		hands[3].name = "HandClenched";
-		hands[4].name = "HandClap";
-		hands[5].name = "HandPoint";
+		hands[1].name = "HandPoint";
+		hands[2].name = "HandClenched";
+		hands[3].name = "HandThumbUp";
+		hands[4].name = "HandFlip";
+		hands[5].name = "HandClap";
 
 		// Position the hands correctly
 		for (int i = 0; i < hands.Length; i++)
@@ -71,26 +71,26 @@ public class HandTypeController : MonoBehaviour
 		}
 		if (SteamVR_Input._default.inActions.TriggerPress.GetState(hand)) // If the user presses the "trigger" button
 		{
-			this.HandSelector(1);
+			this.HandSelector(2);
 		}
 		else if (SteamVR_Input._default.inActions.GripPress.GetState(hand)) // If the user presses the side-button
 		{
-			this.HandSelector(5);
+			this.HandSelector(1);
 		}
 		else if (SteamVR_Input._default.inActions.TrackPadPress.GetState(hand)) // If the user presses the tack-pad
 		{
 			touchPadPos = tPad.GetAxis(hand);
 			if (touchPadPos.x < .5f && touchPadPos.x > -.5f && touchPadPos.y > .5f) // Up
-				this.HandSelector(3);
-
-			else if (touchPadPos.x < .5f && touchPadPos.x > -.5f && touchPadPos.y < -.5f) // Down
-				this.HandSelector(4);
-
-			else if (touchPadPos.y < .5f && touchPadPos.y > -.5f && touchPadPos.x < -.5f) // Left
-				this.HandSelector(2);
+				this.HandSelector(PlayerPrefs.GetInt("EmoteUp"));
 
 			else if (touchPadPos.y < .5f && touchPadPos.y > -.5f && touchPadPos.x > .5f) // Right
-				this.HandSelector(2);
+				this.HandSelector(PlayerPrefs.GetInt("EmoteRight"));
+
+			else if (touchPadPos.x < .5f && touchPadPos.x > -.5f && touchPadPos.y < -.5f) // Down
+				this.HandSelector(PlayerPrefs.GetInt("EmoteDown"));
+
+			else if (touchPadPos.y < .5f && touchPadPos.y > -.5f && touchPadPos.x < -.5f) // Left
+				this.HandSelector(PlayerPrefs.GetInt("EmoteLeft"));
 		}
 		else // Normal hands 
 		{

@@ -51,10 +51,4 @@ public class CosmeticUnlock : MonoBehaviour
 			}
 		}
 	}
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
