@@ -7,6 +7,7 @@ public class WaveShooter : MonoBehaviour
 {
     // Game objects that say what wave the player is on
     private Rigidbody[] waves = new Rigidbody[4];
+	private Rigidbody[] livesLeft = new Rigidbody[3];
     private Vector3 popForce = new Vector3(0, 1300, 0); // How the wave message will be shot out
 	private bool[] poppedWaves = new bool[4];
 
@@ -16,38 +17,40 @@ public class WaveShooter : MonoBehaviour
 		waves[1] = Resources.Load<Rigidbody>("MainGame/Wave2");
 		waves[2] = Resources.Load<Rigidbody>("MainGame/Wave3");
 		waves[3] = Resources.Load<Rigidbody>("MainGame/Sgo");
-	}
 
-	private void Update()
-	{
-		if(Input.GetKeyDown(KeyCode.Space))
-			this.PopWave(1);
+		// Todo: replace with lives messages 
+		livesLeft[0] = Resources.Load<Rigidbody>("MainGame/Wave1");
+		livesLeft[1] = Resources.Load<Rigidbody>("MainGame/Wave1");
+		livesLeft[2] = Resources.Load<Rigidbody>("MainGame/Wave2");
 	}
 
 	/// <summary>
-	/// Shoots a message out saying what wave the player is on
+	/// Shoots a message out saying what wave the player is on (Handing in false will show lives left)
 	/// </summary>
-	/// <param name="waveIndex">What wave message to shoot out (Corresponds directly to the wave)</param>
-	public void PopWave(int waveIndex) // Called from Wave spawner
+	public void PopMessage(int index, bool waveMessage = true) 
     {
-        if(waveIndex <= waves.Length)
+        if(index <= waves.Length)
         {
-            // Creates clone
-            Rigidbody wavePopUp = (Rigidbody)Instantiate(waves[waveIndex], this.transform.position, waves[waveIndex].transform.rotation);
+			// Creates clone
+			Rigidbody popUp;
+			if(waveMessage == true)
+				popUp = (Rigidbody)Instantiate(waves[index], this.transform.position, waves[index].transform.rotation);
+			else
+				popUp = (Rigidbody)Instantiate(livesLeft[index], this.transform.position, livesLeft[index].transform.rotation);
 
-            // Adds the force to send it in the air
-            wavePopUp.AddForce(popForce);
-            wavePopUp.AddTorque(new Vector3(Random.Range(-30, 30), Random.Range(-30, 30), Random.Range(-30, 30)));
+			// Adds the force to send it in the air
+			popUp.AddForce(popForce);
+            popUp.AddTorque(new Vector3(Random.Range(-30, 30), Random.Range(-30, 30), Random.Range(-30, 30)));
 
 			// Randomize the mats of the sign
-			wavePopUp.GetComponent<RandomizeMats>().RandomizeMaterials();
+			popUp.GetComponent<RandomizeMats>().RandomizeMaterials();
 
 			// Destroy it after 4 seconds
-			wavePopUp.GetComponent<ShrinkAndDestroy>().ShrinkDestroy(3);
+			popUp.GetComponent<ShrinkAndDestroy>().ShrinkDestroy(3);
 			
 
 			// Add this to poppedSigns so we can see what signs have been shown 
-			poppedWaves[waveIndex] = true;
+			poppedWaves[index] = true;
         }
     }
 

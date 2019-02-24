@@ -10,6 +10,9 @@ public class GameModeMaster : MonoBehaviour
 	public GameObject[] objsToDestroy;
 	public PlayerHitBox phb;
 
+	private int livesLeft;
+	private IEnumerator liveCorutine;
+
 	private WaveShooter waveShooter;
 	private DestroyWall destroyWall;
 	private CalorieCounter calorieCounter;
@@ -75,13 +78,12 @@ public class GameModeMaster : MonoBehaviour
 			waveTransiton[i] = true;
 
 		timer = 0;
+		livesLeft = 0;
 		onBreakTimer = float.PositiveInfinity;
 
 		// If the file doesnt exist then load the normal defaults, else read from file 
 		if (File.Exists(CUSTOM_ROUTINE_PATH) == false)
 		{
-			warmUp = true;
-
 			// Enable all walls by default
 			for (int i = 0; i < 3; i++)
 			{
@@ -89,9 +91,21 @@ public class GameModeMaster : MonoBehaviour
 				cardioWallTypesAllowed[i] = true;
 			}
 
-			pauseAfterXWaves = int.MaxValue;
-			secondsToPauseFor = 0;
-			switchModesOnBreak = false;
+			if (PlayerPrefs.GetInt(Constants.gameMode) == Constants.gameModeClassic)	// Clasic Mode
+			{
+				warmUp = true;
+				pauseAfterXWaves = int.MaxValue;
+				secondsToPauseFor = 0;
+				switchModesOnBreak = false;
+			}
+			else																		// Arcade Mode
+			{
+				warmUp = false;
+				livesLeft = 3;
+				pauseAfterXWaves = 50;
+				secondsToPauseFor = 15;
+				switchModesOnBreak = true;
+			}
 		}
 		else
 		{
@@ -100,6 +114,8 @@ public class GameModeMaster : MonoBehaviour
 			// If we are in custom mode, check to update the stat
 			if (PlayerPrefs.GetInt(Constants.gameMode) == Constants.gameModeCustom)
 				customRoutineStatCheck = true;
+
+			
 		}
 
 		this.ActivateGameMode();
@@ -352,7 +368,7 @@ public class GameModeMaster : MonoBehaviour
 
 			// Show the wave transition message if it has not been shown yet 
 			if (transitionTimer >= tranTime && waveShooter.HasBeenShown(wavePopNum) == false)
-				waveShooter.PopWave(wavePopNum);
+				waveShooter.PopMessage(wavePopNum);
 
 			// If its been the amount of time specified above start the next wave
 			if (transitionTimer >= tranTime + 5)
@@ -395,7 +411,7 @@ public class GameModeMaster : MonoBehaviour
 			if (switchModesOnBreak == true)
 				this.SwitchGameMode();
 
-			waveShooter.PopWave(3);
+			waveShooter.PopMessage(3);
 			breakEndingPopped = true;
 
 		}
@@ -403,7 +419,7 @@ public class GameModeMaster : MonoBehaviour
 		// Pop up message telling we are on break 5 seconds after wave start (5 so we are standing and not currently squatting through a wall)
 		if (Time.time >= onBreakTimer - secondsToPauseFor + 7 && breakMessagePopped == false)
 		{
-			waveShooter.PopWave(3);
+			waveShooter.PopMessage(3);
 			breakMessagePopped = true;
 		}
 
@@ -509,16 +525,58 @@ public class GameModeMaster : MonoBehaviour
 	/// </summary>
 	public void PassedThroughWall(bool cardio)
 	{
-
 		float calOffset = 0;
 		if (warmUp == true)
 			calOffset = -.002f;
 
-		Debug.Log("Pass through time: " + Time.time);
-
 		// Check to see if we are using the calorie counter
 		if (calorieCounter != null)
 			calorieCounter.UpdateCount(Time.time, cardio, calOffset);
+	}
+
+	/// <summary>
+	/// Go on break for passed in time 
+	/// </summary>
+	public void GoOnBreakImdate(float breakLength)
+	{
+		onBreak = true;
+		breakMessagePopped = true;
+		onBreakTimer = Time.time + breakLength;
+	}
+
+	/// <summary>
+	/// Return the amount of times left we can fail
+	/// </summary>
+	public int GetAmountOfLivesLeft()
+	{
+		return this.livesLeft;
+	}
+
+	/// <summary>
+	/// Decrement the amount of fails we have left by 1
+	/// </summary>
+	public void DecrementAmountOfLives()
+	{
+		this.livesLeft--;
+	}
+
+	/// <summary>
+	/// Pop how many lives left (handed value) after handed wait time
+	/// </summary>
+	public void PopLivesLeft(float waitTime, int livesLeft)
+	{
+		liveCorutine = this.WaitAndPop(waitTime, livesLeft);
+		this.StartCoroutine(liveCorutine);
+	}
+
+	private IEnumerator WaitAndPop(float waitTime, int livesLeft)
+	{
+		while(true)
+		{
+			yield return new WaitForSeconds(waitTime);
+			waveShooter.PopMessage(livesLeft, false);
+			this.StopCoroutine(liveCorutine);		
+		}
 	}
 
 	/// <summary>

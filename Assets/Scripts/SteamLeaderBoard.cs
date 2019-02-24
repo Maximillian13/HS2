@@ -119,6 +119,11 @@ public class SteamLeaderBoard : MonoBehaviour
 					handleName = "Empty";
 			}
 		}
+		else if (gameMode == Constants.gameModeArcade)
+		{
+			titleText.text = "ARCADE MODE";
+			handleName = "HS2ArcadeLeaderBoard";
+		}
 		else                    // Custom Routine
 		{
 			// Delete score board because there is not one for custom routine 

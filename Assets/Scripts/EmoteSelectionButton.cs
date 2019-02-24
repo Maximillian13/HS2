@@ -7,7 +7,7 @@ public class EmoteSelectionButton : MonoBehaviour
 	public int emoteIndex;
 	public Material[] mats; // 0 = green, 1 = blue 
 	private EmoteSelectionControl master;
-	private bool highlighted;
+	//private bool highlighted;
 	private MeshRenderer mr; // For highlighting
 	private bool selected;
 
@@ -79,7 +79,7 @@ public class EmoteSelectionButton : MonoBehaviour
 	/// </summary>
 	public void HighlightButton()
 	{
-		highlighted = true;
+		//highlighted = true;
 		mr.material = mats[1];
 		mr.enabled = true;
 		selected = true;
@@ -90,7 +90,7 @@ public class EmoteSelectionButton : MonoBehaviour
 	/// </summary>
 	public void Deselect()
 	{
-		highlighted = false;
+		//highlighted = false;
 		mr.material = mats[0];
 		mr.enabled = false;
 		selected = false;

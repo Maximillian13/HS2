@@ -290,7 +290,15 @@ public class MainMenuControl : MonoBehaviour
 			gymSongStart.SetButtonToken("LoadLevel cm");
 			gymSongBack.SetButtonToken("GameMode ClassicMode");
 		}
-		if(setToActivate == "LevelSelect")
+
+		if (setToActivate == "ArcadeMode")
+		{
+			buttonSet[1].SetActive(true);
+			gymSongStart.SetButtonToken("LoadLevel am");
+			gymSongBack.SetButtonToken("MainMenu");
+		}
+
+		if (setToActivate == "LevelSelect")
 			buttonSet[1].SetActive(true);
 
 		// Just loads daily challenge stuff
@@ -380,7 +388,18 @@ public class MainMenuControl : MonoBehaviour
 			this.WriteDataToFile(custR, CUSTOM_DATA_PATH);
 		}
 
-		
+		// Arcade Mode
+		if (loadType.ToLower() == "am")
+		{
+			loadIndex = 2;
+			loadTimer = Time.time + 2;
+			PlayerPrefs.SetInt(Constants.gameMode, Constants.gameModeArcade);
+
+			// Make the song file based off buttons
+			gymAndSongSelectControl.MakeSongFile();
+		}
+
+
 	}
 
 	/// <summary>

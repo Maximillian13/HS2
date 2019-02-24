@@ -207,6 +207,7 @@ public static class Constants
 {
 	public static string gameMode = "GameMode";
 	public static string cardioMode = "CardioMode";
+	public static string highScore = "HighScore";
 	public static string totalSquatWallCount = "TotalSquatWallCount";
 	public static string totalCardioWallCount = "TotalCardioWallCount";
 	public static string highestCardioConsec = "HighestCardioConsec";
@@ -215,11 +216,11 @@ public static class Constants
 	public static string totalCustomRoutines = "TotalCustomRoutines";
 	public static string totalCaloriesBurned = "TotalCaloriesBurned";
 
-
 	public static string dailyChallengeIDToken = "DailyChallengeID";
 
 
 	public static int gameModeClassic = 0;
 	public static int gameModeDaily = 1;
 	public static int gameModeCustom = 2;
+	public static int gameModeArcade = 3;
 }

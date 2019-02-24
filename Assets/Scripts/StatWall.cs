@@ -37,7 +37,10 @@ public class StatWall : MonoBehaviour
 			statSummary += "Number of Custom Routines Played: " + statValue + "\n";
 
 			SteamUserStats.GetStat(Constants.totalCaloriesBurned, out statValue);
-			statSummary += "Total Calories Burned: " + statValue;
+			statSummary += "Total Calories Burned: " + statValue + "\n";
+
+			SteamUserStats.GetStat(Constants.highScore, out statValue);
+			statSummary += "Arcade Mode High Score: " + statValue;
 		}
 
 		statText.text = statSummary;
