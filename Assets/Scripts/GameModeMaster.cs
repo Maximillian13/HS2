@@ -114,8 +114,6 @@ public class GameModeMaster : MonoBehaviour
 			// If we are in custom mode, check to update the stat
 			if (PlayerPrefs.GetInt(Constants.gameMode) == Constants.gameModeCustom)
 				customRoutineStatCheck = true;
-
-			
 		}
 
 		this.ActivateGameMode();
@@ -367,7 +365,7 @@ public class GameModeMaster : MonoBehaviour
 			transitionTimer += Time.deltaTime;
 
 			// Show the wave transition message if it has not been shown yet 
-			if (transitionTimer >= tranTime && waveShooter.HasBeenShown(wavePopNum) == false)
+			if (transitionTimer >= tranTime && waveShooter.HasBeenShown(wavePopNum) == false && stopSpawning == false)
 				waveShooter.PopMessage(wavePopNum);
 
 			// If its been the amount of time specified above start the next wave
@@ -380,12 +378,7 @@ public class GameModeMaster : MonoBehaviour
 
 				// Check to see if we are using the calorie counter
 				if (calorieCounter != null)
-				{
-					// todo: test to make sure this is working when level gets reset
-					// Reset the calorie time so it doesnt count time when you are not squatting 
-					Debug.Log("reset time: " + Time.time);
 					calorieCounter.SetPrevTime(Time.time);
-				}
 			}
 		}
 	}
@@ -407,11 +400,13 @@ public class GameModeMaster : MonoBehaviour
 		// 3 second before the waves start again, give a warning 
 		if (Time.time >= onBreakTimer - 2.5f && breakEndingPopped == false)
 		{
+			// Todo: Add something to check if we just died so we dont switch on death 
 			// Switch the game modes if that is something we want
 			if (switchModesOnBreak == true)
 				this.SwitchGameMode();
 
-			waveShooter.PopMessage(3);
+			if(stopSpawning == false) // Check if the game is still going 
+				waveShooter.PopMessage(3);
 			breakEndingPopped = true;
 
 		}
@@ -419,7 +414,8 @@ public class GameModeMaster : MonoBehaviour
 		// Pop up message telling we are on break 5 seconds after wave start (5 so we are standing and not currently squatting through a wall)
 		if (Time.time >= onBreakTimer - secondsToPauseFor + 7 && breakMessagePopped == false)
 		{
-			waveShooter.PopMessage(3);
+			if (stopSpawning == false) // Check if the game is still going 
+				waveShooter.PopMessage(3);
 			breakMessagePopped = true;
 		}
 
@@ -574,7 +570,8 @@ public class GameModeMaster : MonoBehaviour
 		while(true)
 		{
 			yield return new WaitForSeconds(waitTime);
-			waveShooter.PopMessage(livesLeft, false);
+			if(stopSpawning == false) // Check if the game is still going 
+				waveShooter.PopLives(livesLeft);
 			this.StopCoroutine(liveCorutine);		
 		}
 	}

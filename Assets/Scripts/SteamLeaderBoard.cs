@@ -14,6 +14,8 @@ public class SteamLeaderBoard : MonoBehaviour
 	private CallResult<LeaderboardFindResult_t> LeaderboardFindResult;
 	private CallResult<LeaderboardScoresDownloaded_t> LeaderboardScoresDownloaded;
 
+	private bool leaderBoardDisplayShown;
+
 	// Bug: Seems like it isnt displaying in game on the very first time after a clean install (Clear registry)
 
 	public void OnEnable()
@@ -56,12 +58,18 @@ public class SteamLeaderBoard : MonoBehaviour
 		if (lbUpdateGO != null)
 			lbUpdateGO.GetComponent<SteamLeaderBoardUpdater>().InitLeaderboard(handleName);
 
-		LeaderboardFindResult = CallResult<LeaderboardFindResult_t>.Create(this.OnLeaderboardFindResult);
-		LeaderboardScoresDownloaded = CallResult<LeaderboardScoresDownloaded_t>.Create(this.OnLeaderboardScoresDownloaded);
+		this.SetUpForLeaderBoardDisplay();
+	}
 
+	// Set up for the leader board display, needs to be called after everything has been sut up
+	private void SetUpForLeaderBoardDisplay()
+	{
 		// Check if the steam connection is good 
 		if (SteamManager.Initialized == true)
 		{
+			LeaderboardFindResult = CallResult<LeaderboardFindResult_t>.Create(this.OnLeaderboardFindResult);
+			LeaderboardScoresDownloaded = CallResult<LeaderboardScoresDownloaded_t>.Create(this.OnLeaderboardScoresDownloaded);
+
 			SteamAPICall_t handle = SteamUserStats.FindOrCreateLeaderboard(handleName, ELeaderboardSortMethod.k_ELeaderboardSortMethodDescending, ELeaderboardDisplayType.k_ELeaderboardDisplayTypeNumeric);
 			LeaderboardFindResult.Set(handle);
 		}
@@ -133,6 +141,12 @@ public class SteamLeaderBoard : MonoBehaviour
 
 	void Update()
 	{
+		// Do a delayed setup, without this it will not display properly
+		if(leaderBoardDisplayShown == false && Time.timeSinceLevelLoad > .1f)
+		{
+			this.OnEnable();
+			leaderBoardDisplayShown = true;
+		}
 		// Run callbacks if steam is all good
 		if (SteamManager.Initialized == true)
 		{
@@ -196,14 +210,14 @@ public class SteamLeaderBoard : MonoBehaviour
 		{
 			if (hScore == true)
 			{
-				SteamAPICall_t handle = SteamUserStats.DownloadLeaderboardEntries(m_SteamLeaderboard, ELeaderboardDataRequest.k_ELeaderboardDataRequestGlobal, 1, 1);
+				SteamAPICall_t handle = SteamUserStats.DownloadLeaderboardEntries(m_SteamLeaderboard, ELeaderboardDataRequest.k_ELeaderboardDataRequestGlobal, 1, 10);
 
 				// Set the downloaded score 
 				LeaderboardScoresDownloaded.Set(handle);
 			}
 			else
 			{
-				SteamAPICall_t handle = SteamUserStats.DownloadLeaderboardEntries(m_SteamLeaderboard, ELeaderboardDataRequest.k_ELeaderboardDataRequestGlobalAroundUser, -2, 2);
+				SteamAPICall_t handle = SteamUserStats.DownloadLeaderboardEntries(m_SteamLeaderboard, ELeaderboardDataRequest.k_ELeaderboardDataRequestGlobalAroundUser, -5, 5);
 
 				// Set the downloaded score 
 				LeaderboardScoresDownloaded.Set(handle);

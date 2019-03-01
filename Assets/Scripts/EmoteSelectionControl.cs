@@ -9,7 +9,11 @@ public class EmoteSelectionControl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+		for (int i = 0; i < emoteButtons.Length; i++)
+		{
+			emoteButtons[i].Start();
+			emoteButtons[i].CheckIfBound();
+		}
     }
 
     // Update is called once per frame

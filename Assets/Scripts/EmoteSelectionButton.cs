@@ -14,7 +14,7 @@ public class EmoteSelectionButton : MonoBehaviour
 	private GameObject[] emoteWheel;
 
 	// Start is called before the first frame update
-	void Start()
+	public void Start()
     {
 		mr = this.GetComponent<MeshRenderer>();
 		mr.enabled = false;
@@ -29,6 +29,30 @@ public class EmoteSelectionButton : MonoBehaviour
 
 		for (int i = 0; i < emoteWheel.Length; i++)
 			emoteWheel[i].SetActive(false);
+	}
+
+	public void CheckIfBound()
+	{
+		if(PlayerPrefs.GetInt("EmoteUp") == emoteIndex)
+		{
+			this.HighlightButton();
+			emoteWheel[0].SetActive(true);
+		}
+		if (PlayerPrefs.GetInt("EmoteRight") == emoteIndex)
+		{
+			this.HighlightButton();
+			emoteWheel[1].SetActive(true);
+		}
+		if (PlayerPrefs.GetInt("EmoteDown") == emoteIndex)
+		{
+			this.HighlightButton();
+			emoteWheel[2].SetActive(true);
+		}
+		if (PlayerPrefs.GetInt("EmoteLeft") == emoteIndex)
+		{
+			this.HighlightButton();
+			emoteWheel[3].SetActive(true);
+		}
 	}
 
 

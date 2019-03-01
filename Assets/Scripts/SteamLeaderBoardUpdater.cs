@@ -7,15 +7,17 @@ public class SteamLeaderBoardUpdater : MonoBehaviour
 	private SteamLeaderboard_t m_SteamLeaderboard;
 	private CallResult<LeaderboardScoreUploaded_t> LeaderboardScoreUploaded;
 	private CallResult<LeaderboardFindResult_t> LeaderboardFindResult;
+	private string lbNameTest;
 
 	public void InitLeaderboard(string lbName)
-	{
+	{ 
 		if (SteamManager.Initialized == true)
 		{
 			LeaderboardScoreUploaded = CallResult<LeaderboardScoreUploaded_t>.Create(this.OnLeaderboardScoreUploaded);
 			LeaderboardFindResult = CallResult<LeaderboardFindResult_t>.Create(this.OnLeaderboardFindResult);
 			SteamAPICall_t handle = SteamUserStats.FindLeaderboard(lbName);
 			LeaderboardFindResult.Set(handle);
+			lbNameTest = lbName;
 		}
 	}
 

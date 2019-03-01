@@ -27,32 +27,48 @@ public class WaveShooter : MonoBehaviour
 	/// <summary>
 	/// Shoots a message out saying what wave the player is on (Handing in false will show lives left)
 	/// </summary>
-	public void PopMessage(int index, bool waveMessage = true) 
+	public void PopMessage(int index) 
     {
-        if(index <= waves.Length)
-        {
-			// Creates clone
-			Rigidbody popUp;
-			if(waveMessage == true)
-				popUp = (Rigidbody)Instantiate(waves[index], this.transform.position, waves[index].transform.rotation);
-			else
-				popUp = (Rigidbody)Instantiate(livesLeft[index], this.transform.position, livesLeft[index].transform.rotation);
+		// Make sure index is good 
+		if (index < 0 || index >= waves.Length)
+			return;
 
-			// Adds the force to send it in the air
-			popUp.AddForce(popForce);
-            popUp.AddTorque(new Vector3(Random.Range(-30, 30), Random.Range(-30, 30), Random.Range(-30, 30)));
+		// Creates clone
+		Rigidbody popUp = (Rigidbody)Instantiate(waves[index], this.transform.position, waves[index].transform.rotation);
 
-			// Randomize the mats of the sign
-			popUp.GetComponent<RandomizeMats>().RandomizeMaterials();
+		// Adds the force to send it in the air
+		popUp.AddForce(popForce);
+        popUp.AddTorque(new Vector3(Random.Range(-30, 30), Random.Range(-30, 30), Random.Range(-30, 30)));
 
-			// Destroy it after 4 seconds
-			popUp.GetComponent<ShrinkAndDestroy>().ShrinkDestroy(3);
+		// Randomize the mats of the sign
+		popUp.GetComponent<RandomizeMats>().RandomizeMaterials();
+
+		// Destroy it after 4 seconds
+		popUp.GetComponent<ShrinkAndDestroy>().ShrinkDestroy(3);
 			
-
-			// Add this to poppedSigns so we can see what signs have been shown 
-			poppedWaves[index] = true;
-        }
+		// Add this to poppedSigns so we can see what signs have been shown 
+		poppedWaves[index] = true;
     }
+
+	public void PopLives(int index)
+	{
+		// Make sure index is good 
+		if (index < 0 || index >= livesLeft.Length)
+			return;
+
+		// Creates clone
+		Rigidbody popUp = (Rigidbody)Instantiate(livesLeft[index], this.transform.position, livesLeft[index].transform.rotation);
+
+		// Adds the force to send it in the air
+		popUp.AddForce(popForce);
+		popUp.AddTorque(new Vector3(Random.Range(-30, 30), Random.Range(-30, 30), Random.Range(-30, 30)));
+
+		// Randomize the mats of the sign
+		popUp.GetComponent<RandomizeMats>().RandomizeMaterials();
+
+		// Destroy it after 4 seconds
+		popUp.GetComponent<ShrinkAndDestroy>().ShrinkDestroy(3);
+	}
 
 	/// <summary>
 	/// Return if that wave has been shown (0 = wave1, 1 = wave2, 2 = wave3, 3 = Sgo)

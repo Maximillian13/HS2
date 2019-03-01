@@ -15,6 +15,8 @@ public class PlayerHitBox : MonoBehaviour
 	private ScorePopper scorePopper;
 	private PersonalHighScore highScore;
 
+	private bool arcadeMode;
+
 	//private SquatCounter squatCounter;
 	private SteamLeaderBoardUpdater SteamLeaderBoardUpdater;
 
@@ -33,6 +35,9 @@ public class PlayerHitBox : MonoBehaviour
 
 		squatCardioScore = 0;
 		tScore.text = squatCardioScore.ToString();
+
+		if (PlayerPrefs.GetInt(Constants.gameMode) == Constants.gameModeArcade)
+			arcadeMode = true;
 
 		//squatCounter = GameObject.Find("SquatWallCounterAchievments").GetComponent<SquatCounter>();
 		SteamLeaderBoardUpdater = GameObject.Find("UpdateSteamLeaderBoard").GetComponent<SteamLeaderBoardUpdater>();
@@ -78,8 +83,11 @@ public class PlayerHitBox : MonoBehaviour
 					{
 						checkUp.Ready = false;
 
-						scorePopper.PopScoreMessage("10", .04f);
-						highScore.UpdateYourScore(10);
+						if (arcadeMode == true)
+						{
+							scorePopper.PopScoreMessage("10", .04f);
+							highScore.UpdateYourScore(10);
+						}
 					}
 					else if (other.transform.parent.parent.name == "SquatWallx2(Clone)")    // If squat wall is 2 long, allow 2
 						this.ResetAfterNumberOfWalls(2);
@@ -129,13 +137,19 @@ public class PlayerHitBox : MonoBehaviour
             checkUpCounter = 0;
 			if (numberOfWalls == 2)
 			{
-				scorePopper.PopScoreMessage("15", .05f);
-				highScore.UpdateYourScore(15);
+				if (arcadeMode == true)
+				{
+					scorePopper.PopScoreMessage("15", .05f);
+					highScore.UpdateYourScore(15);
+				}
 			}
 			else
 			{
-				scorePopper.PopScoreMessage("20", .06f);
-				highScore.UpdateYourScore(20);
+				if (arcadeMode == true)
+				{
+					scorePopper.PopScoreMessage("20", .06f);
+					highScore.UpdateYourScore(20);
+				}
 			}
 		}
 		else
@@ -150,7 +164,7 @@ public class PlayerHitBox : MonoBehaviour
 	private void CheckIfEndGame()
 	{
 		gameModeMaster.DecrementAmountOfLives();
-		if (gameModeMaster.GetAmountOfLivesLeft() == 0)
+		if (gameModeMaster.GetAmountOfLivesLeft() <= 0)
 		{
 			this.EndGame();
 		}
@@ -191,8 +205,6 @@ public class PlayerHitBox : MonoBehaviour
 				AchivmentAndStatControl.SetStat(Constants.highestSquatConsec, squatCardioScore); // (Will only update stat if larger)
 				AchivmentAndStatControl.CheckAllConsecutiveSquatAchivments(squatCardioScore);
 			}
-
-			AchivmentAndStatControl.SetStat(Constants.highScore, highScore.GetYourScore()); // (Will only update stat if larger)
 		}
 
 		// Save Score if in classic mode or if in daily challenge 
@@ -201,7 +213,11 @@ public class PlayerHitBox : MonoBehaviour
 
 		// If arcade, update based on the score 
 		if (PlayerPrefs.GetInt(Constants.gameMode) == Constants.gameModeArcade)
-			SteamLeaderBoardUpdater.UpdateLeaderBoard(highScore.GetYourScore());
+		{
+			int currScore = highScore.GetYourScore();
+			SteamLeaderBoardUpdater.UpdateLeaderBoard(currScore);
+			AchivmentAndStatControl.SetStat(Constants.highScore, currScore);
+		}
 
 		if (GameObject.Find("GuideRail") != null)
 		{

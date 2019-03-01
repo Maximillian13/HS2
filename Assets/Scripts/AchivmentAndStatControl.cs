@@ -40,13 +40,13 @@ public static class AchivmentAndStatControl
 	/// </summary>
 	public static void CheckAllTotalSquatAchivments(int totalSquats)
 	{
-		ChechAndUnlockAchivment(totalSquats, SQUAT_CONSEC0, Achievement.SQUAT_TOTAL0);
-		ChechAndUnlockAchivment(totalSquats, SQUAT_CONSEC1, Achievement.SQUAT_TOTAL1);
-		ChechAndUnlockAchivment(totalSquats, SQUAT_CONSEC2, Achievement.SQUAT_TOTAL2);
-		ChechAndUnlockAchivment(totalSquats, SQUAT_CONSEC3, Achievement.SQUAT_TOTAL3);
-		ChechAndUnlockAchivment(totalSquats, SQUAT_CONSEC4, Achievement.SQUAT_TOTAL4);
-		ChechAndUnlockAchivment(totalSquats, SQUAT_CONSEC5, Achievement.SQUAT_TOTAL5);
-		ChechAndUnlockAchivment(totalSquats, SQUAT_CONSEC6, Achievement.SQUAT_TOTAL6);
+		ChechAndUnlockAchivment(totalSquats, SQUAT_TOTAL0, Achievement.SQUAT_TOTAL0);
+		ChechAndUnlockAchivment(totalSquats, SQUAT_TOTAL1, Achievement.SQUAT_TOTAL1);
+		ChechAndUnlockAchivment(totalSquats, SQUAT_TOTAL2, Achievement.SQUAT_TOTAL2);
+		ChechAndUnlockAchivment(totalSquats, SQUAT_TOTAL3, Achievement.SQUAT_TOTAL3);
+		ChechAndUnlockAchivment(totalSquats, SQUAT_TOTAL4, Achievement.SQUAT_TOTAL4);
+		ChechAndUnlockAchivment(totalSquats, SQUAT_TOTAL5, Achievement.SQUAT_TOTAL5);
+		ChechAndUnlockAchivment(totalSquats, SQUAT_TOTAL6, Achievement.SQUAT_TOTAL6);
 	}
 
 	/// <summary>
@@ -82,8 +82,10 @@ public static class AchivmentAndStatControl
 	/// </summary>
 	public static void SetStat(string statName, int statVal)
 	{
+		bool t;
 		if (SteamManager.Initialized == true)
-			SteamUserStats.SetStat(statName, statVal);
+			t = SteamUserStats.SetStat(statName, statVal);
+
 	}
 
 	/// <summary>
@@ -114,10 +116,7 @@ public static class AchivmentAndStatControl
 		{
 			int statVal = 0;
 			if (SteamUserStats.GetStat(statName, out statVal) == true)
-			{
 				SteamUserStats.SetStat(statName, statVal + amount);
-				Debug.Log("Inc succ -> " + SteamUserStats.StoreStats());
-			}
 		}
 	}
 

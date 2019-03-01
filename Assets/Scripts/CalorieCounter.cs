@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 
 public class CalorieCounter : MonoBehaviour
 {
@@ -23,6 +25,7 @@ public class CalorieCounter : MonoBehaviour
 		if (this.CheckIfOriginal() == false)
 			return;
 
+		SceneManager.sceneLoaded += this.LevelLoaded;
 		count = this.transform.Find("CaloriesBurnedNumber").GetComponent<TextMesh>();
 		prevTime = float.NegativeInfinity;
 		weight = PlayerPrefs.GetInt("PlayerWeight");
@@ -70,11 +73,11 @@ public class CalorieCounter : MonoBehaviour
 		prevTime = curTime;
 	}
 
-
-	private void OnLevelWasLoaded(int level)
+	// When level is loaded
+	private void LevelLoaded(Scene level, LoadSceneMode sceneMode)
 	{
 		// If we are in the main menu
-		if(level == 1)
+		if(level.buildIndex == 1)
 		{
 			AchivmentAndStatControl.IncrementStat(Constants.totalCaloriesBurned, currCount);
 			Destroy(this.gameObject);
