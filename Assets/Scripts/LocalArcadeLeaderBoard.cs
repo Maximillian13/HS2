@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using TMPro;
 
 public class LocalArcadeLeaderBoard : MonoBehaviour
 {
-	private TextMesh bodyText;
+	private TextMeshPro bodyText;
 
 	private List<LocalArcadeLeaderBoardEntry> lbEntries = new List<LocalArcadeLeaderBoardEntry>();
 	private string dataPath;
@@ -23,7 +24,7 @@ public class LocalArcadeLeaderBoard : MonoBehaviour
 			return;
 		}
 
-		bodyText = this.transform.Find("Body").GetComponent<TextMesh>();
+		bodyText = this.transform.Find("Body").GetComponent<TextMeshPro>();
 
 		dataPath = Application.persistentDataPath + "/ALS.txt";
 

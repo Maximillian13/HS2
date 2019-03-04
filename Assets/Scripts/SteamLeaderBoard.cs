@@ -2,12 +2,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using Steamworks;
+using TMPro;
 
 public class SteamLeaderBoard : MonoBehaviour
 {
 	public string lbName;
 	private TextMesh titleText; // The text mesh that will display the title
-	private TextMesh bodyText; // The text mesh that will display the leader board
+	private TextMeshPro bodyText; // The text mesh that will display the leader board
 	private string handleName;
 
 	private SteamLeaderboard_t m_SteamLeaderboard;
@@ -25,7 +26,7 @@ public class SteamLeaderBoard : MonoBehaviour
 
 		// Find the text mesh
 		titleText = this.transform.Find("Title").GetComponent<TextMesh>();
-		bodyText = this.transform.Find("Body").GetComponent<TextMesh>();
+		bodyText = this.transform.Find("Body").GetComponent<TextMeshPro>();
 		handleName = lbName;
 
 		// IF there is nothing default to the classic mode 
