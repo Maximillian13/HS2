@@ -214,10 +214,28 @@ public class PlayerHitBox : MonoBehaviour
 		// If arcade, update based on the score 
 		if (PlayerPrefs.GetInt(Constants.gameMode) == Constants.gameModeArcade)
 		{
+			// Save score to steam leader board
 			int currScore = highScore.GetYourScore();
 			SteamLeaderBoardUpdater.UpdateLeaderBoard(currScore);
 			AchivmentAndStatControl.SetStat(Constants.highScore, currScore);
+
+			// Pop up the name select
+			ArcadeNameSelector nameSelector = GameObject.Find("ArcadeNameSelector").GetComponent<ArcadeNameSelector>();
+			nameSelector.SetPlayerScore(currScore);
+			nameSelector.SetToSize();
+
+			// Get rid of the hand placement stuff so it does not bug you when entering your name
+			Transform handPlacement = this.transform.Find("HandPlacement");
+			if (transform != null)
+				handPlacement.gameObject.SetActive(false);
+			GameObject handMessage = GameObject.Find("HandMessage");
+			if (handMessage != null)
+				handMessage.SetActive(false);
+
+			// Prevent loading level so we can pick name
+			GameObject.Find("GameModeMaster").GetComponent<GameModeMaster>().PreventLevelFromLoading = true;
 		}
+
 
 		if (GameObject.Find("GuideRail") != null)
 		{
@@ -229,6 +247,7 @@ public class PlayerHitBox : MonoBehaviour
 		// Gib all walls
 		this.DestroyAllWalls();
 
+		// Let the arcade mode handle ending the game if we are in arcade mode
 		GameModeMaster gameMaster = GameObject.Find("GameModeMaster").GetComponent<GameModeMaster>();
 		gameMaster.EndGame();
 

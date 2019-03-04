@@ -55,11 +55,13 @@ public class GameModeMaster : MonoBehaviour
 	private int rand; // Random int for deciding when to spawn multi-wall squat walls
 	private int lastRand = -1;
 
+	private bool preventLevelFromLoading;
 
 	private string CUSTOM_ROUTINE_PATH;
 	#endregion
 
 	private bool customRoutineStatCheck;
+
 	// Start is called before the first frame update
 	void Start()
     {
@@ -158,9 +160,12 @@ public class GameModeMaster : MonoBehaviour
 			if (loadingReset == true)
 				return true;
 
+			if (preventLevelFromLoading == true)
+				return true;
+
 			// Add up the time, once you get to 5 seconds reload the game
 			resetGame += Time.deltaTime;
-			if (resetGame >= 8)
+			if (resetGame >= 6)
 			{
 				GameObject.Find("[CameraRig]").transform.Find("Camera").GetComponent<EyeFadeControl>().CloseEyes(2);
 				loadingReset = true;
@@ -576,12 +581,22 @@ public class GameModeMaster : MonoBehaviour
 		}
 	}
 
+
 	/// <summary>
 	/// Will tell the game to stop spawning waves and reset the level
 	/// </summary>
 	public void EndGame()
 	{
 		stopSpawning = true;
+	}
+
+	/// <summary>
+	/// Prevents game from loading a new level
+	/// </summary>
+	public bool PreventLevelFromLoading
+	{
+		get { return this.preventLevelFromLoading; }
+		set { this.preventLevelFromLoading = value; }
 	}
 
 
