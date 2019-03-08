@@ -18,8 +18,6 @@ public class ArcadeNameSelector : MonoBehaviour, IButtonMaster
 	private bool shrink;
 	private float timer;
 
-	// Todo: Fix order of score, Git rid of hand box when selecting 
-
 	// Start is called before the first frame update
 	void Start()
 	{

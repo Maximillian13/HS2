@@ -106,14 +106,14 @@ public class DailyChallengeMaster : MonoBehaviour
 				squatWallTypes[2] = false;
 
 				// Add songs
-				songs.Add("Sgo");
+				songs.Add("Sgo 2");
 				songs.Add("909");
 
 				// Random modifiers
 				breakAfter = seededRand.Next(150, 201);
 				breakFor = seededRand.Next(10, 31);
 				tms[2].text = "Modifiers:\n" +
-					"\t-Song(s): Sgo, 909";
+					"\t-Song(s): Sgo 2, 909";
 			}
 		}
 		else // Cardio mode
@@ -155,7 +155,7 @@ public class DailyChallengeMaster : MonoBehaviour
 
 				// Add songs
 				songs.Add("909");
-				songs.Add("Sgo");
+				songs.Add("Sgo 2");
 
 				// Random modifiers
 				breakAfter = seededRand.Next(5, 11) * 10;
@@ -163,7 +163,7 @@ public class DailyChallengeMaster : MonoBehaviour
 				tms[2].text = "Modifiers:\n" +
 					"\t-Break after: " + breakAfter + " walls\n" +
 					"\t-Break for: " + breakFor + " seconds\n" +
-					"\t-Song(s): 909, Sgo";
+					"\t-Song(s): 909, Sgo 2";
 			}
 		}
 	}

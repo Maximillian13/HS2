@@ -17,7 +17,7 @@ public class SteamLeaderBoard : MonoBehaviour
 
 	private bool leaderBoardDisplayShown;
 
-	// Bug: Seems like it isnt displaying in game on the very first time after a clean install (Clear registry)
+	// BUG: Seems like it isnt displaying in game on the very first time after a clean install (Clear registry)
 
 	public void OnEnable()
 	{
