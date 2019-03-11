@@ -87,6 +87,7 @@ public class WandControlMP3 : MonoBehaviour
 
 			if (Vector3.Distance(mp3Transform.position, triggerBox.transform.position) < .1f)
 			{
+				mp3Transform.localScale = new Vector3(.4f, .4f, .4f);
 				mp3Transform.SetParent(triggerBox.transform);
 				mp3Transform.localEulerAngles = new Vector3(-90, 180, 0);
 				mp3Transform.localPosition = Vector3.zero;

@@ -84,6 +84,7 @@ public class GenericButton : MonoBehaviour, IInteractibleButton
 		highlighted = true;
 		mr.material = mats[1];
 		mr.enabled = true;
+		selected = true;
 	}
 
 	public void ForceSelect()

@@ -10,6 +10,7 @@ public class MP3TriggerBox : MonoBehaviour
 
 	private void OnTriggerEnter(Collider other)
 	{
+		// BUG: For some reason if you press the trigger button as the haptics are firing it will go continusly 
 		if (other.name == "Controller (left)" || other.name == "Controller (right)")
 			other.GetComponent<WandControlMP3>().TriggerHaptic(.2f, .1f);
 	}

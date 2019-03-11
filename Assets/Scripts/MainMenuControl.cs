@@ -119,6 +119,10 @@ public class MainMenuControl : MonoBehaviour
 			this.TransitionToMenu("Stats");
 		if(Input.GetKeyDown(KeyCode.D))
 			this.TransitionToMenu("DailyChallenge");
+		if (Input.GetKeyDown(KeyCode.F))
+			this.TransitionToMenu("LoadLevel dc");
+		if (Input.GetKeyDown(KeyCode.O))
+			this.TransitionToMenu("Options");
 
 		// If we need to move the walls up or down
 		this.MoveWall();
@@ -294,6 +298,8 @@ public class MainMenuControl : MonoBehaviour
 		if (setToActivate == "ArcadeMode")
 		{
 			buttonSet[1].SetActive(true);
+			// Make it squat mode 
+			PlayerPrefs.SetInt(Constants.cardioMode, 0);
 			gymSongStart.SetButtonToken("LoadLevel am");
 			gymSongBack.SetButtonToken("MainMenu");
 		}

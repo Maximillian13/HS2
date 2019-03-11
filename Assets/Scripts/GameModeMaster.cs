@@ -10,6 +10,7 @@ public class GameModeMaster : MonoBehaviour
 	public GameObject[] objsToDestroy;
 	public PlayerHitBox phb;
 
+	private bool preventGameModeSwitch;
 	private int livesLeft;
 	private IEnumerator liveCorutine;
 
@@ -405,10 +406,10 @@ public class GameModeMaster : MonoBehaviour
 		// 3 second before the waves start again, give a warning 
 		if (Time.time >= onBreakTimer - 2.5f && breakEndingPopped == false)
 		{
-			// Todo: Add something to check if we just died so we dont switch on death 
 			// Switch the game modes if that is something we want
-			if (switchModesOnBreak == true)
+			if (switchModesOnBreak == true && preventGameModeSwitch == false)
 				this.SwitchGameMode();
+			preventGameModeSwitch = false;
 
 			if(stopSpawning == false) // Check if the game is still going 
 				waveShooter.PopMessage(3);
@@ -543,6 +544,7 @@ public class GameModeMaster : MonoBehaviour
 		onBreak = true;
 		breakMessagePopped = true;
 		onBreakTimer = Time.time + breakLength;
+		preventGameModeSwitch = true;
 	}
 
 	/// <summary>

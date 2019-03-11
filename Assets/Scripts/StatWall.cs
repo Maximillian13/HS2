@@ -18,7 +18,7 @@ public class StatWall : MonoBehaviour
 		if (SteamManager.Initialized == true)
 		{
 			int statValue = -1;
-			Debug.Log(SteamUserStats.GetStat(Constants.totalSquatWallCount, out statValue));
+			SteamUserStats.GetStat(Constants.totalSquatWallCount, out statValue);
 			statSummary = "Total Squat Walls Passed: " + statValue + "\n";
 
 			SteamUserStats.GetStat(Constants.highestSquatConsec, out statValue);

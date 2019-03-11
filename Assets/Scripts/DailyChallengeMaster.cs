@@ -43,6 +43,8 @@ public class DailyChallengeMaster : MonoBehaviour
 
 		// Fill out the description
 		this.FillDescription();
+
+		Debug.Log(PlayerPrefs.GetInt("DailySquatID"));
 	}
 
 	private void OnEnable()
@@ -196,6 +198,11 @@ public class DailyChallengeMaster : MonoBehaviour
 
 	private void Update()
 	{
+		if(Input.GetKeyDown(KeyCode.C))
+		{
+			PlayerPrefs.SetInt("DailySquatID", 0);
+			Debug.Log("PP reset");
+		}
 		//if(Input.GetKey(KeyCode.R))
 		//{
 		//	// Todo: Delete for testing daily challenges

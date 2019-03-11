@@ -168,6 +168,11 @@ public class SteamLeaderBoard : MonoBehaviour
 			return;
 		}
 
+		// If arcade mode make it so it says "points" instead of walls
+		string wallsOrPoints = "Walls";
+		if (titleText.text == "ARCADE MODE")
+			wallsOrPoints = "Points";
+
 		// You should probably check whether param.m_hSteamLeaderboard is
 		// the one you want to handle.
 		bool entryAdded = false;
@@ -183,7 +188,7 @@ public class SteamLeaderBoard : MonoBehaviour
 			{
 				entryAdded = true;
 				string playerName = SteamFriends.GetFriendPersonaName(entry.m_steamIDUser);
-				entries.Add(string.Format("Position {0}  |  {1} With {2} Walls", entry.m_nGlobalRank, playerName, entry.m_nScore));
+				entries.Add(string.Format("Position {0}  |  {1} With {2} " + wallsOrPoints, entry.m_nGlobalRank, playerName, entry.m_nScore));
 				//entries.Add(string.Format("{0}: rank {1}, score {2}", playerName, entry.m_nGlobalRank, entry.m_nScore));
 				bodyText.text = bodyText.text + " " + entries[i] + "\n";
 			}

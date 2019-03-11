@@ -85,7 +85,7 @@ public class PlayerHitBox : MonoBehaviour
 
 						if (arcadeMode == true)
 						{
-							scorePopper.PopScoreMessage("10", .04f);
+							scorePopper.PopScoreMessage("+10", .04f);
 							highScore.UpdateYourScore(10);
 						}
 					}
@@ -139,7 +139,7 @@ public class PlayerHitBox : MonoBehaviour
 			{
 				if (arcadeMode == true)
 				{
-					scorePopper.PopScoreMessage("15", .05f);
+					scorePopper.PopScoreMessage("+15", .05f);
 					highScore.UpdateYourScore(15);
 				}
 			}
@@ -147,7 +147,7 @@ public class PlayerHitBox : MonoBehaviour
 			{
 				if (arcadeMode == true)
 				{
-					scorePopper.PopScoreMessage("20", .06f);
+					scorePopper.PopScoreMessage("+20", .06f);
 					highScore.UpdateYourScore(20);
 				}
 			}

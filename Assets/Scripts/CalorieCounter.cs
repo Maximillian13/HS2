@@ -76,6 +76,10 @@ public class CalorieCounter : MonoBehaviour
 	// When level is loaded
 	private void LevelLoaded(Scene level, LoadSceneMode sceneMode)
 	{
+		// Prevent weird behavior with routine 
+		if (this == null)
+			return;
+
 		// If we are in the main menu
 		if(level.buildIndex == 1)
 		{

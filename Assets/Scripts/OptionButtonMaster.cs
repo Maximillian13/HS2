@@ -135,7 +135,6 @@ public class OptionButtonMaster : MonoBehaviour, IButtonMaster
 
 	private void CalorieCounterPress()
 	{
-
 		int useCalCounterInt = PlayerPrefs.GetInt("UseCalorieCounter") == 0 ? 1 : 0;
 		Debug.Log(useCalCounterInt);
 		PlayerPrefs.SetInt("UseCalorieCounter", useCalCounterInt);
