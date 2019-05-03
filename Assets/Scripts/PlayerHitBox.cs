@@ -11,6 +11,8 @@ public class PlayerHitBox : MonoBehaviour
     private int checkUpCounter; // For when there are the multi-walls
     private bool gameOver;
 
+	private GameObject[] handPlacement = new GameObject[2];
+
 	private GameModeMaster gameModeMaster;
 	private ScorePopper scorePopper;
 	private PersonalHighScore highScore;
@@ -32,6 +34,14 @@ public class PlayerHitBox : MonoBehaviour
 		gameModeMaster = GameObject.Find("GameModeMaster").GetComponent<GameModeMaster>();
 		scorePopper = this.transform.Find("ScorePopper").GetComponent<ScorePopper>();
 		highScore = GameObject.Find("PersonalHighScore").GetComponent<PersonalHighScore>();
+
+		// Put the hand placement info in this array so we can easily enable/disable it
+		Transform handPlacementT = this.transform.Find("HandPlacement");
+		if (handPlacementT != null)
+			handPlacement[0] = handPlacementT.gameObject;
+		GameObject handMessageG = GameObject.Find("HandMessage");
+		if (handMessageG != null)
+			handPlacement[1] = handMessageG;
 
 		squatCardioScore = 0;
 		tScore.text = squatCardioScore.ToString();
@@ -60,6 +70,7 @@ public class PlayerHitBox : MonoBehaviour
 			// If its the Top of the wall reload level (Eventually explode boxes and show player high-score)
 			if (other.name == "SquatWallUp")
 			{
+				Debug.Log("Hit top of squat wall ");
 				this.CheckIfEndGame();
 			}
 			// If its the bottom (squatted under the wall) increase the player score
@@ -97,6 +108,7 @@ public class PlayerHitBox : MonoBehaviour
 				}
 				else // Did not come up from a squat
 				{
+					Debug.Log("Did not come up from squat");
 					this.CheckIfEndGame();
 				}
 			}
@@ -159,11 +171,16 @@ public class PlayerHitBox : MonoBehaviour
     }
 
 	/// <summary>
-	/// Check to <see cref="CheckIfEndGame we should end the game or put the player on a pause
+	/// Check to see if we should end the game or put the player on a pause
 	/// </summary>
 	private void CheckIfEndGame()
 	{
-		gameModeMaster.DecrementAmountOfLives();
+		// If we are on break we should not be penalizing the player
+		if (gameModeMaster.GetOnBreak() == true)
+			return;
+
+		if(gameModeMaster.GetAmountOfLivesLeft() != int.MaxValue)
+			gameModeMaster.DecrementAmountOfLives();
 		if (gameModeMaster.GetAmountOfLivesLeft() <= 0)
 		{
 			this.EndGame();
@@ -174,10 +191,13 @@ public class PlayerHitBox : MonoBehaviour
 			this.DestroyAllWalls();
 			// Tell the main game to go on break
 			gameModeMaster.GoOnBreakImdate(20);
-			gameModeMaster.PopLivesLeft(4, gameModeMaster.GetAmountOfLivesLeft());
+			if (gameModeMaster.GetAmountOfLivesLeft() != int.MaxValue)
+				gameModeMaster.PopLivesLeft(4, gameModeMaster.GetAmountOfLivesLeft());
+			else
+				gameModeMaster.PopLivesLeft(4, -1);
 
 			// Reset everything to normal 
-			checkUp.Ready = false;
+			checkUp.Ready = true;
 			checkUpCounter = 0;
 		}
 	}
@@ -225,23 +245,18 @@ public class PlayerHitBox : MonoBehaviour
 			nameSelector.SetToSize();
 
 			// Get rid of the hand placement stuff so it does not bug you when entering your name
-			Transform handPlacement = this.transform.Find("HandPlacement");
-			if (transform != null)
-				handPlacement.gameObject.SetActive(false);
-			GameObject handMessage = GameObject.Find("HandMessage");
-			if (handMessage != null)
-				handMessage.SetActive(false);
+			this.DisableEnableHands(false);
 
 			// Prevent loading level so we can pick name
 			GameObject.Find("GameModeMaster").GetComponent<GameModeMaster>().PreventLevelFromLoading = true;
 		}
 
-
-		if (GameObject.Find("GuideRail") != null)
+		if (GameObject.Find("GYM") != null)
 		{
-			GuideRail gr = GameObject.Find("GuideRail").GetComponent<GuideRail>();
-			if (gr != null)
-				gr.LowerRail();
+			Transform st = GameObject.Find("GYM").transform.Find("SquatTrack");
+			st.Find("SquatBars").GetComponent<GuideRail>().LowerRail();
+			st.Find("DoorA").GetComponent<SquatTrackDoor>().CloseDoor();
+			st.Find("DoorB").GetComponent<SquatTrackDoor>().CloseDoor();
 		}
 
 		// Gib all walls
@@ -281,6 +296,19 @@ public class PlayerHitBox : MonoBehaviour
 					Destroy(t.gameObject); // Destroy the squat wall
 				}
 			}
+		}
+	}
+
+
+	/// <summary>
+	/// Enable/Disable the hand placement box 
+	/// </summary>
+	public void DisableEnableHands(bool enable)
+	{
+		for(int i = 0; i < handPlacement.Length; i++)
+		{
+			if (handPlacement[i] != null)
+				handPlacement[i].SetActive(enable);
 		}
 	}
 }

@@ -175,7 +175,7 @@ public class DailyChallengeMaster : MonoBehaviour
 	/// </summary>
 	public string[] GetDailyChallengeSummary()
 	{
-		string[] customRutineStrings = new string[5];
+		string[] customRutineStrings = new string[7];
 
 		// If warmUpButton[0] is selected then warm up == true 
 		customRutineStrings[0] = warmUp.ToString();
@@ -192,6 +192,11 @@ public class DailyChallengeMaster : MonoBehaviour
 
 		// If we should switch game modes during breaks 
 		customRutineStrings[4] = switchModesOnBreak.ToString();
+
+		// Todo: Assign values for lives and speed mult
+		// Fill out the amount of lives and speed multiplier
+		customRutineStrings[5] = "1";
+		customRutineStrings[6] = "1";
 
 		return customRutineStrings;
 	}

@@ -7,8 +7,8 @@ public class GuideRail : MonoBehaviour
     private bool goUp;
     private float counter;
     private BoxCollider[] boxCol;
-    const float HEIGHT_UP = 2.74f;
-    const float HEIGHT_DOWN = 0;
+    const float HEIGHT_UP = 1;
+    const float HEIGHT_DOWN = -1.5f;
 	
     void Start()
     {

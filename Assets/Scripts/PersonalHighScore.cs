@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class PersonalHighScore : MonoBehaviour
 {
-	private TextMesh highScoreText;
-	private TextMesh yourScoreText;
+	private TextMeshPro highScoreText;
+	private TextMeshPro yourScoreText;
 
 	private int currentScore;
 
@@ -19,8 +20,8 @@ public class PersonalHighScore : MonoBehaviour
 			return;
 		}
 
-		highScoreText = this.transform.Find("HighScoreNumber").GetComponent<TextMesh>();
-		yourScoreText = this.transform.Find("YourScoreNumber").GetComponent<TextMesh>();
+		highScoreText = this.transform.Find("HighScoreNumber").GetComponent<TextMeshPro>();
+		yourScoreText = this.transform.Find("YourScoreNumber").GetComponent<TextMeshPro>();
 
 		highScoreText.text = AchivmentAndStatControl.GetStat(Constants.highScore).ToString();
 		yourScoreText.text = currentScore.ToString();

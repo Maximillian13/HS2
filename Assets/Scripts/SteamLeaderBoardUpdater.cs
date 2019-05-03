@@ -21,17 +21,6 @@ public class SteamLeaderBoardUpdater : MonoBehaviour
 		}
 	}
 
-	// Closes all sockets and kills all threads (This prevents unity from freezing)
-	private void OnApplicationQuit()
-	{
-		if (SteamManager.Initialized == true)
-		{
-			SteamAPI.RunCallbacks();
-			SteamAPI.ReleaseCurrentThreadMemory();
-			SteamAPI.Shutdown();
-		}
-	}
-
 	// Update is called once per frame
 	void Update()
 	{
@@ -75,6 +64,24 @@ public class SteamLeaderBoardUpdater : MonoBehaviour
 		if (pCallback.m_bLeaderboardFound != 0)
 		{
 			m_SteamLeaderboard = pCallback.m_hSteamLeaderboard;
+		}
+	}
+
+	// Closes all sockets and kills all threads (This prevents unity from freezing)
+	private void OnApplicationQuit()
+	{
+		if (SteamManager.Initialized == true)
+		{
+			SteamAPI.RunCallbacks();
+			SteamAPI.Shutdown();
+		}
+	}
+	private void OnDestroy()
+	{
+		if (SteamManager.Initialized == true)
+		{
+			SteamAPI.RunCallbacks();
+			SteamAPI.Shutdown();
 		}
 	}
 

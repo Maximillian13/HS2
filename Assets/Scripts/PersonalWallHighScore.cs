@@ -1,12 +1,13 @@
 ﻿// Written by Maximillian Coburn, Property of Bean Boy Games LLC. (Feel free to use it)
 using UnityEngine;
 using System.Collections;
+using TMPro;
 
 
 public class PersonalWallHighScore : MonoBehaviour 
 {
-	private TextMesh title;
-	private TextMesh score;
+	private TextMeshPro title;
+	private TextMeshPro score;
 
 	// Use this for initialization
 	void Start()
@@ -17,8 +18,8 @@ public class PersonalWallHighScore : MonoBehaviour
 			return;
 		}
 
-		title = this.transform.Find("ScoreTitle").GetComponent<TextMesh>();
-		score = this.transform.Find("ScoreNumber").GetComponent<TextMesh>();
+		title = this.transform.Find("ScoreTitle").GetComponent<TextMeshPro>();
+		score = this.transform.Find("ScoreNumber").GetComponent<TextMeshPro>();
 
 		bool cardio = PlayerPrefs.GetInt(Constants.cardioMode) == 1;
 		if (cardio == true)

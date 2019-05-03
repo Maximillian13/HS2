@@ -18,6 +18,8 @@ public class GameModeMaster : MonoBehaviour
 	private DestroyWall destroyWall;
 	private CalorieCounter calorieCounter;
 
+	private float wallSpeedMultiplier = 1;
+
 
 	#region private fields
 	private int wallSpawnCount; // How many walls have spawned 
@@ -279,7 +281,7 @@ public class GameModeMaster : MonoBehaviour
 			if (waveSpawns[2] == true)
 				wallCountAfterWarmUp++;
 
-			this.StartWallMovment(wallClone, wallSpeed); // Start the movement of the wall
+			this.StartWallMovment(wallClone, wallSpeed * wallSpeedMultiplier); // Start the movement of the wall
 			timer = 0; // Reset timer for next spawn
 
 			// Update the custom routine stat if we are in that mode and 10 walls have spawned (To avoid boosting) 
@@ -342,6 +344,18 @@ public class GameModeMaster : MonoBehaviour
 
 			// Set if we should switch game modes when going on break
 			switchModesOnBreak = bool.Parse(sr.ReadLine());
+
+			// Get lives 
+			int liveCount = int.Parse(sr.ReadLine());
+			// Make it endless
+			if (liveCount == 6)
+				livesLeft = int.MaxValue;
+			else
+				livesLeft = liveCount - 1; // To make base 0
+
+			// Get the speed mult
+			wallSpeedMultiplier = float.Parse(sr.ReadLine());
+
 		}
 	}
 
@@ -398,6 +412,9 @@ public class GameModeMaster : MonoBehaviour
 		if (Time.time >= onBreakTimer)
 		{
 			onBreak = false;
+			if (cardioMode == false)
+				phb.DisableEnableHands(true);
+
 			// Check to see if we are using the calorie counter
 			if (calorieCounter != null)
 				calorieCounter.SetPrevTime(Time.time);
@@ -440,6 +457,7 @@ public class GameModeMaster : MonoBehaviour
 				breakMessagePopped = false;
 				breakEndingPopped = false;
 				wallCountAfterWarmUp = 0;
+				phb.DisableEnableHands(false);
 			}
 		}
 
@@ -494,7 +512,7 @@ public class GameModeMaster : MonoBehaviour
 			if (waveSpawns[2] == true)
 				wallCountAfterWarmUp += wallCountToAdd;
 
-			this.StartWallMovment(wallClone, wallSpeed); // Start the movement of the wall
+			this.StartWallMovment(wallClone, wallSpeed * wallSpeedMultiplier); // Start the movement of the wall
 			timer = 0; // Reset timer for next spawn
 
 			// Update the custom routine stat if we are in that mode and 10 walls have spawned (To avoid boosting) 
@@ -545,6 +563,7 @@ public class GameModeMaster : MonoBehaviour
 		breakMessagePopped = true;
 		onBreakTimer = Time.time + breakLength;
 		preventGameModeSwitch = true;
+		phb.DisableEnableHands(false);
 	}
 
 	/// <summary>
@@ -564,7 +583,7 @@ public class GameModeMaster : MonoBehaviour
 	}
 
 	/// <summary>
-	/// Pop how many lives left (handed value) after handed wait time
+	/// Pop how many lives left (handed value) after handed wait time (-1 for infinity)
 	/// </summary>
 	public void PopLivesLeft(float waitTime, int livesLeft)
 	{
@@ -590,6 +609,14 @@ public class GameModeMaster : MonoBehaviour
 	public void EndGame()
 	{
 		stopSpawning = true;
+	}
+
+	/// <summary>
+	/// Returns if we are currently on break
+	/// </summary>
+	public bool GetOnBreak()
+	{
+		return onBreak;
 	}
 
 	/// <summary>

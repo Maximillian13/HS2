@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 
 public class CalorieCounter : MonoBehaviour
 {
 	// Squat Calculation based off this website https://www.livestrong.com/article/313995-calories-burned-during-squats/
 
-	private TextMesh count;
+	private TextMeshPro count;
 
 	private float prevTime;
 	private int currCount;
@@ -26,7 +27,7 @@ public class CalorieCounter : MonoBehaviour
 			return;
 
 		SceneManager.sceneLoaded += this.LevelLoaded;
-		count = this.transform.Find("CaloriesBurnedNumber").GetComponent<TextMesh>();
+		count = this.transform.Find("CaloriesBurnedNumber").GetComponent<TextMeshPro>();
 		prevTime = float.NegativeInfinity;
 		weight = PlayerPrefs.GetInt("PlayerWeight");
 		count.text = "0";

@@ -471,4 +471,22 @@ public class MainMenuControl : MonoBehaviour
 		}
 	}
 
+	// Closes all sockets and kills all threads (This prevents unity from freezing)
+	private void OnApplicationQuit()
+	{
+		if (SteamManager.Initialized == true)
+		{
+			SteamAPI.RunCallbacks();
+			SteamAPI.Shutdown();
+		}
+	}
+	//private void OnDestroy()
+	//{
+	//	if (SteamManager.Initialized == true)
+	//	{
+	//		SteamAPI.RunCallbacks();
+	//		SteamAPI.Shutdown();
+	//	}
+	//}
+
 }

@@ -1,0 +1,303 @@
+fileFormatVersion: 2
+guid: f926e724ef659d741952749c0ef87853
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: Cloner
+    100002: //RootNode
+    100004: Cube
+    100006: Cube_1
+    100008: Cube_1_2
+    100010: Cylinder
+    100012: Cylinder_1
+    100014: Cylinder_1_0
+    100016: Cylinder_1_1
+    100018: Cylinder_1_10
+    100020: Cylinder_1_11
+    100022: Cylinder_1_12
+    100024: Cylinder_1_13
+    100026: Cylinder_1_14
+    100028: Cylinder_1_15
+    100030: Cylinder_1_16
+    100032: Cylinder_1_17
+    100034: Cylinder_1_18
+    100036: Cylinder_1_19
+    100038: Cylinder_1_2
+    100040: Cylinder_1_20
+    100042: Cylinder_1_21
+    100044: Cylinder_1_22
+    100046: Cylinder_1_3
+    100048: Cylinder_1_4
+    100050: Cylinder_1_5
+    100052: Cylinder_1_6
+    100054: Cylinder_1_7
+    100056: Cylinder_1_8
+    100058: Cylinder_1_9
+    100060: Plane
+    100062: Polygon
+    100064: Polygon_1
+    100066: Rails
+    100068: Symmetry
+    100070: Symmetry_1
+    100072: Null
+    400000: Cloner
+    400002: //RootNode
+    400004: Cube
+    400006: Cube_1
+    400008: Cube_1_2
+    400010: Cylinder
+    400012: Cylinder_1
+    400014: Cylinder_1_0
+    400016: Cylinder_1_1
+    400018: Cylinder_1_10
+    400020: Cylinder_1_11
+    400022: Cylinder_1_12
+    400024: Cylinder_1_13
+    400026: Cylinder_1_14
+    400028: Cylinder_1_15
+    400030: Cylinder_1_16
+    400032: Cylinder_1_17
+    400034: Cylinder_1_18
+    400036: Cylinder_1_19
+    400038: Cylinder_1_2
+    400040: Cylinder_1_20
+    400042: Cylinder_1_21
+    400044: Cylinder_1_22
+    400046: Cylinder_1_3
+    400048: Cylinder_1_4
+    400050: Cylinder_1_5
+    400052: Cylinder_1_6
+    400054: Cylinder_1_7
+    400056: Cylinder_1_8
+    400058: Cylinder_1_9
+    400060: Plane
+    400062: Polygon
+    400064: Polygon_1
+    400066: Rails
+    400068: Symmetry
+    400070: Symmetry_1
+    400072: Null
+    2100000: OnOffLight
+    2100002: M_Metal
+    2100004: Neon
+    2100006: M_CosmicVOid
+    2100008: M_Chromey
+    2100010: No Name
+    2100012: MivingNeon
+    2300000: Cube
+    2300002: Cube_1
+    2300004: Cube_1_2
+    2300006: Cylinder
+    2300008: Cylinder_1
+    2300010: Cylinder_1_0
+    2300012: Cylinder_1_1
+    2300014: Cylinder_1_10
+    2300016: Cylinder_1_11
+    2300018: Cylinder_1_12
+    2300020: Cylinder_1_13
+    2300022: Cylinder_1_14
+    2300024: Cylinder_1_15
+    2300026: Cylinder_1_16
+    2300028: Cylinder_1_17
+    2300030: Cylinder_1_18
+    2300032: Cylinder_1_19
+    2300034: Cylinder_1_2
+    2300036: Cylinder_1_20
+    2300038: Cylinder_1_21
+    2300040: Cylinder_1_22
+    2300042: Cylinder_1_3
+    2300044: Cylinder_1_4
+    2300046: Cylinder_1_5
+    2300048: Cylinder_1_6
+    2300050: Cylinder_1_7
+    2300052: Cylinder_1_8
+    2300054: Cylinder_1_9
+    2300056: Plane
+    2300058: Polygon
+    2300060: Polygon_1
+    2300062: Rails
+    3300000: Cube
+    3300002: Cube_1
+    3300004: Cube_1_2
+    3300006: Cylinder
+    3300008: Cylinder_1
+    3300010: Cylinder_1_0
+    3300012: Cylinder_1_1
+    3300014: Cylinder_1_10
+    3300016: Cylinder_1_11
+    3300018: Cylinder_1_12
+    3300020: Cylinder_1_13
+    3300022: Cylinder_1_14
+    3300024: Cylinder_1_15
+    3300026: Cylinder_1_16
+    3300028: Cylinder_1_17
+    3300030: Cylinder_1_18
+    3300032: Cylinder_1_19
+    3300034: Cylinder_1_2
+    3300036: Cylinder_1_20
+    3300038: Cylinder_1_21
+    3300040: Cylinder_1_22
+    3300042: Cylinder_1_3
+    3300044: Cylinder_1_4
+    3300046: Cylinder_1_5
+    3300048: Cylinder_1_6
+    3300050: Cylinder_1_7
+    3300052: Cylinder_1_8
+    3300054: Cylinder_1_9
+    3300056: Plane
+    3300058: Polygon
+    3300060: Polygon_1
+    3300062: Rails
+    4300000: Cylinder_1
+    4300002: Plane
+    4300004: Cube_1
+    4300006: Cylinder_1_0
+    4300008: Cylinder_1_1
+    4300010: Cylinder_1_2
+    4300012: Cylinder_1_3
+    4300014: Cylinder_1_4
+    4300016: Cylinder_1_5
+    4300018: Cylinder_1_6
+    4300020: Cylinder_1_7
+    4300022: Cylinder_1_8
+    4300024: Cylinder_1_9
+    4300026: Cylinder_1_10
+    4300028: Cylinder_1_11
+    4300030: Cylinder_1_12
+    4300032: Cylinder_1_13
+    4300034: Cylinder_1_14
+    4300036: Cylinder_1_15
+    4300038: Cylinder_1_16
+    4300040: Cylinder_1_17
+    4300042: Cylinder_1_18
+    4300044: Cylinder_1_19
+    4300046: Cylinder_1_20
+    4300048: Cylinder_1_21
+    4300050: Cylinder_1_22
+    4300052: Rails
+    4300054: Cube
+    4300056: Cube_1_2
+    4300058: Cylinder
+    4300060: Polygon_1
+    4300062: Polygon
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_Chromey
+    second: {fileID: 2100000, guid: cc0b2a7afa645af409aaff44e2db756e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_CosmicVOid
+    second: {fileID: 2100000, guid: ae71ce77a7994734d972dbe8cb0970d3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_Metal
+    second: {fileID: 2100000, guid: cc0b2a7afa645af409aaff44e2db756e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MivingNeon
+    second: {fileID: 2100000, guid: 5f1f3f54735f1fb4db6cfba1005efd00, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Neon
+    second: {fileID: 2100000, guid: 9b8dcc9dd17e95a49b11f86552745ef1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: No Name
+    second: {fileID: 2100000, guid: 199eec32f3a614b428f0af13038b6d11, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: OnOffLight
+    second: {fileID: 2100000, guid: a1a4731d4da10cc468545e69f870d12d, type: 2}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

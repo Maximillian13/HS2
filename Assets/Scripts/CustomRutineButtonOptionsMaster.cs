@@ -13,11 +13,18 @@ public class CustomRutineButtonOptionsMaster : MonoBehaviour, IButtonMaster
 	public GenericButton[] wallsUntilBreakDownUp;
 	public GenericButton[] wallDensityButtons;
 	public GenericButton[] wallOpeningButtons;
+	public GenericButton[] livesButtons;
+	public GenericButton[] speedMultButtons;
 
 	public TextMeshPro[] breakTexts;
+	public TextMeshPro livesText;
+	public TextMeshPro speedMultText;
 
 	private int breakLengthCounter;
 	private int wallsUntilBreakCounter;
+
+	private int lives;
+	private float speedMult = 1;
 
 	// Start is called before the first frame update
 	void Start()
@@ -34,6 +41,10 @@ public class CustomRutineButtonOptionsMaster : MonoBehaviour, IButtonMaster
 			wallDensityButtons[i].Start();
 		for (int i = 0; i < wallOpeningButtons.Length; i++)
 			wallOpeningButtons[i].Start();
+		for (int i = 0; i < livesButtons.Length; i++)
+			livesButtons[i].Start();
+		for (int i = 0; i < speedMultButtons.Length; i++)
+			speedMultButtons[i].Start();
 
 		// Default settings 
 		warmUpButton.Select();
@@ -56,10 +67,19 @@ public class CustomRutineButtonOptionsMaster : MonoBehaviour, IButtonMaster
 	{
 		if(token == "HaveBreaksYes")
 			this.EnableOrDisableBreakButtons(!haveBreaksButton.IsSelected());
+
 		if (token.Contains("BreakLength"))
 			this.HandleBreakLength(token);
+
 		if (token.Contains("WallsUntilBreak"))
 			this.HandleWallUntilBreak(token);
+
+		if (token.Contains("Lives"))
+			this.HandleLives(token);
+
+		if (token.Contains("SpeedMult"))
+			this.HandleSpeedMult(token);
+
 		if (token.Contains("Thickness"))
 		{
 			GenericButton gb = this.FindButtonWithToken(token, wallDensityButtons);
@@ -72,6 +92,7 @@ public class CustomRutineButtonOptionsMaster : MonoBehaviour, IButtonMaster
 				}
 			}
 		}
+
 		if (token.Contains("Opening"))
 		{
 			GenericButton gb = this.FindButtonWithToken(token, wallOpeningButtons);
@@ -85,6 +106,50 @@ public class CustomRutineButtonOptionsMaster : MonoBehaviour, IButtonMaster
 			}
 		}
 
+	}
+
+	/// <summary>
+	/// Handles the button presses for the speed mult option
+	/// </summary>
+	private void HandleLives(string token)
+	{
+		if (token.Contains("Down"))
+		{
+			lives -= 1;
+			if (lives < 1)
+				lives = 1;
+		}
+		else
+		{
+			lives += 1;
+			if (lives > 6)
+				lives = 6;
+		}
+		// if we are at six, mark as infinity and make it so the player can not lose 
+		if (lives == 6)
+			livesText.text = "INF";
+		else
+			livesText.text = lives.ToString();
+	}
+
+	/// <summary>
+	/// Handles the button presses for the speed mult option
+	/// </summary>
+	private void HandleSpeedMult(string token)
+	{
+		if (token.Contains("Down"))
+		{
+			speedMult -= .1f;
+			if (speedMult < .8f)
+				speedMult = .8f;
+		}
+		else
+		{
+			speedMult += .1f;
+			if (speedMult > 1.2f)
+				speedMult = 1.2f;
+		}
+		speedMultText.text = speedMult.ToString();
 	}
 
 	/// <summary>
@@ -215,7 +280,7 @@ public class CustomRutineButtonOptionsMaster : MonoBehaviour, IButtonMaster
 	/// <returns></returns>
 	public string[] GetCustomRutineSummary()
 	{
-		string[] customRutineStrings = new string[5];
+		string[] customRutineStrings = new string[7];
 
 		// If warmUpButton[0] is selected then warm up == true 
 		customRutineStrings[0] = warmUpButton.IsSelected().ToString();
@@ -237,8 +302,12 @@ public class CustomRutineButtonOptionsMaster : MonoBehaviour, IButtonMaster
 		// Check all the different wall types for cardio and fill them in order of left, mid, right (true if button is active, false if not)
 		customRutineStrings[3] = wallOpeningButtons[0].IsSelected() + " " + wallOpeningButtons[1].IsSelected() + " " + wallOpeningButtons[2].IsSelected();
 
-		// Fill in the 
+		// Fill in the option if we will be switching mode on breaks
 		customRutineStrings[4] = switchGameModeButton.IsSelected().ToString();
+
+		// Fill out the amount of lives and speed multiplier
+		customRutineStrings[5] = lives.ToString();
+		customRutineStrings[6] = speedMult.ToString();
 
 		return customRutineStrings;
 	}

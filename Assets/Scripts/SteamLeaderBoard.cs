@@ -85,10 +85,18 @@ public class SteamLeaderBoard : MonoBehaviour
 		if (SteamManager.Initialized == true)
 		{
 			SteamAPI.RunCallbacks();
-			SteamAPI.ReleaseCurrentThreadMemory();
 			SteamAPI.Shutdown();
 		}
 	}
+	//private void OnDestroy()
+	//{
+	//	if(SteamManager.Initialized == true)
+	//	{
+	//		SteamAPI.RunCallbacks();
+	//		SteamAPI.Shutdown();
+	//	}
+	//}
+
 
 	private void SetCorrectLeaderBoard()
 	{

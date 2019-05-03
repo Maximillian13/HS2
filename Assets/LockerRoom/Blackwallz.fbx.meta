@@ -1,0 +1,205 @@
+fileFormatVersion: 2
+guid: dd4e192b46bb7ff48b0e24c8049115c8
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: Cube_1
+    100004: Cube_3
+    100006: DecorA
+    100008: DecorB
+    100010: DecorC
+    100012: DecorD
+    100014: Disc_1
+    100016: LR_Wall_Basic
+    100018: LR_Wall_Corner
+    100020: Column
+    100022: DoorA
+    100024: DoorB
+    100026: Ramp
+    100028: RoofGrid
+    400000: //RootNode
+    400002: Cube_1
+    400004: Cube_3
+    400006: DecorA
+    400008: DecorB
+    400010: DecorC
+    400012: DecorD
+    400014: Disc_1
+    400016: LR_Wall_Basic
+    400018: LR_Wall_Corner
+    400020: Column
+    400022: DoorA
+    400024: DoorB
+    400026: Ramp
+    400028: RoofGrid
+    2100000: NeonC
+    2100002: M_Metal
+    2100004: NeonB
+    2100006: NeonD
+    2100008: Neon
+    2100010: M_MAIN
+    2100012: NeonE
+    2300000: Cube_1
+    2300002: Cube_3
+    2300004: DecorA
+    2300006: DecorB
+    2300008: DecorC
+    2300010: DecorD
+    2300012: Disc_1
+    2300014: LR_Wall_Basic
+    2300016: LR_Wall_Corner
+    2300018: Column
+    2300020: DoorA
+    2300022: DoorB
+    2300024: Ramp
+    2300026: RoofGrid
+    3300000: Cube_1
+    3300002: Cube_3
+    3300004: DecorA
+    3300006: DecorB
+    3300008: DecorC
+    3300010: DecorD
+    3300012: Disc_1
+    3300014: LR_Wall_Basic
+    3300016: LR_Wall_Corner
+    3300018: Column
+    3300020: DoorA
+    3300022: DoorB
+    3300024: Ramp
+    3300026: RoofGrid
+    4300000: Disc_1
+    4300002: Cube_3
+    4300004: Cube_1
+    4300006: DecorD
+    4300008: DecorC
+    4300010: DecorB
+    4300012: DecorA
+    4300014: LR_Wall_Corner
+    4300016: LR_Wall_Basic
+    4300018: Column
+    4300020: DoorA
+    4300022: DoorB
+    4300024: Ramp
+    4300026: RoofGrid
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_MAIN
+    second: {fileID: 2100000, guid: 12d3be9239ff35f43a3c7dec209d907a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_Metal
+    second: {fileID: 2100000, guid: cc0b2a7afa645af409aaff44e2db756e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Neon
+    second: {fileID: 2100000, guid: 9b8dcc9dd17e95a49b11f86552745ef1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: NeonB
+    second: {fileID: 2100000, guid: a1a4731d4da10cc468545e69f870d12d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: NeonC
+    second: {fileID: 2100000, guid: 9b8dcc9dd17e95a49b11f86552745ef1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: NeonD
+    second: {fileID: 2100000, guid: 9b8dcc9dd17e95a49b11f86552745ef1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: NeonE
+    second: {fileID: 2100000, guid: 9b8dcc9dd17e95a49b11f86552745ef1, type: 2}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
