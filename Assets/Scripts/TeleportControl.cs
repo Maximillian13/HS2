@@ -6,6 +6,7 @@ using Valve.VR;
 public class TeleportControl : MonoBehaviour
 {
 	public bool leftHand;
+	public AudioSource sound;
 	private SteamVR_Input_Sources hand;
 
 	private Transform rig;
@@ -103,15 +104,15 @@ public class TeleportControl : MonoBehaviour
 
 
 		// On grip press activate the teleporting pointer thing
-		if (SteamVR_Input._default.inActions.GripPress.GetStateDown(hand))
+		if (SteamVR_Actions._default.GripPress.GetStateDown(hand))
 			tpStart.gameObject.SetActive(true);
 
 		// When being held, display where the player is pointing and will land 
-		if (SteamVR_Input._default.inActions.GripPress.GetState(hand))
+		if (SteamVR_Actions._default.GripPress.GetState(hand))
 			this.TeleportPlayer(false);
 
 		// Or release teleport the player to that location 
-		if (SteamVR_Input._default.inActions.GripPress.GetStateUp(hand))
+		if (SteamVR_Actions._default.GripPress.GetStateUp(hand))
 		{
 			this.TeleportPlayer(true);
 			tpStart.gameObject.SetActive(false);
@@ -124,13 +125,20 @@ public class TeleportControl : MonoBehaviour
 		if (tpStart == null)
 			return;
 
-		// Set up ray to be shot 
 		Ray ray = new Ray(this.tpStart.position, -this.tpStart.up);
+
+
+		//RaycastHit[] rh = Physics.RaycastAll(ray, float.PositiveInfinity);
+		//if(rh.Length < 1 || (rh.Length > 0 && rh[0].collider.tag != "TportArea"))
+		//{
+		//	Debug.Log("Killed");
+		//	return;
+		//}
+
+		// Set up ray to be shot 
 		RaycastHit rayHit;
-
-
 		// shoot a ray out the front of the tp thing and look for the ground with the tag "TportArea"
-		if (Physics.Raycast(ray, out rayHit, float.PositiveInfinity, LayerMask.GetMask("TportArea")) == true)
+		if (Physics.Raycast(ray, out rayHit, float.PositiveInfinity, LayerMask.GetMask("TportArea", "TportBlock")) == true && rayHit.collider.tag != "TportBlock")
 		{
 			// Display a marker where we will land (Check the diff from the old one so its not shaky)
 			if (snapTele == true)
@@ -159,7 +167,10 @@ public class TeleportControl : MonoBehaviour
 				Vector3 headPosOnGround = new Vector3(head.position.x, rig.position.y, head.position.z);
 				Vector3 translation = rayHit.point - headPosOnGround;
 				rig.position += translation;
-				
+
+				// Play the sound
+				sound.Play();
+
 				// Get rid of the marker
 				endMarker.SetActive(false);
 			}

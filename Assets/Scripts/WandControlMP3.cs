@@ -49,7 +49,7 @@ public class WandControlMP3 : MonoBehaviour
 			musicVolControl = musicGo.GetComponent<MusicVolumeControl>();
 		}
 
-		triggerBox = GameObject.Find("Player").transform.Find("MP3Trigger").GetComponent<MP3TriggerBox>();
+		triggerBox = GameObject.Find("MP3Trigger").GetComponent<MP3TriggerBox>();
 		mp3Transform = triggerBox.transform.Find("MP3Player");
 	}
 
@@ -101,7 +101,7 @@ public class WandControlMP3 : MonoBehaviour
 	/// </summary>
 	private void OnTriggerPress()
 	{
-		if (SteamVR_Input._default.inActions.TriggerPress.GetStateDown(hand))
+		if (SteamVR_Actions._default.TriggerPress.GetStateDown(hand))
 		{
 			// If the mp3 is not being held and it is the correct hand in the trigger box 
 			if (triggerBox.MP3InHand == false && triggerBox.HandInTriggerBox == handInt)
@@ -122,7 +122,7 @@ public class WandControlMP3 : MonoBehaviour
 	/// </summary>
 	public void OnTriggerHold()
 	{
-		if (SteamVR_Input._default.inActions.TriggerPress.GetState(hand) && holdingMp3 == true)
+		if (SteamVR_Actions._default.TriggerPress.GetState(hand) && holdingMp3 == true)
 		{
 			alphaTimer += Time.deltaTime / 2;
 			mp3Transform.localScale = Vector3.Lerp(mp3Transform.localScale, Vector3.one, alphaTimer);
@@ -132,7 +132,7 @@ public class WandControlMP3 : MonoBehaviour
 			mp3Transform.localEulerAngles = this.transform.localEulerAngles;
 
 			// If we press the track pad
-			if (SteamVR_Input._default.inActions.TrackPadPress.GetStateDown(hand))
+			if (SteamVR_Actions._default.TrackPadPress.GetStateDown(hand))
 			{
 				// Get the axis of the touch pad and do what needs to be done for that press
 				touchPadPos = tPad.GetAxis(hand);
@@ -156,7 +156,7 @@ public class WandControlMP3 : MonoBehaviour
 	/// </summary>
 	public void OnTriggerRelease()
 	{
-		if (SteamVR_Input._default.inActions.TriggerPress.GetStateUp(hand) && holdingMp3 == true)
+		if (SteamVR_Actions._default.TriggerPress.GetStateUp(hand) && holdingMp3 == true)
 		{
 			// Move the mp3 back 
 			moveBack = true;
@@ -175,6 +175,6 @@ public class WandControlMP3 : MonoBehaviour
 	/// </summary>
 	public void TriggerHaptic(float length, float strength)
 	{
-		hapticAction.Execute(0, length, 100, strength, hand);
+		hapticAction.Execute(0, length, 150, strength, hand);
 	}
 }

@@ -42,15 +42,15 @@ public class DailyChallengeMaster : MonoBehaviour
 			cardioWallTypes[i] = false;
 
 		// Fill out the description
-		this.FillDescription();
+		//this.FillDescription();
 
 		Debug.Log(PlayerPrefs.GetInt("DailySquatID"));
 	}
 
-	private void OnEnable()
-	{
-		this.FillDescription();
-	}
+	//private void OnEnable()
+	//{
+	//	this.FillDescription();
+	//}
 
 
 	/// <summary>
@@ -60,6 +60,9 @@ public class DailyChallengeMaster : MonoBehaviour
 	{
 		if (tms[0] == null)
 			this.Start();
+
+		// Clear song file
+		songs.Clear();
 
 		// Figure if we are in cardio mode 
 		bool inCardioMode = PlayerPrefs.GetInt(Constants.cardioMode) == 1;

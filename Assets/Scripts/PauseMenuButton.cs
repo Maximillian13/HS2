@@ -37,6 +37,16 @@ public class PauseMenuButton : MonoBehaviour, IInteractibleButton
 			master.MainMenu();
 			mr.enabled = false;
 		}
+
+		if (buttonSetToken == "HeightUp")
+		{
+			master.HeightUpDown(.1f);
+		}
+
+		if (buttonSetToken == "HeightDown")
+		{
+			master.HeightUpDown(-.1f);
+		}
 	}
 
 

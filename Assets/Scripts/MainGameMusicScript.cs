@@ -46,9 +46,9 @@ public class MainGameMusicScript : MonoBehaviour
 			return;
 
 		// Get the MP3 player
-		Transform mp3T = GameObject.Find("Player").transform.Find("MP3Trigger");
+		GameObject mp3T = GameObject.Find("MP3Trigger");
 		if (mp3T != null)
-			mp3 = mp3T.Find("MP3Player").GetComponent<MP3PlayerControl>();
+			mp3 = mp3T.transform.Find("MP3Player").GetComponent<MP3PlayerControl>();
 
 		// Make lists
 		//masterSongList = new List<AudioClip>();

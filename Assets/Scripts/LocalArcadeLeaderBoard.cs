@@ -80,7 +80,7 @@ public class LocalArcadeLeaderBoard : MonoBehaviour
 	{
 		if(Input.GetKeyDown(KeyCode.H))
 		{
-			this.AddEntryAndShowPlacment("Test", 8);
+			this.AddEntryAndShowPlacment("Test", -10000);
 		}
 	}
 
@@ -145,9 +145,9 @@ public class LocalArcadeLeaderBoard : MonoBehaviour
 	private void AddEntry(int currIndex, int entryIndex)
 	{
 		if (entryIndex == currIndex)
-			bodyText.text += "<color=yellow>" + currIndex + ". " + lbEntries[currIndex].Name + ": " + lbEntries[currIndex].Score + "</color>\n";
+			bodyText.text += "<color=yellow>" + (currIndex + 1) + ". " + lbEntries[currIndex].Name + ": " + lbEntries[currIndex].Score + "</color>\n";
 		else
-			bodyText.text += currIndex + ". " + lbEntries[currIndex].Name + ": " + lbEntries[currIndex].Score + "\n";
+			bodyText.text += (currIndex + 1) + ". " + lbEntries[currIndex].Name + ": " + lbEntries[currIndex].Score + "\n";
 	}
 }
 

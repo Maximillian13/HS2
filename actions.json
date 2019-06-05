@@ -88,26 +88,15 @@
   "localization": [
     {
       "language_tag": "en_US",
-      "/actions/default/in/InteractUI": "Interact With UI",
-      "/actions/default/in/Teleport": "Teleport",
-      "/actions/default/in/GrabPinch": "Grab Pinch",
-      "/actions/default/in/GrabGrip": "Grab Grip",
-      "/actions/default/in/SkeletonLeftHand": "Skeleton (Left)",
-      "/actions/default/in/SkeletonRightHand": "Skeleton (Right)",
       "/actions/default/in/Pose": "Pose",
       "/actions/default/out/Haptic": "Haptic",
-      "/actions/buggybuddy/in/Steering": "Steering",
-      "/actions/buggybuddy/in/Throttle": "Throttle",
-      "/actions/buggybuddy/in/Brake": "Brake",
-      "/actions/buggybuddy/in/Reset": "Reset",
       "/actions/platformer/in/Move": "Move",
       "/actions/platformer/in/Jump": "Jump",
       "/actions/default/in/TriggerPress": "Trigger Press",
       "/actions/default/in/TrackPadPress": "Track Pad Press",
       "/actions/default/in/GripPress": "Grip Press",
       "/actions/default/in/MenuPress": "Menu Press",
-      "/actions/default/in/TrackPadPos": "Track Pad Position",
-      "/actions/default/in/PoseTest": "Pose Test"
+      "/actions/default/in/TrackPadPos": "Track Pad Position"
     }
   ]
 }

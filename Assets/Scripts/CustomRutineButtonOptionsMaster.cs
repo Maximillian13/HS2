@@ -8,6 +8,7 @@ public class CustomRutineButtonOptionsMaster : MonoBehaviour, IButtonMaster
 	// All the button sections
 	public GenericButton warmUpButton;
 	public GenericButton haveBreaksButton;
+	public GenericButton handGuardButton;
 	public GenericButton switchGameModeButton;
 	public GenericButton[] breakLengthDownUp;
 	public GenericButton[] wallsUntilBreakDownUp;
@@ -32,6 +33,7 @@ public class CustomRutineButtonOptionsMaster : MonoBehaviour, IButtonMaster
 		// Set up all buttons 
 		warmUpButton.Start();
 		haveBreaksButton.Start();
+		handGuardButton.Start();
 		switchGameModeButton.Start();
 		for (int i = 0; i < breakLengthDownUp.Length; i++)
 			breakLengthDownUp[i].Start();
@@ -48,6 +50,7 @@ public class CustomRutineButtonOptionsMaster : MonoBehaviour, IButtonMaster
 
 		// Default settings 
 		warmUpButton.Select();
+		handGuardButton.Select();
 		switchGameModeButton.Deselect();
 		haveBreaksButton.Deselect();
 		this.EnableOrDisableBreakButtons(false);
@@ -280,7 +283,7 @@ public class CustomRutineButtonOptionsMaster : MonoBehaviour, IButtonMaster
 	/// <returns></returns>
 	public string[] GetCustomRutineSummary()
 	{
-		string[] customRutineStrings = new string[7];
+		string[] customRutineStrings = new string[8];
 
 		// If warmUpButton[0] is selected then warm up == true 
 		customRutineStrings[0] = warmUpButton.IsSelected().ToString();
@@ -294,20 +297,23 @@ public class CustomRutineButtonOptionsMaster : MonoBehaviour, IButtonMaster
 		else
 			customRutineStrings[1] += wallsUntilBreakCounter;
 
+		// Hand placement on or off
+		customRutineStrings[2] = handGuardButton.IsSelected().ToString();
+
 		// Check all the different wall densities and fill them in order of 1, 2, 3 (true if button is active, false if not)
-		customRutineStrings[2] = wallDensityButtons[0].IsSelected() == true ? "True" : "False";
-		customRutineStrings[2] += wallDensityButtons[1].IsSelected() == true ? " True " : " False ";
-		customRutineStrings[2] += wallDensityButtons[2].IsSelected() == true ? "True" : "False";
+		customRutineStrings[3] = wallDensityButtons[0].IsSelected() == true ? "True" : "False";
+		customRutineStrings[3] += wallDensityButtons[1].IsSelected() == true ? " True " : " False ";
+		customRutineStrings[3] += wallDensityButtons[2].IsSelected() == true ? "True" : "False";
 
 		// Check all the different wall types for cardio and fill them in order of left, mid, right (true if button is active, false if not)
-		customRutineStrings[3] = wallOpeningButtons[0].IsSelected() + " " + wallOpeningButtons[1].IsSelected() + " " + wallOpeningButtons[2].IsSelected();
+		customRutineStrings[4] = wallOpeningButtons[0].IsSelected() + " " + wallOpeningButtons[1].IsSelected() + " " + wallOpeningButtons[2].IsSelected();
 
 		// Fill in the option if we will be switching mode on breaks
-		customRutineStrings[4] = switchGameModeButton.IsSelected().ToString();
+		customRutineStrings[5] = switchGameModeButton.IsSelected().ToString();
 
 		// Fill out the amount of lives and speed multiplier
-		customRutineStrings[5] = lives.ToString();
-		customRutineStrings[6] = speedMult.ToString();
+		customRutineStrings[6] = lives.ToString();
+		customRutineStrings[7] = speedMult.ToString();
 
 		return customRutineStrings;
 	}

@@ -4,33 +4,52 @@ using UnityEngine;
 
 public class SteamLeaderButtonControl : MonoBehaviour, IButtonMaster
 {
+	public SteamLeaderBoard leaderBoard;
 	public GenericButton[] buttons;
-	public SteamLeaderBoard[] leaderBoards;
+	public string[] lbHandels;
+	public string[] lbNames;
+	private int lbIndex;
 
+	private int updateCounter;
 
 	// Start is called before the first frame update
 	void Start()
     {
-		for (int i = 0; i < buttons.Length; i++)
-			buttons[i].Start();
-		buttons[0].Select();
-    }
+		lbIndex = 0;
+		updateCounter = 0;
+	}
+
+	public void FixedUpdate()
+	{
+		if (updateCounter == 15)
+		{
+			// Needs to be done this way so when it loads from the server it doesnt get fucked
+			this.UpdateAroundYou();
+			updateCounter = 0;
+		}
+		updateCounter++;
+	}
 
 	public void ButtonPress(string token)
 	{
-		for (int i = 0; i < buttons.Length; i++)
-			buttons[i].Deselect();
+		// If clicking the next button
+		if(token == "Next")
+		{
+			lbIndex++;
+			if (lbIndex == lbHandels.Length)
+				lbIndex = 0;
 
-		if (token == "YScore")
-		{
-			for (int i = 0; i < leaderBoards.Length; i++)
-				leaderBoards[i].ChangeScoreBoardType(false);
+			leaderBoard.ChangeScoreBoard(lbHandels[lbIndex], lbNames[lbIndex]);
 		}
+	}
+
+	public void UpdateAroundYou()
+	{
+		// Check what kind of board 
+		if (buttons[1].IsSelected() == true)
+			leaderBoard.ChangeScoreBoardAroundType(false);
 		else
-		{
-			for (int i = 0; i < leaderBoards.Length; i++)
-				leaderBoards[i].ChangeScoreBoardType(true);
-		}
+			leaderBoard.ChangeScoreBoardAroundType(true);
 	}
 
 }

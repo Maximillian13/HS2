@@ -2,12 +2,13 @@
   "source": "Unity",
   "applications": [
     {
-      "app_key": "application.generated.unity.hotsquat.exe",
+      "app_key": "application.generated.unity.hotsquat2newglory.exe",
       "launch_type": "url",
       "url": "steam://launch/",
+      "action_manifest_path": "D:\\Projects\\HotSquat2\\HotSquat2\\actions.json",
       "strings": {
         "en_us": {
-          "name": "Hot Squat [Testing]"
+          "name": "Hot Squat 2: New Glory [Testing]"
         }
       }
     }

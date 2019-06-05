@@ -6,7 +6,7 @@ using Valve.VR;
 
 public class HandTypeController : MonoBehaviour
 {
-	public GameObject[] hands;
+	private GameObject[] hands = new GameObject[6];
 	public bool leftHand;
 	private SteamVR_Input_Sources hand;
 
@@ -37,7 +37,8 @@ public class HandTypeController : MonoBehaviour
 	{
 		// Destroy all old hands
 		for (int i = 0; i < hands.Length; i++)
-			Destroy(hands[i].gameObject);
+			if(hands[i] != null)
+				Destroy(hands[i].gameObject);
 
 		// Get all the hands 
 		string whichHand = leftHand == true ? "Left" : "Right";
@@ -46,7 +47,7 @@ public class HandTypeController : MonoBehaviour
 		hands[2] = Instantiate<GameObject>(Resources.Load<GameObject>("Hands/Hands" + modelIndex + "/" + whichHand + "/HandClenched"), this.transform);
 		hands[3] = Instantiate<GameObject>(Resources.Load<GameObject>("Hands/Hands" + modelIndex + "/" + whichHand + "/HandThumbUp"), this.transform);
 		hands[4] = Instantiate<GameObject>(Resources.Load<GameObject>("Hands/Hands" + modelIndex + "/" + whichHand + "/HandFlip"), this.transform);
-		hands[5] = Instantiate<GameObject>(Resources.Load<GameObject>("Hands/Hands" + modelIndex + "/" + whichHand + "/HandClap"), this.transform);
+		hands[5] = Instantiate<GameObject>(Resources.Load<GameObject>("Hands/Hands" + modelIndex + "/" + whichHand + "/HandOkay"), this.transform);
 
 		// Rename everything
 		hands[0].name = "HandRest";
@@ -54,30 +55,30 @@ public class HandTypeController : MonoBehaviour
 		hands[2].name = "HandClenched";
 		hands[3].name = "HandThumbUp";
 		hands[4].name = "HandFlip";
-		hands[5].name = "HandClap";
+		hands[5].name = "HandOkay";
 
 		// Position the hands correctly
 		for (int i = 0; i < hands.Length; i++)
-			hands[i].transform.localPosition = Vector3.zero;
+			hands[i].transform.localPosition = new Vector3(0, 0, -.1f);
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
-		if (SteamVR_Input._default.inActions.MenuPress.GetState(SteamVR_Input_Sources.RightHand) && SceneManager.GetActiveScene().buildIndex == 2)
+		if (SteamVR_Actions._default.MenuPress.GetState(SteamVR_Input_Sources.RightHand) && SceneManager.GetActiveScene().buildIndex == 2)
 		{
 			if(music != null)
 				music.mute = !music.mute;
 		}
-		if (SteamVR_Input._default.inActions.TriggerPress.GetState(hand)) // If the user presses the "trigger" button
+		if (SteamVR_Actions._default.TriggerPress.GetState(hand)) // If the user presses the "trigger" button
 		{
 			this.HandSelector(2);
 		}
-		else if (SteamVR_Input._default.inActions.GripPress.GetState(hand)) // If the user presses the side-button
+		else if (SteamVR_Actions._default.GripPress.GetState(hand)) // If the user presses the side-button
 		{
 			this.HandSelector(1);
 		}
-		else if (SteamVR_Input._default.inActions.TrackPadPress.GetState(hand)) // If the user presses the tack-pad
+		else if (SteamVR_Actions._default.TrackPadPress.GetState(hand)) // If the user presses the tack-pad
 		{
 			touchPadPos = tPad.GetAxis(hand);
 			if (touchPadPos.x < .5f && touchPadPos.x > -.5f && touchPadPos.y > .5f) // Up

@@ -18,28 +18,22 @@ public class MoveWall : MonoBehaviour
     {
         moveUp = true;
         moveDown = false;
-		if (cardioWall == false)
+		//if (cardioWall == false)
 		{
 			hCal = GameObject.Find("HeightCalibrator").GetComponent<HeightCalibrator>();
-			this.StartCoroutine(this.LateStart(hCal.GetCalibrationTime() + .1f));
+			height = hCal.GetWallAdjustedHeight();
 		}
-		else
+		//else
 		{
-			height = 0;
+		//	height = 0;
 		}
-    }
-    // Set the height of the wall based on the player height
-    IEnumerator LateStart(float waitTime)
-    {
-        yield return new WaitForSeconds(waitTime);
-        height = hCal.GetCalibratedHeight();
     }
 
 
 	void Update () 
     {
         // If the wall has reached its max point tell it to stop moving up
-        if(this.transform.localPosition.y >= height + .5f) // Todo: Test if +.5 is appropriate here (Need a tester)
+        if(this.transform.localPosition.y >= height) // Todo: Test if +.5 is appropriate here (Need a tester)
         {
             moveUp = false;
         }

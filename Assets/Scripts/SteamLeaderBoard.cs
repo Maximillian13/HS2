@@ -7,7 +7,7 @@ using TMPro;
 public class SteamLeaderBoard : MonoBehaviour
 {
 	public string lbName;
-	private TextMesh titleText; // The text mesh that will display the title
+	private TextMeshPro titleText; // The text mesh that will display the title
 	private TextMeshPro bodyText; // The text mesh that will display the leader board
 	private string handleName;
 
@@ -25,41 +25,11 @@ public class SteamLeaderBoard : MonoBehaviour
 			return;
 
 		// Find the text mesh
-		titleText = this.transform.Find("Title").GetComponent<TextMesh>();
+		titleText = this.transform.Find("Title").GetComponent<TextMeshPro>();
 		bodyText = this.transform.Find("Body").GetComponent<TextMeshPro>();
 		handleName = lbName;
 
-		// IF there is nothing default to the classic mode 
-		if (handleName == "")
-			handleName = "HS2ClassicModeLeaderBoard";
-
-		// Todo: Make sure that all this daily scoreboard buisness is working how we want it
-		// Daily challenge pulling from player prefs 
-		if (handleName == "DailyChallengeSquat")
-		{
-			if (DaySinceUnixTime.GetDaySinceUnixTime() == PlayerPrefs.GetInt(Constants.dailyChallengeIDToken))
-				handleName = "Squat" + PlayerPrefs.GetInt(Constants.dailyChallengeIDToken);
-			else
-				handleName = "Empty";
-		}
-		if (handleName == "DailyChallengeCardio")
-		{
-			if (DaySinceUnixTime.GetDaySinceUnixTime() == PlayerPrefs.GetInt(Constants.dailyChallengeIDToken))
-				handleName = "Cardio" + PlayerPrefs.GetInt(Constants.dailyChallengeIDToken);
-			else
-				handleName = "Empty";
-		}
-
-		// If its "BasedOffMode" then check what game mode we are on and get that 
-		if (lbName == "BasedOffMode")
-			this.SetCorrectLeaderBoard();
-
-		// Set up for the leader board to be updated
-		GameObject lbUpdateGO = GameObject.Find("UpdateSteamLeaderBoard");
-		if (lbUpdateGO != null)
-			lbUpdateGO.GetComponent<SteamLeaderBoardUpdater>().InitLeaderboard(handleName);
-
-		this.SetUpForLeaderBoardDisplay();
+		this.ChangeScoreBoard(handleName);
 	}
 
 	// Set up for the leader board display, needs to be called after everything has been sut up
@@ -76,18 +46,18 @@ public class SteamLeaderBoard : MonoBehaviour
 		}
 
 		// Set the leader board to be the one around the player
-		this.ChangeScoreBoardType(false);
+		this.ChangeScoreBoardAroundType(false);
 	}
 
 	// Closes all sockets and kills all threads (This prevents unity from freezing)
-	private void OnApplicationQuit()
-	{
-		if (SteamManager.Initialized == true)
-		{
-			SteamAPI.RunCallbacks();
-			SteamAPI.Shutdown();
-		}
-	}
+	//private void OnApplicationQuit()
+	//{
+	//	if (SteamManager.Initialized == true)
+	//	{
+	//		SteamAPI.RunCallbacks();
+	//		SteamAPI.Shutdown();
+	//	}
+	//}
 	//private void OnDestroy()
 	//{
 	//	if(SteamManager.Initialized == true)
@@ -161,6 +131,11 @@ public class SteamLeaderBoard : MonoBehaviour
 		{
 			SteamAPI.RunCallbacks();
 		}
+
+		//if(Input.GetKeyDown(KeyCode.V))
+		//{
+		//	this.ChangeScoreBoard("HS2ClassicModeCardioLeaderBoard");
+		//}
 	}
 
 	void OnLeaderboardScoresDownloaded(LeaderboardScoresDownloaded_t param, bool ioError)
@@ -218,7 +193,7 @@ public class SteamLeaderBoard : MonoBehaviour
 	/// <summary>
 	/// Change if this leader board displays in high score mode or around user mode
 	/// </summary>
-	public void ChangeScoreBoardType(bool hScore)
+	public void ChangeScoreBoardAroundType(bool hScore)
 	{
 		if (SteamManager.Initialized == true)
 		{
@@ -237,6 +212,50 @@ public class SteamLeaderBoard : MonoBehaviour
 				LeaderboardScoresDownloaded.Set(handle);
 			}
 		}
+	}
+
+	/// <summary>
+	/// Changes to given leaderboard based off handed in string 
+	/// </summary>
+	public void ChangeScoreBoard(string newHandle, string lbName = "")
+	{
+		// IF there is nothing default to the classic mode 
+		if (newHandle == "")
+			newHandle = "HS2ClassicModeLeaderBoard";
+
+		// Add name if needed
+		if (lbName != "")
+			titleText.text = lbName.ToUpper();
+
+		// Todo: Make sure that all this daily scoreboard buisness is working how we want it
+		// Daily challenge pulling from player prefs 
+		if (newHandle == "DailyChallengeSquat")
+		{
+			if (DaySinceUnixTime.GetDaySinceUnixTime() == PlayerPrefs.GetInt(Constants.dailyChallengeIDToken))
+				newHandle = "Squat" + PlayerPrefs.GetInt(Constants.dailyChallengeIDToken);
+			else
+				newHandle = "Empty";
+		}
+		if (newHandle == "DailyChallengeCardio")
+		{
+			if (DaySinceUnixTime.GetDaySinceUnixTime() == PlayerPrefs.GetInt(Constants.dailyChallengeIDToken))
+				newHandle = "Cardio" + PlayerPrefs.GetInt(Constants.dailyChallengeIDToken);
+			else
+				newHandle = "Empty";
+		}
+
+		handleName = newHandle;
+
+		// If its "BasedOffMode" then check what game mode we are on and get that 
+		if (lbName == "BasedOffMode")
+			this.SetCorrectLeaderBoard();
+
+		// Set up for the leader board to be updated
+		GameObject lbUpdateGO = GameObject.Find("UpdateSteamLeaderBoard");
+		if (lbUpdateGO != null)
+			lbUpdateGO.GetComponent<SteamLeaderBoardUpdater>().InitLeaderboard(handleName);
+
+		this.SetUpForLeaderBoardDisplay();
 	}
 
 

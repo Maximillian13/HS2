@@ -4,15 +4,23 @@ using UnityEngine;
 
 public class MP3TriggerBox : MonoBehaviour
 {
+	public Transform mp3BodyPos;
 	// What hand is in the box to grab it (0 = left, 1 = right, -1 = none)
 	private int handIn = -1;
 	private bool mp3InHand;
+
+	private void Update()
+	{
+		this.transform.position = mp3BodyPos.position;
+		this.transform.eulerAngles = mp3BodyPos.eulerAngles;
+
+	}
 
 	private void OnTriggerEnter(Collider other)
 	{
 		// BUG: For some reason if you press the trigger button as the haptics are firing it will go continusly 
 		if (other.name == "Controller (left)" || other.name == "Controller (right)")
-			other.GetComponent<WandControlMP3>().TriggerHaptic(.2f, .1f);
+			other.GetComponent<WandControlMP3>().TriggerHaptic(.1f, .1f);
 	}
 
 	private void OnTriggerStay(Collider other)

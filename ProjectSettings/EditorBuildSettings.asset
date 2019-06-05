@@ -14,7 +14,4 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/ClassicMode.unity
     guid: f42788b39bf70f645a802354a4c6a38d
-  - enabled: 1
-    path: Assets/Scenes/old/WarningStuff.unity
-    guid: 73e87ebd1b350984ba33c28cb144e62b
   m_configObjects: {}

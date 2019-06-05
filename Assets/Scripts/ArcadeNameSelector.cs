@@ -151,7 +151,7 @@ public class ArcadeNameSelector : MonoBehaviour, IButtonMaster
 			this.transform.localScale = new Vector3(this.transform.localScale.x + .033f, this.transform.localScale.y + .025f, this.transform.localScale.z + .004166f);
 			if(this.transform.localScale.x >= 2)
 			{
-				this.transform.localScale = new Vector3(2, 1.5f, .25f);
+				this.transform.localScale = new Vector3(1.5f, 1, .2f);
 				grow = false;
 			}
 		}

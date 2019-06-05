@@ -34,23 +34,23 @@ public class WandControlMenuInteraction : MonoBehaviour
 		//	UnityEngine.SceneManagement.SceneManager.LoadScene(0);
 
 		// IF the trigger is pressed 
-		if (SteamVR_Input._default.inActions.TriggerPress.GetStateDown(hand))
+		if (SteamVR_Actions._default.TriggerPress.GetStateDown(hand))
 		{
 			// If we are just interacting with exactly 1 button
 			if(collidedButtons.Count == 1)
 				collidedButtons[0].PressButton(); // Go to the button script and do what it says
+			if (collidedButtons.Count > 1)
+				Debug.Log("BigBoy");
 		}
 
 		// If the track pad is pressed (For emote selection)
-		if (SteamVR_Input._default.inActions.TrackPadPress.GetStateDown(hand))
+		if (SteamVR_Actions._default.TrackPadPress.GetStateDown(hand))
 		{
 			// If we are just interacting with exactly 1 button
 			if (emoteButtons.Count == 1)
 				emoteButtons[0].PressButton(tPad.GetAxis(hand)); // Go to the button script and do what it says
 		}
 	}
-
-	// Bug: When hovering over multiple option v fast it breaks button presses. (Keep testing but it might be fixed)
 
 	// Enters button
 	void OnTriggerEnter(Collider other)
@@ -60,6 +60,7 @@ public class WandControlMenuInteraction : MonoBehaviour
 		// If its a button
 		if (collidedButton != null)
 		{
+			Debug.Log("Enter");
 			// Highlight it
 			collidedButton.HighLight(true);
 			// Add the button to the list 
@@ -87,6 +88,8 @@ public class WandControlMenuInteraction : MonoBehaviour
 		// If its a button
 		if (collidedButton != null)
 		{
+			Debug.Log("Exit");
+
 			// Set the color to be un-highlighted
 			collidedButton.HighLight(false);
 			// Remove the button from the list

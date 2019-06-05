@@ -9,6 +9,7 @@ public class UpDownBob : MonoBehaviour
     public float downHeight = 2;
     public bool squater;
     public bool biker;
+	public bool runner;
     private float speed;
 
     public bool forceDown;
@@ -34,24 +35,26 @@ public class UpDownBob : MonoBehaviour
             speed = Random.Range(.3f, 2f);
         else if(biker == true)
             speed = Random.Range(1, 2);
-        else
-            speed = .15f;
+		else if (runner == true)
+			speed = Random.Range(1, 1.5f);
+		else
+			speed = .15f;
 	}
 	
 	// Update is called once per frame
 	void Update () 
     {
         // If it gets to a cretin hight or depth make it switch direction 
-	    if(this.transform.position.y > upHeight)//(Using constant numbers now because we dont need it in multiple places might want to change to public values eventually)
+	    if(this.transform.localPosition.y > upHeight)//(Using constant numbers now because we dont need it in multiple places might want to change to public values eventually)
             goDown = true;
-        if (this.transform.position.y < downHeight)
+        if (this.transform.localPosition.y < downHeight)
             goDown = false;
 
         // Make the object bob up or down
         if(goDown == true)
-            this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y - (speed * Time.smoothDeltaTime), this.transform.position.z);
+            this.transform.localPosition = new Vector3(this.transform.localPosition.x, this.transform.localPosition.y - (speed * Time.smoothDeltaTime), this.transform.localPosition.z);
         else
-            this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y + (speed * Time.smoothDeltaTime), this.transform.position.z);
+            this.transform.localPosition = new Vector3(this.transform.localPosition.x, this.transform.localPosition.y + (speed * Time.smoothDeltaTime), this.transform.localPosition.z);
         
 	}
 }

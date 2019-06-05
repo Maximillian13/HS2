@@ -13,10 +13,10 @@ public class MusicVolumeControl : MonoBehaviour
 		audioSource = this.GetComponent<AudioSource>();
 		audioSource.volume = (PlayerPrefs.GetInt("MusicVol") + 10) / 10.0f;
 
-		Transform mp3T = GameObject.Find("Player").transform.Find("MP3Trigger");
+		GameObject mp3T = GameObject.Find("MP3Trigger");
 		if (mp3T != null)
 		{
-			mp3 = mp3T.Find("MP3Player").GetComponent<MP3PlayerControl>();
+			mp3 = mp3T.transform.Find("MP3Player").GetComponent<MP3PlayerControl>();
 			this.ChangeCurrentVolumeAndMP3(0); // Make it match the in game volume 
 		}
     }

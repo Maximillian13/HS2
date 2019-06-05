@@ -1,13 +1,14 @@
 ﻿// Written by Maximillian Coburn, Property of Bean Boy Games LLC. (Feel free to use it)
 using UnityEngine;
 using System.Collections;
+using TMPro;
 
 public class HandPlacment : MonoBehaviour 
 {
     // The left and right hand
     public HandPlacmentLeft leftHand;
     public HandPlacmentRight rightHand;
-    public TextMesh tm;
+    public TextMeshPro tm;
 
     // The material and render of the box you need to be inside 
     public Material[] mat;

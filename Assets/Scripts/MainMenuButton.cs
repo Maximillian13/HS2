@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MainMenuButton : MonoBehaviour, IInteractibleButton
 {
+	public bool press;
 	public string buttonSetToken;   // What the button will do
 	private MeshRenderer mr;        // For highlighting
 	private MainMenuControl mmc;
@@ -17,6 +18,14 @@ public class MainMenuButton : MonoBehaviour, IInteractibleButton
 		mmc = GameObject.Find("MainMenuControl").GetComponent<MainMenuControl>();
 	}
 
+	private void Update()
+	{
+		if (press == true)
+		{
+			this.PressButton();
+			press = false;
+		}
+	}
 
 	// At the start of an interaction
 	public void PressButton()

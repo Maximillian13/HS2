@@ -11,18 +11,31 @@ public class WandControlGeneralInteraction : MonoBehaviour
 	private InteractableObject closesyItem;
 	private InteractableObject interactingItem;
 
+	private BoxCollider boxColl;
+	private float collTimer;
+
 	private void Start()
 	{
-		if(leftHand == true)
+		collTimer = float.PositiveInfinity;
+
+		if (leftHand == true)
+		{
 			hand = SteamVR_Input_Sources.LeftHand;
+			boxColl = GameObject.Find("BoxColLeft").GetComponent<BoxCollider>();
+		}
 		else
+		{
 			hand = SteamVR_Input_Sources.RightHand;
+			boxColl = GameObject.Find("BoxColRight").GetComponent<BoxCollider>();
+		}
 	}
 
 	void Update()
 	{
+		boxColl.transform.position = this.transform.position;
+		boxColl.transform.eulerAngles = this.transform.eulerAngles;
 		// If you press the trigger button
-		if (SteamVR_Input._default.inActions.TriggerPress.GetStateDown(hand))
+		if (SteamVR_Actions._default.TriggerPress.GetStateDown(hand))
 		{
 			// Calculate the minimum distance if there are multiple object you are interacting with
 			this.GetClosestItem();
@@ -36,11 +49,12 @@ public class WandControlGeneralInteraction : MonoBehaviour
 			if (interactingItem != null)
 			{
 				interactingItem.StartInteraction(this);
+				boxColl.enabled = false;
 			}
 		}
 
 		// If you release the trigger button
-		if (SteamVR_Input._default.inActions.TriggerPress.GetStateUp(hand))
+		if (SteamVR_Actions._default.TriggerPress.GetStateUp(hand))
 		{
 			// Drop the item
 			this.DropItem();
@@ -49,6 +63,14 @@ public class WandControlGeneralInteraction : MonoBehaviour
 				interactingItem = null;
 				closesyItem = null;
 			}
+			collTimer = Time.time + .25f;
+		}
+
+		// Re-enable the box collider after releasing 
+		if(Time.time > collTimer)
+		{
+			collTimer = float.PositiveInfinity;
+			boxColl.enabled = true;
 		}
 	}
 

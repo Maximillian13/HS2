@@ -8,7 +8,9 @@ public class GameModeMaster : MonoBehaviour
 	public WallSpawner wallSpawner;
 	public WallSpawnerCardio wallSpawnerCardio;
 	public GameObject[] objsToDestroy;
-	public PlayerHitBox phb;
+	public PlayerHitBox playerHitBox;
+
+	public PauseMenu[] pauseMenues;
 
 	private bool preventGameModeSwitch;
 	private int livesLeft;
@@ -19,6 +21,8 @@ public class GameModeMaster : MonoBehaviour
 	private CalorieCounter calorieCounter;
 
 	private float wallSpeedMultiplier = 1;
+
+	private bool haveHandGuard = true;
 
 
 	#region private fields
@@ -118,7 +122,12 @@ public class GameModeMaster : MonoBehaviour
 
 			// If we are in custom mode, check to update the stat
 			if (PlayerPrefs.GetInt(Constants.gameMode) == Constants.gameModeCustom)
+			{
 				customRoutineStatCheck = true;
+				// Set the arcade pause menus
+				for (int i = 0; i < pauseMenues.Length; i++)
+					pauseMenues[i].SetPauseButton(Instantiate<GameObject>(Resources.Load<GameObject>("Other/PauseMenuCustom")));
+			}
 		}
 
 		this.ActivateGameMode();
@@ -146,7 +155,7 @@ public class GameModeMaster : MonoBehaviour
 
 		// Switch modes 
 		cardioMode = !cardioMode;
-		phb.SetGameMode(cardioMode);
+		playerHitBox.SetGameMode(cardioMode);
 
 	}
 
@@ -313,7 +322,7 @@ public class GameModeMaster : MonoBehaviour
 		else
 			wallSpawnerCardio.gameObject.SetActive(false);
 
-		phb.SetGameMode(cardioMode);
+		playerHitBox.SetGameMode(cardioMode);
 	}
 
 
@@ -331,6 +340,9 @@ public class GameModeMaster : MonoBehaviour
 			string[] breakTokens = sr.ReadLine().Split(' ');
 			secondsToPauseFor = int.Parse(breakTokens[0]);
 			pauseAfterXWaves = int.Parse(breakTokens[1]);
+
+			// Get the hand guard setting 
+			haveHandGuard = bool.Parse(sr.ReadLine());
 
 			// Set what walls are allowed
 			string[] wallTokens = sr.ReadLine().Split(' ');
@@ -351,11 +363,10 @@ public class GameModeMaster : MonoBehaviour
 			if (liveCount == 6)
 				livesLeft = int.MaxValue;
 			else
-				livesLeft = liveCount - 1; // To make base 0
+				livesLeft = liveCount; 
 
 			// Get the speed mult
 			wallSpeedMultiplier = float.Parse(sr.ReadLine());
-
 		}
 	}
 
@@ -412,8 +423,8 @@ public class GameModeMaster : MonoBehaviour
 		if (Time.time >= onBreakTimer)
 		{
 			onBreak = false;
-			if (cardioMode == false)
-				phb.DisableEnableHands(true);
+			if (cardioMode == false || haveHandGuard == true)
+				playerHitBox.DisableEnableHands(true);
 
 			// Check to see if we are using the calorie counter
 			if (calorieCounter != null)
@@ -429,7 +440,7 @@ public class GameModeMaster : MonoBehaviour
 			preventGameModeSwitch = false;
 
 			if(stopSpawning == false) // Check if the game is still going 
-				waveShooter.PopMessage(3);
+				waveShooter.PopBreakMessage(false);
 			breakEndingPopped = true;
 
 		}
@@ -438,7 +449,7 @@ public class GameModeMaster : MonoBehaviour
 		if (Time.time >= onBreakTimer - secondsToPauseFor + 7 && breakMessagePopped == false)
 		{
 			if (stopSpawning == false) // Check if the game is still going 
-				waveShooter.PopMessage(3);
+				waveShooter.PopBreakMessage(true);
 			breakMessagePopped = true;
 		}
 
@@ -457,7 +468,7 @@ public class GameModeMaster : MonoBehaviour
 				breakMessagePopped = false;
 				breakEndingPopped = false;
 				wallCountAfterWarmUp = 0;
-				phb.DisableEnableHands(false);
+				playerHitBox.DisableEnableHands(false);
 			}
 		}
 
@@ -560,10 +571,11 @@ public class GameModeMaster : MonoBehaviour
 	public void GoOnBreakImdate(float breakLength)
 	{
 		onBreak = true;
-		breakMessagePopped = true;
 		onBreakTimer = Time.time + breakLength;
+		breakEndingPopped = false;
+		breakMessagePopped = true;
 		preventGameModeSwitch = true;
-		phb.DisableEnableHands(false);
+		playerHitBox.DisableEnableHands(false);
 	}
 
 	/// <summary>
@@ -617,6 +629,14 @@ public class GameModeMaster : MonoBehaviour
 	public bool GetOnBreak()
 	{
 		return onBreak;
+	}
+
+	/// <summary>
+	/// Gets if the hand guard should be enabled 
+	/// </summary>
+	public bool GetHandGuard()
+	{
+		return this.haveHandGuard;
 	}
 
 	/// <summary>

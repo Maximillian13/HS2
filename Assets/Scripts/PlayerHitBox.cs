@@ -43,6 +43,7 @@ public class PlayerHitBox : MonoBehaviour
 		if (handMessageG != null)
 			handPlacement[1] = handMessageG;
 
+
 		squatCardioScore = 0;
 		tScore.text = squatCardioScore.ToString();
 
@@ -51,6 +52,9 @@ public class PlayerHitBox : MonoBehaviour
 
 		//squatCounter = GameObject.Find("SquatWallCounterAchievments").GetComponent<SquatCounter>();
 		SteamLeaderBoardUpdater = GameObject.Find("UpdateSteamLeaderBoard").GetComponent<SteamLeaderBoardUpdater>();
+
+		// Get rid of the hand guard if we are not using it 
+		this.DisableEnableHands(gameModeMaster.GetHandGuard());
 	}
 
 	/// <summary>
@@ -192,7 +196,7 @@ public class PlayerHitBox : MonoBehaviour
 			// Tell the main game to go on break
 			gameModeMaster.GoOnBreakImdate(20);
 			if (gameModeMaster.GetAmountOfLivesLeft() != int.MaxValue)
-				gameModeMaster.PopLivesLeft(4, gameModeMaster.GetAmountOfLivesLeft());
+				gameModeMaster.PopLivesLeft(4, gameModeMaster.GetAmountOfLivesLeft() );
 			else
 				gameModeMaster.PopLivesLeft(4, -1);
 
@@ -205,7 +209,7 @@ public class PlayerHitBox : MonoBehaviour
 	/// <summary>
 	/// Destroy all walls and end the game
 	/// </summary>
-    public void EndGame()
+    public void EndGame(bool viaPauseMenu = false)
     {
 		// If we have already done the ending stuff return out
 		if (gameOver == true)
@@ -239,13 +243,14 @@ public class PlayerHitBox : MonoBehaviour
 			SteamLeaderBoardUpdater.UpdateLeaderBoard(currScore);
 			AchivmentAndStatControl.SetStat(Constants.highScore, currScore);
 
-			// Pop up the name select
-			ArcadeNameSelector nameSelector = GameObject.Find("ArcadeNameSelector").GetComponent<ArcadeNameSelector>();
-			nameSelector.SetPlayerScore(currScore);
-			nameSelector.SetToSize();
-
-			// Get rid of the hand placement stuff so it does not bug you when entering your name
-			this.DisableEnableHands(false);
+			// Dont enable the player score pop up 
+			if (viaPauseMenu == false)
+			{
+				// Pop up the name select
+				ArcadeNameSelector nameSelector = GameObject.Find("ArcadeNameSelector").GetComponent<ArcadeNameSelector>();
+				nameSelector.SetPlayerScore(currScore);
+				nameSelector.SetToSize();
+			}
 
 			// Prevent loading level so we can pick name
 			GameObject.Find("GameModeMaster").GetComponent<GameModeMaster>().PreventLevelFromLoading = true;
@@ -286,8 +291,7 @@ public class PlayerHitBox : MonoBehaviour
 				{
 					Transform t = gibs.transform.parent.parent; // Get the grandparent (Squat-Wall)
 					gibs.GetComponent<MeshRenderer>().enabled = true; // Make it so the player can see the gibs
-					gibs.gameObject.AddComponent<InteractableObject>(); // Make it so the player can pick up the wall gibs
-					ShrinkAndDestroy shrinkAndDestroy = gibs.gameObject.AddComponent<ShrinkAndDestroy>();
+					ShrinkAndDestroy shrinkAndDestroy = gibs.gameObject.GetComponent<ShrinkAndDestroy>();
 					shrinkAndDestroy.ShrinkDestroy(10);
 					gibs.transform.parent = null; // Un-parent the gibs
 					gibs.isKinematic = false; // Make physics work on them

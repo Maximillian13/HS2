@@ -187,7 +187,7 @@ namespace Valve.VR.InteractionSystem
 		{
 			if ( handHoverLocked )
 			{
-                handHoverLocked.HideGrabHint();
+                //handHoverLocked.HideGrabHint();
 				handHoverLocked.HoverUnlock(interactable);
 				handHoverLocked = null;
 			}
@@ -219,14 +219,14 @@ namespace Valve.VR.InteractionSystem
 		//-------------------------------------------------
 		private void OnHandHoverBegin( Hand hand )
 		{
-            hand.ShowGrabHint();
+            //hand.ShowGrabHint();
 		}
 
 
 		//-------------------------------------------------
 		private void OnHandHoverEnd( Hand hand )
 		{
-            hand.HideGrabHint();
+            //hand.HideGrabHint();
 
 			if ( driving && hand )
 			{
@@ -262,7 +262,7 @@ namespace Valve.VR.InteractionSystem
 				ComputeAngle( hand );
 				UpdateAll();
 
-                hand.HideGrabHint();
+                //hand.HideGrabHint();
 			}
             else if (grabbedWithType != GrabTypes.None && isGrabEnding)
 			{
@@ -298,8 +298,8 @@ namespace Valve.VR.InteractionSystem
 			}
 			else
 			{
-				Debug.LogFormat( "The collider needs to be a minimum distance away from the CircularDrive GameObject {0}", gameObject.ToString() );
-				Debug.Assert( false, string.Format( "The collider needs to be a minimum distance away from the CircularDrive GameObject {0}", gameObject.ToString() ) );
+				Debug.LogFormat("<b>[SteamVR Interaction]</b> The collider needs to be a minimum distance away from the CircularDrive GameObject {0}", gameObject.ToString() );
+				Debug.Assert( false, string.Format("<b>[SteamVR Interaction]</b> The collider needs to be a minimum distance away from the CircularDrive GameObject {0}", gameObject.ToString() ) );
 			}
 
 			if ( debugPath && dbgPathLimit > 0 )

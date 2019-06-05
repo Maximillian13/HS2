@@ -7,30 +7,20 @@ using Steamworks;
 
 public class MainMenuControl : MonoBehaviour
 {
-	private GameObject[] randScenes;
-	private int lastRandInd;
-
-	public GameObject[] specailScenes;
-
 	public GameObject[] buttonSet;
 	public Transform wall;
 	public Transform specailWall;
 	public Transform collectableSpawnerParent;
 
-	private CollectibleSpawner[] collSpawners;
-
-	private bool moveDown;
-	private bool moveUp;
-	private bool speacialMoveDown;
-	private bool specailMoveUp;
-	private bool specailCase;
-	private float bottomTimer;
 	private string buttonSetToken;
 
-	private float loadTimer;
-	private int loadIndex;
+	private bool moveBack;
+	private bool moveForward;
+	private float buttonTimer;
 
-	private float quitTimer;
+	private Vector3 forwordPos;
+	private Vector3 backPos;
+
 
 	//private GymSelectButtonControl gymSelectControl;
 	//private SongSelectButtonControl songSelectControl;
@@ -44,6 +34,8 @@ public class MainMenuControl : MonoBehaviour
 	private DailyChallengeMaster dailyChallengeControl;
 	private CustomRutineButtonOptionsMaster customRutineControl;
 
+	private MainMenuLevelLoader levelLoader;
+
 	private string CUSTOM_DATA_PATH;
 
 	// Start is called before the first frame update
@@ -56,26 +48,15 @@ public class MainMenuControl : MonoBehaviour
 		if (File.Exists(CUSTOM_DATA_PATH) == true)
 			File.Delete(CUSTOM_DATA_PATH);
 
-		// Set up for the collectibles
-		collSpawners = new CollectibleSpawner[collectableSpawnerParent.childCount];
-		for (int i = 0; i < collSpawners.Length; i++)
-			collSpawners[i] = collectableSpawnerParent.GetChild(i).GetComponent<CollectibleSpawner>();
-
-		// Set up for rand scenes 
-		GameObject randScenes = this.transform.Find("Random").gameObject;
-		this.randScenes = new GameObject[randScenes.transform.childCount];
-		for (int i = 0; i < this.randScenes.Length; i++)
-			this.randScenes[i] = randScenes.transform.GetChild(i).gameObject;
-		for (int i = 0; i < this.randScenes.Length; i++)
-			this.randScenes[i].SetActive(false);
-
-		// Set up for Special scenes 
-		for (int i = 0; i < this.specailScenes.Length; i++)
-			this.specailScenes[i].SetActive(false);
+		// The position that the buttons will go to when transitioning
+		forwordPos = new Vector3(0, 1.375f, .8f);
+		backPos = new Vector3(0, 1.375f, 1.2f);
+		buttonTimer = float.PositiveInfinity;
 
 		// Active all button sets so we can get their components 
 		for (int i = 0; i < buttonSet.Length; i++)
 			buttonSet[i].SetActive(true);
+
 
 		// Get control objects
 		gymAndSongSelectControl = buttonSet[1].transform.Find("GymSongSelect").GetComponent<GymAndSongSelectControl>();
@@ -86,13 +67,10 @@ public class MainMenuControl : MonoBehaviour
 		customRutineControl = buttonSet[3].transform.GetChild(0).GetComponent<CustomRutineButtonOptionsMaster>();
 		gameModeSelector = buttonSet[4].transform.GetChild(0).GetComponent<WorkOutSelectControl>();
 
+		levelLoader = GameObject.Find("MainMenuLevelLoader").GetComponent<MainMenuLevelLoader>();
+
 		// Set up to display the main menu (and deactivate all the others)
 		this.ActivateButtonSet("MainMenu");
-
-		// Make it so these dont activate for like 100 years or something
-		loadTimer = float.PositiveInfinity;
-		quitTimer = float.PositiveInfinity;
-		bottomTimer = float.PositiveInfinity;
 
 		// Make sure weight is set properly 
 		if (PlayerPrefs.GetInt("PlayerWeight") == 0)
@@ -114,68 +92,15 @@ public class MainMenuControl : MonoBehaviour
 		}
 
 		if (Input.GetKeyDown(KeyCode.Q))
-			this.TransitionToMenu("Outfits");
+			this.TransitionToMenu("GameMode ClassicMode");
 		if (Input.GetKeyDown(KeyCode.W))
 			this.TransitionToMenu("Stats");
 		if(Input.GetKeyDown(KeyCode.D))
 			this.TransitionToMenu("DailyChallenge");
 		if (Input.GetKeyDown(KeyCode.F))
 			this.TransitionToMenu("LoadLevel dc");
-		if (Input.GetKeyDown(KeyCode.O))
-			this.TransitionToMenu("Options");
 
-		// If we need to move the walls up or down
 		this.MoveWall();
-		this.MoveWallSpecail();
-
-		// Check to see if its time to close our eyes and load or quit a the level
-		this.TransitionTimer(loadIndex, ref loadTimer);
-		this.TransitionTimer(-1, ref quitTimer);
-	}
-
-	/// <summary>
-	/// Check if the timer has ran out and if it has, close eyes and load a level or quit the game
-	/// </summary>
-	/// <param name="loadInd">Level to load or -1 to quit</param>
-	/// <param name="timer">What timer we are paying attention to</param>
-	private void TransitionTimer(int loadInd, ref float timer)
-	{
-		// If we are ready to load a level, close eyes and load level
-		if (Time.time > timer)
-		{
-			GameObject.Find("[CameraRig]").transform.Find("Camera").GetComponent<EyeFadeControl>().CloseEyes(loadIndex, true);
-			timer = float.PositiveInfinity;
-		}
-	}
-
-	/// <summary>
-	/// Move the special wall up and down
-	/// </summary>
-	private void MoveWallSpecail()
-	{
-		// Move the special wall down
-		if (speacialMoveDown == true)
-		{
-			specailWall.position = new Vector3(specailWall.position.x, specailWall.position.y - (15 * Time.deltaTime), specailWall.position.z);
-			if (specailWall.position.y <= -0.749f)
-			{
-				specailWall.position = new Vector3(specailWall.position.x, -0.749f, specailWall.position.z);
-				speacialMoveDown = false;
-				if (specailCase == true)
-					specailMoveUp = true;
-			}
-		}
-
-		// Move the wall up
-		if (specailMoveUp == true)
-		{
-			specailWall.position = new Vector3(specailWall.position.x, specailWall.position.y + (15 * Time.deltaTime), specailWall.position.z);
-			if (specailWall.position.y >= .6f)
-			{
-				specailWall.position = new Vector3(specailWall.position.x, .6f, specailWall.position.z);
-				specailMoveUp = false;
-			}
-		}
 	}
 
 	/// <summary>
@@ -184,73 +109,44 @@ public class MainMenuControl : MonoBehaviour
 	private void MoveWall()
 	{
 		// Move the wall down
-		if (moveDown == true)
+		if (moveBack == true)
 		{
-			wall.position = new Vector3(wall.position.x, wall.position.y - (15 * Time.deltaTime), wall.position.z);
-			if (wall.position.y <= -1)
+			wall.transform.position = Vector3.MoveTowards(wall.transform.position, backPos, .025f);
+			if(Vector3.Distance(wall.transform.position, backPos) < .01f)
 			{
-				wall.position = new Vector3(wall.position.x, -1, wall.position.z);
+				wall.transform.position = backPos;
 				this.ActivateButtonSet(buttonSetToken); // What button set to activate
-				moveDown = false;
-				bottomTimer = Time.time + .5f; // Wall stays down for .5 seconds
-				if (specailCase == false)
-					moveUp = true;
+				buttonTimer = Time.time + .5f;
+				moveBack = false;
+				moveForward = true;
 			}
 		}
 
-		// Once we are done waiting at  the bottom
-		if (Time.time > bottomTimer)
+		if (moveForward == true)
 		{
-			// Move the wall up
-			if (moveUp == true)
+			// Once we are done waiting at  the bottom
+			if (Time.time > buttonTimer)
 			{
-				wall.position = new Vector3(wall.position.x, wall.position.y + (15 * Time.deltaTime), wall.position.z);
-				if (wall.position.y >= 1)
+				wall.transform.position = Vector3.MoveTowards(wall.transform.position, forwordPos, .025f);
+				if (Vector3.Distance(wall.transform.position, forwordPos) < .01f)
 				{
-					wall.position = new Vector3(wall.position.x, 1, wall.position.z);
-					moveUp = false;
-					bottomTimer = float.PositiveInfinity;
+					wall.transform.position = forwordPos;
+					buttonTimer = float.PositiveInfinity;
+					moveForward = false;
 				}
 			}
 		}
 	}
+
 
 	/// <summary>
 	/// Move the walls up and down and show the correct button set
 	/// </summary>
 	public void TransitionToMenu(string token)
 	{
-		moveDown = true;			// Start the move of the wall
+		moveBack = true;
 		buttonSetToken = token;     // Move the new buttons in (Once the wall is at the bottom
 
-		if (token == "Outfits")
-		{
-			// Load all the collectibles
-			for (int i = 0; i < collSpawners.Length; i++)
-				collSpawners[i].SpawnCollectible();
-
-			// Pick special outfit scene 
-			this.PickScene(0);      
-			specailMoveUp = true;
-			specailCase = true;
-		}
-		else if (token == "Stats")
-		{
-			// Pick special outfit scene 
-			this.PickScene(1);
-			specailMoveUp = true;
-			specailCase = true;
-		}
-		else
-		{
-			// If it was previously a special case dont randomize yet
-			if (specailCase == false) 
-				this.RandomizeScene();   
-
-			// Not a special case anymore 
-			speacialMoveDown = true;
-			specailCase = false;
-		}
 	}
 
 	/// <summary>
@@ -274,6 +170,10 @@ public class MainMenuControl : MonoBehaviour
 			GameObject[] cObjs = GameObject.FindGameObjectsWithTag("Collectible");
 			for (int i = 0; i < cObjs.Length; i++)
 				cObjs[i].GetComponent<ShrinkAndDestroy>().ShrinkDestroy();
+
+			// Reset the load level object
+			levelLoader.SetLoadIndex(-1);
+			levelLoader.CloseDoors();
 
 			// Load in the correct buttons
 			buttonSet[0].SetActive(true);
@@ -322,25 +222,12 @@ public class MainMenuControl : MonoBehaviour
 			gymSongBack.SetButtonToken("CustomRoutine");
 		}
 
-		// Just loads the option stuff
-		if (setToActivate == "Options")
-		{
-			buttonSet[5].SetActive(true);
-		}
-
 		// Load the buttons for the wall and activate whatever this load type is
 		if (setToActivate.Contains("LoadLevel"))
 		{
 			buttonSet[6].SetActive(true);
 			// Load the right level and info with the info token given after the load "LoadLevel" keyword
 			this.LoadLevel(setToActivate.Split(' ')[1]);
-		}
-
-		// Load the buttons for the wall and activate whatever this load type is
-		if (setToActivate == "Quit")
-		{
-			buttonSet[7].SetActive(true);
-			quitTimer = Time.time + 2;
 		}
 	}
 
@@ -352,8 +239,6 @@ public class MainMenuControl : MonoBehaviour
 		// Classic Mode
 		if(loadType.ToLower() == "cm")
 		{
-			loadIndex = 2;
-			loadTimer = Time.time + 2;
 			PlayerPrefs.SetInt(Constants.gameMode, Constants.gameModeClassic);
 
 			// Make the song file based off buttons
@@ -364,8 +249,6 @@ public class MainMenuControl : MonoBehaviour
 		// Daily Challenge 
 		if (loadType.ToLower() == "dc")
 		{
-			loadIndex = 2;
-			loadTimer = Time.time + 2;
 			PlayerPrefs.SetInt(Constants.gameMode, Constants.gameModeDaily);
 
 			// Make the song file based off the daily challenge
@@ -382,8 +265,6 @@ public class MainMenuControl : MonoBehaviour
 		// Custom Routine
 		if (loadType.ToLower() == "cr")
 		{
-			loadIndex = 2;
-			loadTimer = Time.time + 2;
 			PlayerPrefs.SetInt(Constants.gameMode, Constants.gameModeCustom);
 
 			// Make the song file based off buttons
@@ -397,61 +278,14 @@ public class MainMenuControl : MonoBehaviour
 		// Arcade Mode
 		if (loadType.ToLower() == "am")
 		{
-			loadIndex = 2;
-			loadTimer = Time.time + 2;
 			PlayerPrefs.SetInt(Constants.gameMode, Constants.gameModeArcade);
 
 			// Make the song file based off buttons
 			gymAndSongSelectControl.MakeSongFile();
 		}
 
-
-	}
-
-	/// <summary>
-	/// Randomize the scene that is behind the main menu 
-	/// </summary>
-	private void RandomizeScene()
-	{
-		// Get a new random index thats not the same as the last one 
-		int randInd = -1;
-		do
-		{
-			randInd = Random.Range(0, randScenes.Length);
-		} while (randInd == lastRandInd);
-
-		// Disable old scene
-		this.DisableAllScenes();
-
-		// Set what this scene is as the last scene for the next time 
-		lastRandInd = randInd;
-
-		// Activate the new one
-		randScenes[randInd].SetActive(true);
-	}
-
-	/// <summary>
-	/// Select the special scene you want to show up 
-	/// </summary>
-	private void PickScene(int index)
-	{
-		// Disable old scene
-		this.DisableAllScenes();
-
-		// Activate the new one
-		specailScenes[index].SetActive(true);
-	}
-
-	/// <summary>
-	/// Disables all random and special scenes 
-	/// </summary>
-	private void DisableAllScenes()
-	{
-		for (int i = 0; i < this.randScenes.Length; i++)
-			this.randScenes[i].SetActive(false);
-
-		for (int i = 0; i < this.specailScenes.Length; i++)
-			this.specailScenes[i].SetActive(false);
+		levelLoader.SetLoadIndex(2);
+		levelLoader.OpenDoors();
 	}
 
 	private void WriteDataToFile(string[] data, string path)
@@ -472,14 +306,14 @@ public class MainMenuControl : MonoBehaviour
 	}
 
 	// Closes all sockets and kills all threads (This prevents unity from freezing)
-	private void OnApplicationQuit()
-	{
-		if (SteamManager.Initialized == true)
-		{
-			SteamAPI.RunCallbacks();
-			SteamAPI.Shutdown();
-		}
-	}
+	//private void OnApplicationQuit()
+	//{
+	//	if (SteamManager.Initialized == true)
+	//	{
+	//		SteamAPI.RunCallbacks();
+	//		SteamAPI.Shutdown();
+	//	}
+	//}
 	//private void OnDestroy()
 	//{
 	//	if (SteamManager.Initialized == true)

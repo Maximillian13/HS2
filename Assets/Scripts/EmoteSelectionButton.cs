@@ -33,7 +33,8 @@ public class EmoteSelectionButton : MonoBehaviour
 
 	public void CheckIfBound()
 	{
-		if(PlayerPrefs.GetInt("EmoteUp") == emoteIndex)
+		int s = PlayerPrefs.GetInt("EmoteUp");
+		if (PlayerPrefs.GetInt("EmoteUp") == emoteIndex)
 		{
 			this.HighlightButton();
 			emoteWheel[0].SetActive(true);

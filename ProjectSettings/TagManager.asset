@@ -11,6 +11,8 @@ TagManager:
   - Music
   - Collectible
   - CalorieCounter
+  - TportArea
+  - TportBlock
   layers:
   - Default
   - TransparentFX
@@ -25,7 +27,7 @@ TagManager:
   - Lock
   - NoColWithSelf
   - TportArea
-  - 
+  - TportBlock
   - 
   - 
   - 

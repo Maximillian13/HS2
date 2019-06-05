@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GenericButton : MonoBehaviour, IInteractibleButton
 {
+	public bool press;
 	public string token;
 	public bool highlightingWanted;
 	public bool multiHighlightAllow;
@@ -13,20 +14,38 @@ public class GenericButton : MonoBehaviour, IInteractibleButton
 	private bool highlighted;
 	private MeshRenderer mr; // For highlighting
 	private bool selected;
+	private bool isEnabled = true;
 
 	public IButtonMaster master;
+
+	// The buttons collider (Will be reset on enable/disable to resend trigger info)
+	private BoxCollider bCollider;
 
 	// Setup
 	public void Start()
 	{
 		mr = this.GetComponent<MeshRenderer>();
 		mr.enabled = false;
+		bCollider = this.GetComponent<BoxCollider>();
 
-		// Grab the master script wherever it is 
-		if (this.transform.parent.parent.GetComponent<IButtonMaster>() != null)
-			master = this.transform.parent.parent.GetComponent<IButtonMaster>();
-		else
-			master = this.transform.parent.parent.parent.GetComponent<IButtonMaster>();
+		Transform p = this.transform.parent;
+		while (p.GetComponent<IButtonMaster>() == null)
+		{
+			p = p.parent;
+			if(p == null)
+				throw new System.Exception("CANT FIND MASTER CONTOL!!!");
+		}
+
+		master = p.GetComponent<IButtonMaster>();
+	}
+
+	void Update()
+	{
+		if(press == true)
+		{
+			this.PressButton();
+			press = false;
+		}
 	}
 
 	void FixedUpdate()
@@ -39,6 +58,9 @@ public class GenericButton : MonoBehaviour, IInteractibleButton
 	// At the start of an interaction
 	public void PressButton()
 	{
+		if (isEnabled == false)
+			return;
+
 		// If a toggle button just turn it on and off
 		if(toggleButton == true)
 		{
@@ -71,6 +93,9 @@ public class GenericButton : MonoBehaviour, IInteractibleButton
 	/// </summary>
 	public void Select()
 	{
+		if (isEnabled == false)
+			return;
+
 		master.ButtonPress(token);
 		if (highlightingWanted == true)
 		{
@@ -81,6 +106,9 @@ public class GenericButton : MonoBehaviour, IInteractibleButton
 
 	public void SelectHighLight()
 	{
+		if (isEnabled == false)
+			return;
+
 		highlighted = true;
 		mr.material = mats[1];
 		mr.enabled = true;
@@ -89,6 +117,8 @@ public class GenericButton : MonoBehaviour, IInteractibleButton
 
 	public void ForceSelect()
 	{
+		if (isEnabled == false)
+			return;
 		selected = true;
 	}
 
@@ -97,6 +127,9 @@ public class GenericButton : MonoBehaviour, IInteractibleButton
 	/// </summary>
 	public void Deselect(bool checkMaster = false)
 	{
+		if (isEnabled == false)
+			return;
+
 		highlighted = false;
 		mr.material = mats[0];
 		mr.enabled = false;
@@ -110,6 +143,8 @@ public class GenericButton : MonoBehaviour, IInteractibleButton
 	/// </summary>
 	public void HighLight(bool highLight)
 	{
+		if (isEnabled == false)
+			return;
 		// If overridden, dont disable the highlight 
 		if (selected == true && highlightingWanted == true)
 		{
@@ -120,9 +155,36 @@ public class GenericButton : MonoBehaviour, IInteractibleButton
 	}
 
 
+	/// <summary>
+	/// Disable or enable button
+	/// </summary>
+	public void EnableDisable(bool enable)
+	{
+		if(enable == true)
+		{
+			// Bug: Fucks button up because on trigger exit isnt called when disabling a gameobject 😳
+			//bCollider.enabled = false;
+			//bCollider.enabled = true;
+			this.isEnabled = true;
+		}
+		else
+		{
+			this.Deselect();
+			isEnabled = false;
+		}
+	}
+
+	/// <summary>
+	/// Get if currently selected
+	/// </summary>
+	public bool IsEnabled()
+	{
+		return this.isEnabled;
+	}
+
 	public bool IsSelected()
 	{
-		return selected;
+		return this.selected;
 	}
 
 	public string GetToken()

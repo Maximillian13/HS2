@@ -12,7 +12,10 @@ public class EyeFadeControl : MonoBehaviour
 	private bool close;
 
 	private float curAlpha; // Alpha of mat
-	private float mult = 0; // mult to slow the fade at the begging of opening 
+	private float mult = 0; // mult to slow the fade at the begging of opening
+
+	private float softAlpha;
+	private bool softOpen;
 
 	// Level to load at the end of closing eyes (int.MinValue if no level to load)
 	private int levelToLoad = int.MinValue;
@@ -28,6 +31,7 @@ public class EyeFadeControl : MonoBehaviour
 		origMat = mr.material;
 		editMat = origMat;
 		curAlpha = 1;
+		softAlpha = 0;
 
 		this.OpenEyes();
     }
@@ -59,7 +63,9 @@ public class EyeFadeControl : MonoBehaviour
 		// Close eyes
 		if(close == true)
 		{
-			if(music != null)
+			Debug.Log("Increasing Alpha");
+
+			if (music != null)
 			{
 				currentVolume /= 1.011f + Time.deltaTime;
 				music.volume = currentVolume;
@@ -82,6 +88,20 @@ public class EyeFadeControl : MonoBehaviour
 					else
 						UnityEngine.SceneManagement.SceneManager.LoadScene(levelToLoad);
 				}
+			}
+		}
+
+		if(softOpen == true)
+		{
+			// Fade to black 
+			softAlpha -= Time.deltaTime;  // Set up the current alpha 
+			editMat.color = new Color(0, 0, 0, softAlpha);
+
+			// If we are already at 1 just do nothing 
+			if (softAlpha <= 0)
+			{
+				softOpen = false;
+				mr.enabled = false;
 			}
 		}
 	}
@@ -125,6 +145,50 @@ public class EyeFadeControl : MonoBehaviour
 		}
 
 		this.levelToLoad = loadLevel;
+	}
+
+	/// <summary>
+	/// Closes eyes (Must be called in update or update like function)
+	/// </summary>
+	public void UpdateCloseEyes(bool quit = false)
+	{
+		// If we are fading in and out for level stuff ignore this close/open 
+		if (open == true || close == true)
+			return;
+
+		// If we are already at 1 just do nothing 
+		if (softAlpha >= 1)
+		{
+			if (quit == false)
+				return;
+			else
+			{
+				Application.Quit();
+				Debug.Log("Quit");
+			}
+		}
+
+		// Fade to black 
+		if(quit == true)
+			softAlpha += Time.deltaTime * .5f;  // Set up the current alpha 
+		else
+			softAlpha += Time.deltaTime * 5;  // Set up the current alpha 
+
+		editMat.color = new Color(0, 0, 0, softAlpha);
+		mr.enabled = true;
+		softOpen = false;
+	}
+
+	/// <summary>
+	/// Set your eyes to open after a UpdateCloseEyes() call 
+	/// </summary>
+	public void SoftEyeOpen()
+	{
+		// If we are fading in and out for level stuff ignore this close/open 
+		if (open == true || close == true)
+			return;
+
+		softOpen = true;
 	}
 
 

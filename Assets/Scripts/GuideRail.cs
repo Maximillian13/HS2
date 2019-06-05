@@ -2,32 +2,40 @@
 using System.Collections;
 
 public class GuideRail : MonoBehaviour
-{
-
-    private bool goUp;
-    private float counter;
+{ 
+    private bool moveToCalPos;
+	private bool moveToEnd;
+	private float counter;
     private BoxCollider[] boxCol;
-    const float HEIGHT_UP = 1;
+    private float heightUp = 1;
     const float HEIGHT_DOWN = -1.5f;
-	
-    void Start()
+
+	private HeightCalibrator hCal;
+
+	void Start()
     {
-        goUp = true;
         counter = float.PositiveInfinity;
         boxCol = this.GetComponents<BoxCollider>();
-    }
+		hCal = GameObject.Find("HeightCalibrator").GetComponent<HeightCalibrator>();
+	}
 
 	// Update is called once per frame
 	void Update () 
     {
-	    if(goUp == true && this.transform.localPosition.y < HEIGHT_UP)
+	    if(moveToCalPos == true)
         {
-            this.transform.localPosition = new Vector3(this.transform.localPosition.x, this.transform.localPosition.y + (.75f * Time.deltaTime), this.transform.localPosition.z);
+			float coeff = this.transform.position.y > heightUp ? -1 : 1;
+            this.transform.localPosition = new Vector3(this.transform.localPosition.x, this.transform.localPosition.y + (.8f * coeff * Time.deltaTime), this.transform.localPosition.z);
+			if(Vector3.Distance(this.transform.localPosition, new Vector3(this.transform.localPosition.x, heightUp, this.transform.localPosition.z)) < .05f)
+			{
+				this.transform.localPosition = new Vector3(this.transform.localPosition.x, heightUp, this.transform.localPosition.z);
+				moveToCalPos = false;
+			}
         }
 
-        if (goUp == false && this.transform.localPosition.y > HEIGHT_DOWN)
+        if (moveToEnd == true && this.transform.localPosition.y > HEIGHT_DOWN)
         {
-            this.transform.localPosition = new Vector3(this.transform.localPosition.x, this.transform.localPosition.y + (-.75f * Time.deltaTime), this.transform.localPosition.z);
+            this.transform.localPosition = new Vector3(this.transform.localPosition.x, this.transform.localPosition.y + (-.8f * Time.deltaTime), this.transform.localPosition.z);
         }
 
         if(Time.time > counter + 1 && boxCol[0].enabled == false)
@@ -39,9 +47,24 @@ public class GuideRail : MonoBehaviour
         }
 	}
 
+	/// <summary>
+	/// Raises the rail to a specific height 
+	/// </summary>
+	public void RaiseRail(float hUp)
+	{
+		if (moveToEnd == true)
+			return;
+		moveToCalPos = true;
+		this.heightUp = hUp;
+	}
+
+	/// <summary>
+	/// Lower the rail to the bottom position
+	/// </summary>
     public void LowerRail()
     {
-        goUp = false;
+        moveToCalPos = false;
+		moveToEnd = true;
         counter = Time.time;
     }
 }
