@@ -5,6 +5,7 @@ using UnityEngine;
 public class ShrinkAndDestroy : MonoBehaviour
 {
 	private float destroyTimer = float.PositiveInfinity;
+	private float speed = 1.01f;
 
 	//private void Start()
 	//{
@@ -16,7 +17,7 @@ public class ShrinkAndDestroy : MonoBehaviour
     {
 		if (Time.time > destroyTimer)
 		{
-			this.transform.localScale = new Vector3(this.transform.localScale.x / 1.01f, this.transform.localScale.z / 1.01f, this.transform.localScale.z / 1.01f);
+			this.transform.localScale = new Vector3(this.transform.localScale.x / speed, this.transform.localScale.z / speed, this.transform.localScale.z / speed);
 			if (this.transform.localScale.x < .01f)
 				Destroy(this.gameObject);
 		}
@@ -38,5 +39,11 @@ public class ShrinkAndDestroy : MonoBehaviour
 	public void ShrinkDestroy(float delay)
 	{
 		destroyTimer = Time.time + delay;
+	}
+
+	public void ShrinkDestroySpeed(float s = 1.01f)
+	{
+		speed = s;
+		destroyTimer = -1;
 	}
 }

@@ -1,15 +1,19 @@
 ﻿// Written by Maximillian Coburn, Property of Bean Boy Games LLC. (Feel free to use it)
 using UnityEngine;
 using System.Collections;
+using TMPro;
 
 public class PlayerHitBox : MonoBehaviour 
 {
 	private bool cardioMode;
     private int squatCardioScore; // Player score
-    public TextMesh tScore; // Text mesh for the score
+    public TextMeshPro tScore; // Text mesh for the score
     public CheckUp checkUp; // If the user went up after a wall
     private int checkUpCounter; // For when there are the multi-walls
     private bool gameOver;
+
+	private WallSoundEffects wallSoundEffects; // (Bruh)
+	private string mostRecentWallType;
 
 	private GameObject[] handPlacement = new GameObject[2];
 
@@ -17,12 +21,17 @@ public class PlayerHitBox : MonoBehaviour
 	private ScorePopper scorePopper;
 	private PersonalHighScore highScore;
 
+	private int scoreConsecutiveCounter;
+	private int nextConsecutiveTarget;
+
+
 	private bool arcadeMode;
 
 	//private SquatCounter squatCounter;
 	private SteamLeaderBoardUpdater SteamLeaderBoardUpdater;
 
 	private string GAME_MODE_PATH;
+	private const int FIRST_TARGET = 100;
 
     // Set-up
 	void Start () 
@@ -48,13 +57,19 @@ public class PlayerHitBox : MonoBehaviour
 		tScore.text = squatCardioScore.ToString();
 
 		if (PlayerPrefs.GetInt(Constants.gameMode) == Constants.gameModeArcade)
+		{
 			arcadeMode = true;
+			scoreConsecutiveCounter = 0;
+			nextConsecutiveTarget = FIRST_TARGET;
+		}
+
+		wallSoundEffects = this.GetComponent<WallSoundEffects>();
 
 		//squatCounter = GameObject.Find("SquatWallCounterAchievments").GetComponent<SquatCounter>();
 		SteamLeaderBoardUpdater = GameObject.Find("UpdateSteamLeaderBoard").GetComponent<SteamLeaderBoardUpdater>();
 
 		// Get rid of the hand guard if we are not using it 
-		this.DisableEnableHands(gameModeMaster.GetHandGuard());
+		this.EnableDisableHands(cardioMode == false && gameModeMaster.GetHandGuard() == true);
 	}
 
 	/// <summary>
@@ -74,8 +89,8 @@ public class PlayerHitBox : MonoBehaviour
 			// If its the Top of the wall reload level (Eventually explode boxes and show player high-score)
 			if (other.name == "SquatWallUp")
 			{
-				Debug.Log("Hit top of squat wall ");
 				this.CheckIfEndGame();
+				mostRecentWallType = "Fail"; // For sound Effects
 			}
 			// If its the bottom (squatted under the wall) increase the player score
 			if (other.name == "SquatWallDown")
@@ -98,21 +113,37 @@ public class PlayerHitBox : MonoBehaviour
 					{
 						checkUp.Ready = false;
 
+						mostRecentWallType = "Single"; // For sound Effects
+
 						if (arcadeMode == true)
 						{
-							scorePopper.PopScoreMessage("+10", .04f);
-							highScore.UpdateYourScore(10);
+							scoreConsecutiveCounter += 10;
+							// Check if we got a combo, if we did it will display a combo, if not display what we just did 
+							if (this.TestHighScoreConsecCounter() == false)
+							{
+								scorePopper.PopScoreMessage(0, .04f);
+								highScore.UpdateYourScore(10);
+							}
+							else
+							{
+								mostRecentWallType = "Combo"; // For sound Effects
+							}
 						}
 					}
 					else if (other.transform.parent.parent.name == "SquatWallx2(Clone)")    // If squat wall is 2 long, allow 2
+					{
+						mostRecentWallType = "Double"; // For sound Effects
 						this.ResetAfterNumberOfWalls(2);
+					}
 					else                                                                    // If squat wall is 3 long, allow 3	
+					{
+						mostRecentWallType = "Tripple"; // For sound Effects
 						this.ResetAfterNumberOfWalls(3);
+					}
 
 				}
 				else // Did not come up from a squat
 				{
-					Debug.Log("Did not come up from squat");
 					this.CheckIfEndGame();
 				}
 			}
@@ -130,6 +161,21 @@ public class PlayerHitBox : MonoBehaviour
 				squatCardioScore++;
 				tScore.text = squatCardioScore.ToString();
 
+				if (arcadeMode == true)
+				{
+					scoreConsecutiveCounter += 10;
+					// Check if we got a combo, if we did it will display a combo, if not display what we just did 
+					if (this.TestHighScoreConsecCounter() == false)
+					{
+						scorePopper.PopScoreMessage(0, .04f);
+						highScore.UpdateYourScore(10);
+					}
+					else
+					{
+						mostRecentWallType = "Combo"; // For sound Effects
+					}
+				}
+
 				gameModeMaster.PassedThroughWall(true);
 
 				// Save the total stat and check for achievements 
@@ -141,11 +187,43 @@ public class PlayerHitBox : MonoBehaviour
 		}
     }
 
-    /// <summary>
-    /// Make the player stand back up after multiple walls
-    /// </summary>
-    /// <param name="numberOfWalls">Number of wall that the player is squatting</param>
-    private void ResetAfterNumberOfWalls(int numberOfWalls)
+	private void OnTriggerExit(Collider other)
+	{
+		// Squat walls
+		if (other.name == "SquatWallDown")
+		{
+			if(mostRecentWallType == "Single")
+				wallSoundEffects.PlayClip(WallSoundEffects.WallSoundEffectClip.squatWall);
+			if (mostRecentWallType == "Double")
+				wallSoundEffects.PlayClip(WallSoundEffects.WallSoundEffectClip.squatWallTwo);
+			if (mostRecentWallType == "Tripple")
+				wallSoundEffects.PlayClip(WallSoundEffects.WallSoundEffectClip.squatWallThree);
+			if (mostRecentWallType == "Combo")
+				wallSoundEffects.PlayClip(WallSoundEffects.WallSoundEffectClip.combo);
+		}
+
+		// Cardio walls
+		if (other.name == "CardioWallOpen")
+		{
+			if (mostRecentWallType == "Combo")
+				wallSoundEffects.PlayClip(WallSoundEffects.WallSoundEffectClip.combo);
+			else
+				wallSoundEffects.PlayClip(WallSoundEffects.WallSoundEffectClip.cardioWall);
+		}
+
+		// Fails
+		if (other.name == "CardioWallClosed" || other.name == "SquatWallUp")
+			wallSoundEffects.PlayClip(WallSoundEffects.WallSoundEffectClip.fail);
+
+		// Reset
+		mostRecentWallType = "";
+	}
+
+	/// <summary>
+	/// Make the player stand back up after multiple walls
+	/// </summary>
+	/// <param name="numberOfWalls">Number of wall that the player is squatting</param>
+	private void ResetAfterNumberOfWalls(int numberOfWalls)
     {
         if (checkUpCounter == numberOfWalls - 1)
         {
@@ -155,16 +233,34 @@ public class PlayerHitBox : MonoBehaviour
 			{
 				if (arcadeMode == true)
 				{
-					scorePopper.PopScoreMessage("+15", .05f);
-					highScore.UpdateYourScore(15);
+					scoreConsecutiveCounter += 15;
+					// Check if we got a combo, if we did it will display a combo, if not display what we just did 
+					if (this.TestHighScoreConsecCounter() == false)
+					{
+						scorePopper.PopScoreMessage(1, .05f);
+						highScore.UpdateYourScore(15);
+					}
+					else
+					{
+						mostRecentWallType = "Combo"; // For sound Effects
+					}
 				}
 			}
 			else
 			{
 				if (arcadeMode == true)
 				{
-					scorePopper.PopScoreMessage("+20", .06f);
-					highScore.UpdateYourScore(20);
+					scoreConsecutiveCounter += 20;
+					// Check if we got a combo, if we did it will display a combo, if not display what we just did 
+					if (this.TestHighScoreConsecCounter() == false)
+					{
+						scorePopper.PopScoreMessage(2, .06f);
+						highScore.UpdateYourScore(20);
+					}
+					else
+					{
+						mostRecentWallType = "Combo"; // For sound Effects
+					}
 				}
 			}
 		}
@@ -185,6 +281,11 @@ public class PlayerHitBox : MonoBehaviour
 
 		if(gameModeMaster.GetAmountOfLivesLeft() != int.MaxValue)
 			gameModeMaster.DecrementAmountOfLives();
+
+		// If you hit the wall reset your consecutive counter
+		scoreConsecutiveCounter = 0;
+		nextConsecutiveTarget = FIRST_TARGET;
+
 		if (gameModeMaster.GetAmountOfLivesLeft() <= 0)
 		{
 			this.EndGame();
@@ -194,7 +295,7 @@ public class PlayerHitBox : MonoBehaviour
 			// Destroy walls
 			this.DestroyAllWalls();
 			// Tell the main game to go on break
-			gameModeMaster.GoOnBreakImdate(20);
+			gameModeMaster.GoOnBreakImdate(10);
 			if (gameModeMaster.GetAmountOfLivesLeft() != int.MaxValue)
 				gameModeMaster.PopLivesLeft(4, gameModeMaster.GetAmountOfLivesLeft() );
 			else
@@ -264,6 +365,9 @@ public class PlayerHitBox : MonoBehaviour
 			st.Find("DoorB").GetComponent<SquatTrackDoor>().CloseDoor();
 		}
 
+		// Disable hand block so it doesnt get in your way
+		this.EnableDisableHands(false);
+
 		// Gib all walls
 		this.DestroyAllWalls();
 
@@ -279,6 +383,13 @@ public class PlayerHitBox : MonoBehaviour
 	/// </summary>
 	private void DestroyAllWalls()
 	{
+		// Let shit fly
+		if (GameObject.Find("GYM") != null)
+		{
+			Transform st = GameObject.Find("GYM").transform.Find("SquatTrack");
+			st.Find("SquatBars").GetComponent<GuideRail>().PauseBoxCols();
+		}
+
 		// Get all the wall gibs
 		GameObject[] gibsGO = GameObject.FindGameObjectsWithTag("Gibs");
 		// Loop through all the gibs
@@ -303,11 +414,42 @@ public class PlayerHitBox : MonoBehaviour
 		}
 	}
 
+	/// <summary>
+	/// Test to see if we have passed a consecutive target and make a message about it (true if we did got a combo, false if not)
+	/// </summary>
+	private bool TestHighScoreConsecCounter()
+	{
+		if(scoreConsecutiveCounter >= nextConsecutiveTarget)
+		{
+			// Todo: Change back 
+			scorePopper.TriggerParticleSystem(new bool[] { true, true, true }, new float[] { 5, 5, 5 });
+			// Fireworks 
+			//if (nextConsecutiveTarget <= 250)		// Simple
+			//	scorePopper.TriggerParticleSystem(new bool[] { true, false, false }, new float[] {2, 0, 0});
+			//else if (nextConsecutiveTarget <= 500)   // Med
+			//	scorePopper.TriggerParticleSystem(new bool[] { false, true, true}, new float[] { 0, 3, 3 });
+			//else									// Extreme 
+			//	scorePopper.TriggerParticleSystem(new bool[] { true, true, true }, new float[] { 5, 5, 5 });
+
+			// Increase by a forth of the target, display, increase, then update to the new target 
+			int increaseAmount = 100;
+			scorePopper.PopScoreMessage(3,.1f);
+			highScore.UpdateYourScore(increaseAmount);
+			nextConsecutiveTarget *= 2;
+
+			// Return true if we had a combo
+			return true;
+		}
+
+		// Return false if we did not get a combo
+		return false;
+	}
+
 
 	/// <summary>
 	/// Enable/Disable the hand placement box 
 	/// </summary>
-	public void DisableEnableHands(bool enable)
+	public void EnableDisableHands(bool enable)
 	{
 		for(int i = 0; i < handPlacement.Length; i++)
 		{

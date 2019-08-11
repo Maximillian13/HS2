@@ -49,24 +49,6 @@ public class SteamLeaderBoard : MonoBehaviour
 		this.ChangeScoreBoardAroundType(false);
 	}
 
-	// Closes all sockets and kills all threads (This prevents unity from freezing)
-	//private void OnApplicationQuit()
-	//{
-	//	if (SteamManager.Initialized == true)
-	//	{
-	//		SteamAPI.RunCallbacks();
-	//		SteamAPI.Shutdown();
-	//	}
-	//}
-	//private void OnDestroy()
-	//{
-	//	if(SteamManager.Initialized == true)
-	//	{
-	//		SteamAPI.RunCallbacks();
-	//		SteamAPI.Shutdown();
-	//	}
-	//}
-
 
 	private void SetCorrectLeaderBoard()
 	{
@@ -247,7 +229,7 @@ public class SteamLeaderBoard : MonoBehaviour
 		handleName = newHandle;
 
 		// If its "BasedOffMode" then check what game mode we are on and get that 
-		if (lbName == "BasedOffMode")
+		if (handleName == "BasedOffMode")
 			this.SetCorrectLeaderBoard();
 
 		// Set up for the leader board to be updated

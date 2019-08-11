@@ -8,7 +8,7 @@ public class HandPlacment : MonoBehaviour
     // The left and right hand
     public HandPlacmentLeft leftHand;
     public HandPlacmentRight rightHand;
-    public TextMeshPro tm;
+    public GameObject alertText;
 
     // The material and render of the box you need to be inside 
     public Material[] mat;
@@ -37,13 +37,13 @@ public class HandPlacment : MonoBehaviour
         if(leftHand.GetControllerLeftIn() == true && rightHand.GetControllerRightIn() == true)
         {
             rend.material = mat[0];
-            tm.gameObject.SetActive(false);
+			alertText.gameObject.SetActive(false);
             outTimer = 0;
         }
         else // If one of the hands is out set the material to a warning color and start counting down the time till they lose
         {
             rend.material = mat[1];
-            tm.gameObject.SetActive(true);
+			alertText.gameObject.SetActive(true);
             if (gameStarted == true)
             {
                 outTimer += Time.deltaTime;

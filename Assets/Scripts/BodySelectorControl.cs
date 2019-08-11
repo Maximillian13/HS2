@@ -18,6 +18,8 @@ public class BodySelectorControl : MonoBehaviour, IButtonMaster
 
 	private PlayerModelControl playerBodyCont;
 
+	private AudioSource sound;
+
 	private void Start()
 	{
 		Transform displayBodyParent = this.transform.parent.Find("DisplayBodies");
@@ -34,10 +36,12 @@ public class BodySelectorControl : MonoBehaviour, IButtonMaster
 		bodyButtons[PlayerPrefs.GetInt("BodyType")].SelectHighLight();
 
 		playerBodyCont = GameObject.Find("Player").GetComponent<PlayerModelControl>();
+
+		sound = this.GetComponent<AudioSource>();
 	}
 
 	// For when the button gets pressed
-	public void ButtonPress(string token)
+	public void ButtonPress(string token, GenericButton sender)
 	{
 		// Move bodies 
 		if (token == "Left")
@@ -113,6 +117,10 @@ public class BodySelectorControl : MonoBehaviour, IButtonMaster
 	// Select the current body if unlocked
 	private void Select()
 	{
+		// Play the sound
+		sound.pitch = Random.Range(.95f, 1.05f);
+		sound.Play();
+
 		// Set it as the current body 
 		int cosmeticIndex = trackControl.GetBodyIndex();
 		playerBodyCont.UpdateBodyModel(cosmeticIndex, PlayerPrefs.GetInt("BodyType"));

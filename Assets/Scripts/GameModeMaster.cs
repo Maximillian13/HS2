@@ -11,6 +11,7 @@ public class GameModeMaster : MonoBehaviour
 	public PlayerHitBox playerHitBox;
 
 	public PauseMenu[] pauseMenues;
+	public GameObject[] gyms;
 
 	private bool preventGameModeSwitch;
 	private int livesLeft;
@@ -72,6 +73,21 @@ public class GameModeMaster : MonoBehaviour
 	// Start is called before the first frame update
 	void Start()
     {
+		// Disable all gyms 
+		for (int i = 0; i < gyms.Length; i++)
+			gyms[i].SetActive(false);
+
+		// Re - enable the one we want(or random if rand selected)
+		int gymToEnable = PlayerPrefs.GetInt("GymInd");
+
+		// If random is selected or error just pick randomly 
+		if (gymToEnable >= gyms.Length || gymToEnable < 0)
+			gymToEnable = Random.Range(0, gyms.Length);
+		gyms[gymToEnable].SetActive(true); // Enable that gym
+
+		// rename it so paths still work
+		gyms[gymToEnable].name = "GYM";
+
 		// Get everything
 		CUSTOM_ROUTINE_PATH = Application.persistentDataPath + "/CustomRoutineData.txt";
 		hCal = GameObject.Find("HeightCalibrator").GetComponent<HeightCalibrator>();
@@ -113,7 +129,12 @@ public class GameModeMaster : MonoBehaviour
 				livesLeft = 3;
 				pauseAfterXWaves = 50;
 				secondsToPauseFor = 15;
-				switchModesOnBreak = true;
+				cardioMode = false;
+				// If we are on cardio mode we are acatually on cardio/squat mode 
+				if (PlayerPrefs.GetInt(Constants.cardioMode) == 1)
+					switchModesOnBreak = true;
+				else
+					switchModesOnBreak = false;
 			}
 		}
 		else
@@ -313,11 +334,16 @@ public class GameModeMaster : MonoBehaviour
 		// Check the game mode using player prefs
 		cardioMode = PlayerPrefs.GetInt(Constants.cardioMode) == 1 ? true : false;
 
+		// We take care of this in the arcade section
+		if (PlayerPrefs.GetInt(Constants.gameMode) == Constants.gameModeArcade)
+			cardioMode = false;
+
 		if (cardioMode == true)
 		{
 			wallSpawner.gameObject.SetActive(false);
 			for (int i = 0; i < objsToDestroy.Length; i++)
 				objsToDestroy[i].gameObject.SetActive(false);
+			playerHitBox.EnableDisableHands(false);
 		}
 		else
 			wallSpawnerCardio.gameObject.SetActive(false);
@@ -420,19 +446,19 @@ public class GameModeMaster : MonoBehaviour
 	public bool HandleOnBreak()
 	{
 		// Check to see if we are ready to go back in the game 
-		if (Time.time >= onBreakTimer)
+		if (Time.time >= onBreakTimer + 7)
 		{
 			onBreak = false;
-			if (cardioMode == false || haveHandGuard == true)
-				playerHitBox.DisableEnableHands(true);
+			// Only enable when in squat mode and hand gaurd is off 
+			playerHitBox.EnableDisableHands(cardioMode == false && haveHandGuard == true);
 
 			// Check to see if we are using the calorie counter
 			if (calorieCounter != null)
 				calorieCounter.SetPrevTime(Time.time);
 		}
 
-		// 3 second before the waves start again, give a warning 
-		if (Time.time >= onBreakTimer - 2.5f && breakEndingPopped == false)
+		// 3 second before the waves start again, give a warning (+7 for the delay when poping originally)
+		if (Time.time >= onBreakTimer - 2.5f + 7 && breakEndingPopped == false)
 		{
 			// Switch the game modes if that is something we want
 			if (switchModesOnBreak == true && preventGameModeSwitch == false)
@@ -445,7 +471,7 @@ public class GameModeMaster : MonoBehaviour
 
 		}
 
-		// Pop up message telling we are on break 5 seconds after wave start (5 so we are standing and not currently squatting through a wall)
+		// Pop up message telling we are on break 7 seconds after wave start (7 so we are standing and not currently squatting through a wall)
 		if (Time.time >= onBreakTimer - secondsToPauseFor + 7 && breakMessagePopped == false)
 		{
 			if (stopSpawning == false) // Check if the game is still going 
@@ -468,7 +494,7 @@ public class GameModeMaster : MonoBehaviour
 				breakMessagePopped = false;
 				breakEndingPopped = false;
 				wallCountAfterWarmUp = 0;
-				playerHitBox.DisableEnableHands(false);
+				playerHitBox.EnableDisableHands(false);
 			}
 		}
 
@@ -575,7 +601,7 @@ public class GameModeMaster : MonoBehaviour
 		breakEndingPopped = false;
 		breakMessagePopped = true;
 		preventGameModeSwitch = true;
-		playerHitBox.DisableEnableHands(false);
+		playerHitBox.EnableDisableHands(false);
 	}
 
 	/// <summary>
@@ -662,5 +688,8 @@ public class GameModeMaster : MonoBehaviour
 		{
 			this.SwitchGameMode();
 		}
+
+		if (Input.GetKeyDown(KeyCode.P))
+			UnityEngine.SceneManagement.SceneManager.LoadScene(1);
 	}
 }

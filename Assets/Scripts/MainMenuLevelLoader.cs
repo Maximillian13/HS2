@@ -8,6 +8,9 @@ public class MainMenuLevelLoader : MonoBehaviour
 	public Transform[] doorEndPoints;
 	public GameObject sightBlocker;
 
+	public DailyChallengeMaster dailyChalMaster;
+	public MainMenuControl mainMenuControl;
+
 	private Vector3[] closePos = new Vector3[2];
 	private Vector3[] openPos = new Vector3[2];
 
@@ -75,16 +78,20 @@ public class MainMenuLevelLoader : MonoBehaviour
 			return;
 
 		closing = true;
-		GameObject.Find("[CameraRig]").transform.Find("Camera").GetComponent<EyeFadeControl>().CloseEyes(loadIndex, true);
+		GameObject.Find("[CameraRig]").transform.Find("Camera").GetComponent<EyeFadeControl>().CloseEyes(2, true);
 
+		// Save if we did a dialy challenge
+		if (mainMenuControl.IsDailyChal() == true)
+			dailyChalMaster.IncrementDailyChallengeStatIfNew();
 	}
 
 	public void SetLoadIndex(int li)
 	{
 		this.loadIndex = li;
+		PlayerPrefs.SetInt("GymInd", li);
 	}
 
-	public void OpenDoors()
+	public void OpenDoors(bool dailyChallenge = false)
 	{
 		sightBlocker.SetActive(false);
 		this.opening = true;

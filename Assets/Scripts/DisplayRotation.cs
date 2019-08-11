@@ -5,6 +5,7 @@ using UnityEngine;
 public class DisplayRotation : MonoBehaviour
 {
 	public float rotSpeed = 10;
+	public bool z = false;
 	public bool rigidBody;
 	private float curRot;
 
@@ -23,7 +24,10 @@ public class DisplayRotation : MonoBehaviour
 		if (rigidBody == false)
 		{
 			curRot += Time.deltaTime * rotSpeed;
-			this.transform.eulerAngles = new Vector3(0, curRot, 0);
+			if(z == false)
+				this.transform.eulerAngles = new Vector3(0, curRot, 0);
+			else
+				this.transform.eulerAngles = new Vector3(this.transform.eulerAngles.x, this.transform.eulerAngles.y, curRot);
 		}
 		else
 		{

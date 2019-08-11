@@ -66,10 +66,10 @@ public class CustomRutineButtonOptionsMaster : MonoBehaviour, IButtonMaster
 		wallsUntilBreakCounter = 50;
 	}
 
-	public void ButtonPress(string token)
+	public void ButtonPress(string token, GenericButton sender)
 	{
 		if(token == "HaveBreaksYes")
-			this.EnableOrDisableBreakButtons(!haveBreaksButton.IsSelected());
+			this.EnableOrDisableBreakButtons(haveBreaksButton.IsSelected());
 
 		if (token.Contains("BreakLength"))
 			this.HandleBreakLength(token);
@@ -209,7 +209,7 @@ public class CustomRutineButtonOptionsMaster : MonoBehaviour, IButtonMaster
 
 		switchGameModeButton.gameObject.SetActive(en);
 
-		// Switch text to display correctly depending on the active state 
+		// Switch text to display correctly depending on the active state
 		if(en == true)
 		{
 			breakTexts[0].text = breakLengthCounter.ToString();
@@ -220,15 +220,6 @@ public class CustomRutineButtonOptionsMaster : MonoBehaviour, IButtonMaster
 			breakTexts[0].text = "N/A";
 			breakTexts[1].text = "N/A";
 		}
-	}
-
-	/// <summary>
-	/// Deselect all the warm up buttons 
-	/// </summary>
-	private void DeselectButtonSet(GenericButton[] bSet)
-	{
-		for (int i = 0; i < bSet.Length; i++)
-			bSet[i].Deselect();
 	}
 
 	/// <summary>

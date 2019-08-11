@@ -8,17 +8,15 @@ public class MusicVolumeControl : MonoBehaviour
 	private MP3PlayerControl mp3;
 
     // Start is called before the first frame update
-    void Start()
+    public void AudioSetUp()
     {
 		audioSource = this.GetComponent<AudioSource>();
 		audioSource.volume = (PlayerPrefs.GetInt("MusicVol") + 10) / 10.0f;
 
-		GameObject mp3T = GameObject.Find("MP3Trigger");
-		if (mp3T != null)
-		{
-			mp3 = mp3T.transform.Find("MP3Player").GetComponent<MP3PlayerControl>();
-			this.ChangeCurrentVolumeAndMP3(0); // Make it match the in game volume 
-		}
+		if(GameObject.FindWithTag("Mp3Player") != null)
+			mp3 = GameObject.FindWithTag("Mp3Player").GetComponent<MP3PlayerControl>();
+		
+		this.ChangeCurrentVolumeAndMP3(0); // Make it match the in game volume 
     }
 
 	/// <summary>
@@ -26,6 +24,8 @@ public class MusicVolumeControl : MonoBehaviour
 	/// </summary>
 	public void UpdateVolume()
 	{
+		if (audioSource == null)
+			this.AudioSetUp();
 		audioSource.volume = (PlayerPrefs.GetInt("MusicVol") + 10) / 10.0f;
 	}
 
@@ -49,7 +49,13 @@ public class MusicVolumeControl : MonoBehaviour
 		audioSource.volume = newAudioVol / 10.0f;
 
 		// If we have the MP3 change the level on there
-		if (mp3 != null)
+		if (mp3 == null)
+		{
+			if (GameObject.FindWithTag("Mp3Player") != null)
+				mp3 = GameObject.FindWithTag("Mp3Player").GetComponent<MP3PlayerControl>();
+		}
+
+		if(mp3 != null)
 			mp3.UpdateVolumeLevel(newAudioVol);
 	}
 }

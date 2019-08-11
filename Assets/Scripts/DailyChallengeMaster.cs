@@ -25,6 +25,9 @@ public class DailyChallengeMaster : MonoBehaviour
 	private int breakAfter;
 	private int breakFor;
 	private bool switchModesOnBreak;
+	private int gymNumber;
+	private int lives;
+	private float speed;
 
 	private List<string> songs = new List<string>();
 
@@ -34,24 +37,7 @@ public class DailyChallengeMaster : MonoBehaviour
 		// Get all the text children 
 		for (int i = 0; i < tms.Length; i++)
 			tms[i] = this.transform.GetChild(i).GetComponent<TextMeshPro>();
-
-		// Init all arrays 
-		for (int i = 0; i < squatWallTypes.Length; i++)
-			squatWallTypes[i] = false;
-		for (int i = 0; i < cardioWallTypes.Length; i++)
-			cardioWallTypes[i] = false;
-
-		// Fill out the description
-		//this.FillDescription();
-
-		Debug.Log(PlayerPrefs.GetInt("DailySquatID"));
 	}
-
-	//private void OnEnable()
-	//{
-	//	this.FillDescription();
-	//}
-
 
 	/// <summary>
 	/// Fill the description of the daily challenge
@@ -78,98 +64,87 @@ public class DailyChallengeMaster : MonoBehaviour
 
 		if (inCardioMode == false) // Normal squat mode 
 		{
-			PlayerPrefs.SetInt("DailySquatID", daysOfUnix);
 			if (r == 0)
 			{
-				// Normal Challenge
-				tms[0].text = "Three-some";
-				tms[1].text = "Challenge Description:\nThe only wall coming towards you will be in sets of 3 and you wont have any proper warm-up. Good luck!";
-				warmUp = false;
-				squatWallTypes[0] = false;
-				squatWallTypes[1] = false;
-				squatWallTypes[2] = true;
-
-				// Add songs
-				songs.Add("909");
-
-				// Random modifiers
-				breakAfter = seededRand.Next(15, 21) * 10;
-				breakFor = seededRand.Next(1, 4) * 10;
-				tms[2].text = "Modifiers:\n" +
-					"\t-Break after: " + breakAfter + " walls\n" +
-					"\t-Break for: " + breakFor + " seconds\n" +
-					"\t-Song(s): 909";
+				this.FillOut("Three-some", "The only walls comming towards you will be in sets of 3 and you will not have any proper warm up time. Good luck", false,
+					new bool[] { false, false, true }, new bool[] { false, false, false }, 1, new string[] { "Sco 2" }, 1, 1.0f, 15, 21, 1, 4, false);
 			}
 			if (r == 1)
 			{
-				// Normal Challenge
-				tms[0].text = "Hot Singles In Your Area";
-				tms[1].text = "Challenge Description:\nIn this challenge you will only be facing singe walls, no warm up no breaks, Good luck!";
-				warmUp = false;
-				squatWallTypes[0] = true;
-				squatWallTypes[1] = false;
-				squatWallTypes[2] = false;
-
-				// Add songs
-				songs.Add("Sgo 2");
-				songs.Add("909");
-
-				// Random modifiers
-				breakAfter = seededRand.Next(150, 201);
-				breakFor = seededRand.Next(10, 31);
-				tms[2].text = "Modifiers:\n" +
-					"\t-Song(s): Sgo 2, 909";
+				this.FillOut("Hot Singles In Your Area", "In this challenge you will only be facing singe walls, no warm up no breaks, Good luck!", false,
+					new bool[] { true, false, false }, new bool[] { false, false, false }, 0, new string[] { "Sco 2", "In-House" }, 1, 1.0f, 0, 0, 0, 0, false);
 			}
 		}
 		else // Cardio mode
 		{
 			if (r == 0)
 			{
-				tms[0].text = "Long Jump";
-				tms[1].text = "Challenge Description:\nNo middle opening, get read to side step far...";
-				warmUp = true;
-				cardioWallTypes[0] = true;
-				cardioWallTypes[1] = false;
-				cardioWallTypes[2] = true;
-
-				// Add songs
-				songs.Add("909");
-
-				// Random modifiers
-				breakAfter = seededRand.Next(5, 11) * 10;
-				breakFor = seededRand.Next(2, 4) * 10;
-				tms[2].text = "Modifiers:\n" +
-					"\t-Break after: " + breakAfter + " walls\n" +
-					"\t-Break for: " + breakFor + " seconds\n" +
-					"\t-Song(s): 909";
+				this.FillOut("Long Jump", "No middle opening, get ready to side step far...", true,
+					new bool[] { true, true, false }, new bool[] { true, false, true }, 2, new string[] { "Come On Yall" }, 3, 0.9f, 5, 11, 2, 4, true);
 			}
 			if (r == 1)
 			{
-				tms[0].text = "Spread Eagle Cross the Block";
-				tms[1].text = "Challenge Description:\nNo middle opening, get read to side step far. Switches mode every break";
-				warmUp = false;
-
-				squatWallTypes[0] = true;
-				squatWallTypes[1] = true;
-				squatWallTypes[2] = true;
-				cardioWallTypes[0] = true;
-				cardioWallTypes[1] = false;
-				cardioWallTypes[2] = true;
-
-				switchModesOnBreak = true;
-
-				// Add songs
-				songs.Add("909");
-				songs.Add("Sgo 2");
-
-				// Random modifiers
-				breakAfter = seededRand.Next(5, 11) * 10;
-				breakFor = seededRand.Next(2, 4) * 10;
-				tms[2].text = "Modifiers:\n" +
-					"\t-Break after: " + breakAfter + " walls\n" +
-					"\t-Break for: " + breakFor + " seconds\n" +
-					"\t-Song(s): 909, Sgo 2";
+				this.FillOut("Long Jump (Extreme)", "No middle opening, get ready to side step far...", true,
+					new bool[] { false, false, false }, new bool[] { true, false, true }, 2, new string[] { "The Seperation" }, 3, 1, 5, 11, 2, 4, false);
 			}
+		}
+	}
+
+	private void FillOut(string title, string desc, bool warm, bool[] squatWalls, bool[] cardioWalls, int gymNum, string[] songArr, int livesAmount, float speedMult,
+		int lowerAfter, int upperAfter, int breakForLower, int breakForUpper, bool switchGameModeOnBreak)
+	{
+		// Normal Challenge
+		tms[0].text = title;
+		tms[1].text = "Challenge Description:\n" + desc;
+		warmUp = warm;
+
+		// Walls
+		for(int i = 0; i < squatWalls.Length; i++)
+			squatWallTypes[i] = squatWalls[i];
+		for (int i = 0; i < cardioWalls.Length; i++)
+			cardioWallTypes[i] = cardioWalls[i];
+
+		// Add Gym
+		gymNumber = gymNum;
+
+		// Add songs
+		for(int i = 0; i < songArr.Length; i++)
+			songs.Add(songArr[i]);
+
+		// Lives and speed
+		lives = livesAmount;
+		speed = speedMult;
+
+		// Random modifiers
+		breakAfter = seededRand.Next(lowerAfter, upperAfter) * 10;
+		breakFor = seededRand.Next(breakForLower, breakForUpper) * 10;
+
+		// Switch game mode stuff
+		switchModesOnBreak = switchGameModeOnBreak;
+
+		// Make a string of all the songs
+		string songString = songArr[0];
+		for (int i = 1; i < songArr.Length; i++)
+			songString += (" | " + songArr[i]);
+
+		if (breakAfter == 0 || breakFor == 0)
+		{
+			tms[2].text = "Modifiers:\n" +
+					"\t-Lives:" + livesAmount + "\n" +
+					"\t-SpeedMult:" + speedMult + "\n" +
+					"\t-Gym:" + this.ConvertIntToGymName(gymNumber) + "\n" +
+					"\t-Song(s): " + songString;	
+		}
+		else
+		{
+			tms[2].text = "Modifiers:\n" +
+			"\t-Break after: " + breakAfter + " walls\n" +
+			"\t-Break for: " + breakFor + " seconds\n" +
+			"\t-Lives:" + livesAmount + "\n" +
+			"\t-SpeedMult:" + speedMult + "\n" +
+			"\t-Switch Game Modes on Break:" + switchGameModeOnBreak + "\n" +
+			"\t-Gym:" + this.ConvertIntToGymName(gymNumber) + "\n" +
+			"\t-Song(s): " + songString;
 		}
 	}
 
@@ -178,28 +153,33 @@ public class DailyChallengeMaster : MonoBehaviour
 	/// </summary>
 	public string[] GetDailyChallengeSummary()
 	{
-		string[] customRutineStrings = new string[7];
+		string[] customRutineStrings = new string[8];
 
 		// If warmUpButton[0] is selected then warm up == true 
 		customRutineStrings[0] = warmUp.ToString();
 
-		// Fill info of how often and how long breaks will happen
-		customRutineStrings[1] = breakFor + " ";
-		customRutineStrings[1] += breakAfter;
+		// Fill info of how often and how long breaks will happen (If no breaks set to in.maxval)
+		if (breakFor == 0 || breakAfter == 0)
+			customRutineStrings[1] = breakFor + " " + int.MaxValue; 
+		else
+			customRutineStrings[1] = breakFor + " " + breakAfter;
+
+		// Hand placement always on
+		customRutineStrings[2] = "True";
 
 		// Check all the different wall densities and fill them in order of 1, 2, 3 (true if button is active, false if not)
-		customRutineStrings[2] = squatWallTypes[0] + " " + squatWallTypes[1] + " " + squatWallTypes[2];
+		customRutineStrings[3] = squatWallTypes[0] + " " + squatWallTypes[1] + " " + squatWallTypes[2];
 
 		// Check all the different wall types for cardio and fill them in order of 1, 2, 3 (true if button is active, false if not)
-		customRutineStrings[3] = cardioWallTypes[0] + " " + cardioWallTypes[1] + " " + cardioWallTypes[2];
+		customRutineStrings[4] = cardioWallTypes[0] + " " + cardioWallTypes[1] + " " + cardioWallTypes[2];
 
 		// If we should switch game modes during breaks 
-		customRutineStrings[4] = switchModesOnBreak.ToString();
+		customRutineStrings[5] = switchModesOnBreak.ToString();
 
 		// Todo: Assign values for lives and speed mult
 		// Fill out the amount of lives and speed multiplier
-		customRutineStrings[5] = "1";
-		customRutineStrings[6] = "1";
+		customRutineStrings[6] = lives.ToString();
+		customRutineStrings[7] = speed.ToString();
 
 		return customRutineStrings;
 	}
@@ -236,18 +216,18 @@ public class DailyChallengeMaster : MonoBehaviour
 	/// <summary>
 	/// Increment the score if it is the first time doing this daily challenge (one for squat and one for cardio)
 	/// </summary>
-	public void IncrementDailyChallengeStat()
+	public void IncrementDailyChallengeStatIfNew()
 	{
 		// Get what player pref we are looking for (either cardio or squat)
 		string playerPrefToFind = "DailySquatID";
 		if (PlayerPrefs.GetInt(Constants.cardioMode) == 1) 
 			playerPrefToFind = "DailyCardioID";
 
-		int pp = PlayerPrefs.GetInt(playerPrefToFind);
-		int ud = DaySinceUnixTime.GetDaySinceUnixTime();
+		int savedDay = PlayerPrefs.GetInt(playerPrefToFind);
+		int CurrentDay = DaySinceUnixTime.GetDaySinceUnixTime();
 
 		// If the player pref does not match the current day. It must be a new day, increment score
-		if (PlayerPrefs.GetInt(playerPrefToFind) != DaySinceUnixTime.GetDaySinceUnixTime())
+		if (savedDay != CurrentDay)
 		{
 			AchivmentAndStatControl.IncrementStat(Constants.totalDailyChallenges);
 			PlayerPrefs.SetInt(playerPrefToFind, DaySinceUnixTime.GetDaySinceUnixTime());
@@ -260,5 +240,30 @@ public class DailyChallengeMaster : MonoBehaviour
 	public List<string> GetDailyChallengeSongs()
 	{
 		return songs;
+	}
+
+	/// <summary>
+	/// Returns the index of the currently selected gym
+	/// </summary>
+	public int GetGymIndex()
+	{
+		return this.gymNumber;
+	}
+
+	/// <summary>
+	/// Returns a string representation of a gym given the index of the gym
+	/// </summary>
+	private string ConvertIntToGymName(int gymInd)
+	{
+		if (gymInd == 0)
+			return "Classic";
+		else if (gymInd == 1)
+			return "Night Club";
+		else if (gymInd == 1)
+			return "Future";
+		else if (gymInd == 1)
+			return "Victorian";
+		else
+			return "Random";
 	}
 }

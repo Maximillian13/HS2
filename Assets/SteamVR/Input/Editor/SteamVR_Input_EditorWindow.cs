@@ -740,7 +740,6 @@ namespace Valve.VR
                         bool confirm = EditorUtility.DisplayDialog("Confirmation", "Are you sure you want to delete this action set and all of its actions?.", "Delete", "Cancel");
                         if (confirm)
                         {
-                            //todo: this doesn't work
                             SteamVR_Input.actionFile.action_sets.RemoveAt(selectedActionSet);
                             selectedActionSet = -1;
                             selectedAction = null;
@@ -824,7 +823,7 @@ namespace Valve.VR
                 {
                     if (string.IsNullOrEmpty(action.skeleton) == false)
                     {
-                        action.skeleton = null; //todo: shouldn't have skeleton data for non skeleton types I think
+                        action.skeleton = null; 
                     }
                 }
             }

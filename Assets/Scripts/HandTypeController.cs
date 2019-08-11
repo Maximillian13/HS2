@@ -6,7 +6,7 @@ using Valve.VR;
 
 public class HandTypeController : MonoBehaviour
 {
-	private GameObject[] hands = new GameObject[6];
+	private GameObject[] hands = new GameObject[12];
 	public bool leftHand;
 	private SteamVR_Input_Sources hand;
 
@@ -45,17 +45,29 @@ public class HandTypeController : MonoBehaviour
 		hands[0] = Instantiate<GameObject>(Resources.Load<GameObject>("Hands/Hands" + modelIndex + "/" + whichHand + "/HandRest"), this.transform);
 		hands[1] = Instantiate<GameObject>(Resources.Load<GameObject>("Hands/Hands" + modelIndex + "/" + whichHand + "/HandPoint"), this.transform);
 		hands[2] = Instantiate<GameObject>(Resources.Load<GameObject>("Hands/Hands" + modelIndex + "/" + whichHand + "/HandClenched"), this.transform);
-		hands[3] = Instantiate<GameObject>(Resources.Load<GameObject>("Hands/Hands" + modelIndex + "/" + whichHand + "/HandThumbUp"), this.transform);
-		hands[4] = Instantiate<GameObject>(Resources.Load<GameObject>("Hands/Hands" + modelIndex + "/" + whichHand + "/HandFlip"), this.transform);
-		hands[5] = Instantiate<GameObject>(Resources.Load<GameObject>("Hands/Hands" + modelIndex + "/" + whichHand + "/HandOkay"), this.transform);
+		hands[3] = Instantiate<GameObject>(Resources.Load<GameObject>("Hands/Hands" + modelIndex + "/" + whichHand + "/HandThumbsUp"), this.transform);
+		hands[4] = Instantiate<GameObject>(Resources.Load<GameObject>("Hands/Hands" + modelIndex + "/" + whichHand + "/HandShaka"), this.transform);
+		hands[5] = Instantiate<GameObject>(Resources.Load<GameObject>("Hands/Hands" + modelIndex + "/" + whichHand + "/HandPeace"), this.transform);
+		hands[6] = Instantiate<GameObject>(Resources.Load<GameObject>("Hands/Hands" + modelIndex + "/" + whichHand + "/HandHorns"), this.transform);
+		hands[7] = Instantiate<GameObject>(Resources.Load<GameObject>("Hands/Hands" + modelIndex + "/" + whichHand + "/HandHeart"), this.transform);
+		hands[8] = Instantiate<GameObject>(Resources.Load<GameObject>("Hands/Hands" + modelIndex + "/" + whichHand + "/HandCrossed"), this.transform);
+		hands[9] = Instantiate<GameObject>(Resources.Load<GameObject>("Hands/Hands" + modelIndex + "/" + whichHand + "/HandPinch"), this.transform);
+		hands[10] = Instantiate<GameObject>(Resources.Load<GameObject>("Hands/Hands" + modelIndex + "/" + whichHand + "/HandGun"), this.transform);
+		hands[11] = Instantiate<GameObject>(Resources.Load<GameObject>("Hands/Hands" + modelIndex + "/" + whichHand + "/HandFlip"), this.transform);
 
 		// Rename everything
 		hands[0].name = "HandRest";
 		hands[1].name = "HandPoint";
 		hands[2].name = "HandClenched";
-		hands[3].name = "HandThumbUp";
-		hands[4].name = "HandFlip";
-		hands[5].name = "HandOkay";
+		hands[3].name = "HandThumbsUp";
+		hands[4].name = "HandShaka";
+		hands[5].name = "HandPeace";
+		hands[6].name = "HandHorns";
+		hands[7].name = "HandHeart";
+		hands[8].name = "HandCrossed";
+		hands[9].name = "HandPinch";
+		hands[10].name = "HandGun";
+		hands[11].name = "HandFlip";
 
 		// Position the hands correctly
 		for (int i = 0; i < hands.Length; i++)

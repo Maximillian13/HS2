@@ -15,7 +15,6 @@ public class RandomizeMats : MonoBehaviour
 		// Prevent getting stuck in the below loop
 		if (mats.Length < 2)
 		{
-			Debug.Log("To little mats assigned...");
 			return;
 		}
 

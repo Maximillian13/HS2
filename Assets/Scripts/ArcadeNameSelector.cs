@@ -7,7 +7,8 @@ public class ArcadeNameSelector : MonoBehaviour, IButtonMaster
 {
 	public TextMeshPro[] fullNameText;
 	public TextMeshPro currLetterText;
-	public TextMeshPro nextText;
+	public MeshRenderer mr;
+	public Material[] greens;
 
 	private int playerScore = 0;
 	private string[] charecters;
@@ -25,7 +26,7 @@ public class ArcadeNameSelector : MonoBehaviour, IButtonMaster
 			"O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", ".", "?", "!" };
 	}
 
-	public void ButtonPress(string token)
+	public void ButtonPress(string token, GenericButton sender)
 	{
 		if (token == "Left" || token == "Right")
 			this.LeftRightPress(token);
@@ -74,7 +75,7 @@ public class ArcadeNameSelector : MonoBehaviour, IButtonMaster
 		timer = 0;
 
 		// Change the next button to say next instead of submit
-		nextText.text = "Next";
+		mr.materials[0] = greens[0];
 	}
 
 	public void Next()
@@ -97,7 +98,7 @@ public class ArcadeNameSelector : MonoBehaviour, IButtonMaster
 		currNameCharIndex++;
 
 		if (currNameCharIndex == 3)
-			nextText.text = "Submit";
+			mr.materials[0] = greens[1];
 	}
 
 	/// <summary>
@@ -148,17 +149,19 @@ public class ArcadeNameSelector : MonoBehaviour, IButtonMaster
 	{
 		if (grow == true)
 		{
-			this.transform.localScale = new Vector3(this.transform.localScale.x + .033f, this.transform.localScale.y + .025f, this.transform.localScale.z + .004166f);
-			if(this.transform.localScale.x >= 2)
+			float scaleTime = Time.deltaTime * 2;
+			this.transform.localScale = new Vector3(this.transform.localScale.x + scaleTime, this.transform.localScale.y + scaleTime, this.transform.localScale.z + scaleTime);
+			if(this.transform.localScale.x >= 1)
 			{
-				this.transform.localScale = new Vector3(1.5f, 1, .2f);
+				this.transform.localScale = Vector3.one;
 				grow = false;
 			}
 		}
 
 		if(shrink == true)
 		{
-			this.transform.localScale = new Vector3(this.transform.localScale.x - .033f, this.transform.localScale.y - .025f, this.transform.localScale.z - .004166f);
+			float scaleTime = Time.deltaTime * 2;
+			this.transform.localScale = new Vector3(this.transform.localScale.x - scaleTime, this.transform.localScale.y - scaleTime, this.transform.localScale.z - scaleTime);
 			if (this.transform.localScale.x < 0)
 				Destroy(this.gameObject);
 		}

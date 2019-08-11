@@ -13,7 +13,11 @@ public class PauseMenuButton : MonoBehaviour, IInteractibleButton
 	{
 		mr = this.GetComponent<MeshRenderer>();
 		mr.enabled = false;
-		master = this.transform.parent.parent.parent.GetComponent<PauseMenu>();
+		Transform pTrans = this.transform.parent;
+		while (pTrans.GetComponent<PauseMenu>() == null)
+			pTrans = pTrans.parent;
+
+		master = pTrans.GetComponent<PauseMenu>();
 	}
 
 

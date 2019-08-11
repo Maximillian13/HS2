@@ -30,7 +30,7 @@ public class SteamLeaderButtonControl : MonoBehaviour, IButtonMaster
 		updateCounter++;
 	}
 
-	public void ButtonPress(string token)
+	public void ButtonPress(string token, GenericButton sender)
 	{
 		// If clicking the next button
 		if(token == "Next")

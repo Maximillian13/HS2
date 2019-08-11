@@ -33,7 +33,7 @@ public class MoveWall : MonoBehaviour
 	void Update () 
     {
         // If the wall has reached its max point tell it to stop moving up
-        if(this.transform.localPosition.y >= height) // Todo: Test if +.5 is appropriate here (Need a tester)
+        if(this.transform.localPosition.y >= height) 
         {
             moveUp = false;
         }

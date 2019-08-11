@@ -5,20 +5,21 @@ using TMPro;
 
 public class ScorePopperMessage : MonoBehaviour
 {
-	private TextMeshPro scoreText;
+	private SpriteRenderer spriteRend;
 	private float alpha = 1.5f;
 	private float upTimer = -.01f;
-	// Start is called before the first frame update
-	void Start()
+	private float upDiv = 15;
+
+	private void Start()
 	{
-		scoreText = this.GetComponent<TextMeshPro>();
+		spriteRend = this.GetComponent<SpriteRenderer>();
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
 		alpha -= Time.deltaTime;
-		scoreText.color = new Color(scoreText.color.r, scoreText.color.g, scoreText.color.b, alpha);
+		spriteRend.color = new Color(spriteRend.color.r, spriteRend.color.g, spriteRend.color.b, alpha);
 
 		upTimer += Time.deltaTime / 15;
 		this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y + upTimer, this.transform.position.z);
@@ -28,11 +29,9 @@ public class ScorePopperMessage : MonoBehaviour
 
 	}
 
-	public void SetMessage(string message)
+	public void SetMessage(string message, float speedGoingUpDiv = 15, float goingUpTimer = -.01f)
 	{
-		if (scoreText == null)
-			this.Start();
-
-		scoreText.text = message;
+		this.upTimer = goingUpTimer;
+		this.upDiv = speedGoingUpDiv;
 	}
 }

@@ -13,6 +13,8 @@ TagManager:
   - CalorieCounter
   - TportArea
   - TportBlock
+  - Mp3Player
+  - HandCol
   layers:
   - Default
   - TransparentFX

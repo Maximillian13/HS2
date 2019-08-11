@@ -8,18 +8,24 @@ public static class AchivmentAndStatControl
 	private const int SQUAT_CONSEC0 = 10; // Pancake Butt
 	private const int SQUAT_CONSEC1 = 100; // Average Caboose
 	private const int SQUAT_CONSEC2 = 200; // Rock Hard Bottom
-	private const int SQUAT_CONSEC3 = 300; // Buns Of Steel
-	private const int SQUAT_CONSEC4 = 400; // Golden Gluteus 
-	private const int SQUAT_CONSEC5 = 500; // Buns Of Steel
-	private const int SQUAT_CONSEC6 = 750; // Golden Gluteus 
+	private const int SQUAT_CONSEC3 = 350; // Buns Of Steel
+	private const int SQUAT_CONSEC4 = 500; // Golden Gluteus 
 
 	private const int SQUAT_TOTAL0 = 500; // Home Gym // Todo: Change to 500
 	private const int SQUAT_TOTAL1 = 1000; // 1-Month Trial
 	private const int SQUAT_TOTAL2 = 2500; // Cardio Casual
-	private const int SQUAT_TOTAL3 = 5000; // Gym Rat
-	private const int SQUAT_TOTAL4 = 10000; // Leg Day, Every Day
-	private const int SQUAT_TOTAL5 = 50000; // King Of The Gym
-	private const int SQUAT_TOTAL6 = 100000; // Guardian Of The Gym
+	private const int SQUAT_TOTAL3 = 10000; // Gym Rat
+	private const int SQUAT_TOTAL4 = 50000; // Leg Day, Every Day
+
+	private const int DAILY_CHALLENGE0 = 1; 
+	private const int DAILY_CHALLENGE1 = 7; 
+	private const int DAILY_CHALLENGE2 = 14; 
+	private const int DAILY_CHALLENGE3 = 30; 
+	private const int DAILY_CHALLENGE4 = 50; 
+	private const int DAILY_CHALLENGE5 = 100;
+
+
+	private const int PUNCHING_BAG = 5000;
 
 	/// <summary>
 	/// Check if any of the Consecutive squat achievements have been made yet
@@ -31,8 +37,6 @@ public static class AchivmentAndStatControl
 		ChechAndUnlockAchivment(amountOfSquats, SQUAT_CONSEC2, Achievement.SQUAT_CONSEC2);
 		ChechAndUnlockAchivment(amountOfSquats, SQUAT_CONSEC3, Achievement.SQUAT_CONSEC3);
 		ChechAndUnlockAchivment(amountOfSquats, SQUAT_CONSEC4, Achievement.SQUAT_CONSEC4);
-		ChechAndUnlockAchivment(amountOfSquats, SQUAT_CONSEC5, Achievement.SQUAT_CONSEC5);
-		ChechAndUnlockAchivment(amountOfSquats, SQUAT_CONSEC6, Achievement.SQUAT_CONSEC6);
 	}
 
 	/// <summary>
@@ -45,8 +49,19 @@ public static class AchivmentAndStatControl
 		ChechAndUnlockAchivment(totalSquats, SQUAT_TOTAL2, Achievement.SQUAT_TOTAL2);
 		ChechAndUnlockAchivment(totalSquats, SQUAT_TOTAL3, Achievement.SQUAT_TOTAL3);
 		ChechAndUnlockAchivment(totalSquats, SQUAT_TOTAL4, Achievement.SQUAT_TOTAL4);
-		ChechAndUnlockAchivment(totalSquats, SQUAT_TOTAL5, Achievement.SQUAT_TOTAL5);
-		ChechAndUnlockAchivment(totalSquats, SQUAT_TOTAL6, Achievement.SQUAT_TOTAL6);
+	}
+
+	/// <summary>
+	/// Check if any of the daily challenge achievements have been made yet
+	/// </summary>
+	public static void CheckAllDailyChallengeAchivments(int dailyChallengeNum)
+	{
+		ChechAndUnlockAchivment(dailyChallengeNum, DAILY_CHALLENGE0, Achievement.DAILY_CHALLENGE0);
+		ChechAndUnlockAchivment(dailyChallengeNum, DAILY_CHALLENGE1, Achievement.DAILY_CHALLENGE1);
+		ChechAndUnlockAchivment(dailyChallengeNum, DAILY_CHALLENGE2, Achievement.DAILY_CHALLENGE2);
+		ChechAndUnlockAchivment(dailyChallengeNum, DAILY_CHALLENGE3, Achievement.DAILY_CHALLENGE3);
+		ChechAndUnlockAchivment(dailyChallengeNum, DAILY_CHALLENGE4, Achievement.DAILY_CHALLENGE4);
+		ChechAndUnlockAchivment(dailyChallengeNum, DAILY_CHALLENGE5, Achievement.DAILY_CHALLENGE5);
 	}
 
 	/// <summary>
@@ -75,6 +90,56 @@ public static class AchivmentAndStatControl
 			if (SteamManager.Initialized == true)
 				UnlockAchievement(m_Achievements[(int)achivName]);
 		}
+	}
+
+	/// <summary>
+	/// Check all achivments incase you missed one 
+	/// </summary>
+	public static void CheckAllAchivments()
+	{
+		if (GetStat(Constants.totalSquatWallCount) >= SQUAT_TOTAL0)
+			UnlockAchievement(m_Achievements[(int)Achievement.SQUAT_TOTAL0]);
+		if (GetStat(Constants.totalSquatWallCount) >= SQUAT_TOTAL1)
+			UnlockAchievement(m_Achievements[(int)Achievement.SQUAT_TOTAL1]);
+		if (GetStat(Constants.totalSquatWallCount) >= SQUAT_TOTAL2)
+			UnlockAchievement(m_Achievements[(int)Achievement.SQUAT_TOTAL2]);
+		if (GetStat(Constants.totalSquatWallCount) >= SQUAT_TOTAL3)
+			UnlockAchievement(m_Achievements[(int)Achievement.SQUAT_TOTAL3]);
+		if (GetStat(Constants.totalSquatWallCount) >= SQUAT_TOTAL4)
+			UnlockAchievement(m_Achievements[(int)Achievement.SQUAT_TOTAL4]);
+
+		if (GetStat(Constants.highestSquatConsec) >= SQUAT_CONSEC0)
+			UnlockAchievement(m_Achievements[(int)Achievement.SQUAT_CONSEC0]);
+		if (GetStat(Constants.highestSquatConsec) >= SQUAT_CONSEC1)
+			UnlockAchievement(m_Achievements[(int)Achievement.SQUAT_CONSEC1]);
+		if (GetStat(Constants.highestSquatConsec) >= SQUAT_CONSEC2)
+			UnlockAchievement(m_Achievements[(int)Achievement.SQUAT_CONSEC2]);
+		if (GetStat(Constants.highestSquatConsec) >= SQUAT_CONSEC3)
+			UnlockAchievement(m_Achievements[(int)Achievement.SQUAT_CONSEC3]);
+		if (GetStat(Constants.highestSquatConsec) >= SQUAT_CONSEC4)
+			UnlockAchievement(m_Achievements[(int)Achievement.SQUAT_CONSEC4]);
+
+		if (GetStat(Constants.totalDailyChallenges) >= DAILY_CHALLENGE0)
+			UnlockAchievement(m_Achievements[(int)Achievement.DAILY_CHALLENGE0]);
+		if (GetStat(Constants.totalDailyChallenges) >= DAILY_CHALLENGE1)
+			UnlockAchievement(m_Achievements[(int)Achievement.DAILY_CHALLENGE1]);
+		if (GetStat(Constants.totalDailyChallenges) >= DAILY_CHALLENGE2)
+			UnlockAchievement(m_Achievements[(int)Achievement.DAILY_CHALLENGE2]);
+		if (GetStat(Constants.totalDailyChallenges) >= DAILY_CHALLENGE3)
+			UnlockAchievement(m_Achievements[(int)Achievement.DAILY_CHALLENGE3]);
+		if (GetStat(Constants.totalDailyChallenges) >= DAILY_CHALLENGE4)
+			UnlockAchievement(m_Achievements[(int)Achievement.DAILY_CHALLENGE4]);
+		if (GetStat(Constants.totalDailyChallenges) >= DAILY_CHALLENGE5)
+			UnlockAchievement(m_Achievements[(int)Achievement.DAILY_CHALLENGE5]);
+
+		if (GetStat(Constants.punchingBagPunches) >= PUNCHING_BAG)
+			UnlockAchievement(m_Achievements[(int)Achievement.PUNCHING_BAG]);
+	}
+
+	public static void CheckPunchingBagAchiv()
+	{
+		if (GetStat(Constants.punchingBagPunches) >= PUNCHING_BAG)
+			UnlockAchievement(m_Achievements[(int)Achievement.PUNCHING_BAG]);
 	}
 
 	/// <summary>
@@ -130,36 +195,50 @@ public static class AchivmentAndStatControl
 		SQUAT_CONSEC2,
 		SQUAT_CONSEC3,
 		SQUAT_CONSEC4,
-		SQUAT_CONSEC5,
-		SQUAT_CONSEC6,
 
+		// Total
 		SQUAT_TOTAL0,
 		SQUAT_TOTAL1,
 		SQUAT_TOTAL2,
 		SQUAT_TOTAL3,
 		SQUAT_TOTAL4,
-		SQUAT_TOTAL5,
-		SQUAT_TOTAL6
+
+		// Daily
+		DAILY_CHALLENGE0,
+		DAILY_CHALLENGE1,
+		DAILY_CHALLENGE2,
+		DAILY_CHALLENGE3,
+		DAILY_CHALLENGE4,
+		DAILY_CHALLENGE5,
+
+		// Random 
+		PUNCHING_BAG
+
 	};
 
 	private static Achievement_t[] m_Achievements = new Achievement_t[]
 	{
         // Per Round
-        new Achievement_t(Achievement.SQUAT_CONSEC0, "SQUAT_CONSEC0", "Do 10 squats in one round."),
-		new Achievement_t(Achievement.SQUAT_CONSEC1, "SQUAT_CONSEC1", "Do 100 squats in one round."),
-		new Achievement_t(Achievement.SQUAT_CONSEC2, "SQUAT_CONSEC2", "Do 200 squats in one round."),
-		new Achievement_t(Achievement.SQUAT_CONSEC3, "SQUAT_CONSEC3", "Do 300 squats in one round."),
-		new Achievement_t(Achievement.SQUAT_CONSEC4, "SQUAT_CONSEC4", "Do 400 squats in one round."),
-		new Achievement_t(Achievement.SQUAT_CONSEC5, "SQUAT_CONSEC5", "Do 500 squats in one round."),
-		new Achievement_t(Achievement.SQUAT_CONSEC6, "SQUAT_CONSEC6", "Do 750 squats in one round."),
+        new Achievement_t(Achievement.SQUAT_CONSEC0, "SQUAT_CONSEC0", "Do 10 squats in a row in Classic Mode."),
+		new Achievement_t(Achievement.SQUAT_CONSEC1, "SQUAT_CONSEC1", "Do 100 squats in a row in Classic Mode."),
+		new Achievement_t(Achievement.SQUAT_CONSEC2, "SQUAT_CONSEC2", "Do 200 squats in a row in Classic Mode."),
+		new Achievement_t(Achievement.SQUAT_CONSEC3, "SQUAT_CONSEC3", "Do 350 squats in a row in Classic Mode."),
+		new Achievement_t(Achievement.SQUAT_CONSEC4, "SQUAT_CONSEC4", "Do 500 squats in a row in Classic Mode."),
 
 		new Achievement_t(Achievement.SQUAT_TOTAL0, "SQUAT_TOTAL0", "Do 500 squats in total."),
-		new Achievement_t(Achievement.SQUAT_TOTAL1, "SQUAT_TOTAL1", "Do 1000 squats in total."),
-		new Achievement_t(Achievement.SQUAT_TOTAL2, "SQUAT_TOTAL2", "Do 2500 squats in total."),
-		new Achievement_t(Achievement.SQUAT_TOTAL3, "SQUAT_TOTAL3", "Do 5000 squats in total."),
-		new Achievement_t(Achievement.SQUAT_TOTAL4, "SQUAT_TOTAL4", "Do 10000 squats in total."),
-		new Achievement_t(Achievement.SQUAT_TOTAL5, "SQUAT_TOTAL5", "Do 50000 squats in total."),
-		new Achievement_t(Achievement.SQUAT_TOTAL6, "SQUAT_TOTAL6", "Do 100000 squats in total."),
+		new Achievement_t(Achievement.SQUAT_TOTAL1, "SQUAT_TOTAL1", "Do 1,000 squats in total."),
+		new Achievement_t(Achievement.SQUAT_TOTAL2, "SQUAT_TOTAL2", "Do 2,500 squats in total."),
+		new Achievement_t(Achievement.SQUAT_TOTAL3, "SQUAT_TOTAL3", "Do 10,000 squats in total."),
+		new Achievement_t(Achievement.SQUAT_TOTAL4, "SQUAT_TOTAL4", "Do 50,000 squats in total."),
+
+		new Achievement_t(Achievement.DAILY_CHALLENGE0, "DAILY_CHALLENGE0", "Complete 1 daily challenge."),
+		new Achievement_t(Achievement.DAILY_CHALLENGE1, "DAILY_CHALLENGE1", "Complete 7 daily challenge."),
+		new Achievement_t(Achievement.DAILY_CHALLENGE2, "DAILY_CHALLENGE2", "Complete 14 daily challenge."),
+		new Achievement_t(Achievement.DAILY_CHALLENGE3, "DAILY_CHALLENGE3", "Complete 30 daily challenge."),
+		new Achievement_t(Achievement.DAILY_CHALLENGE4, "DAILY_CHALLENGE4", "Complete 50 daily challenge."),
+		new Achievement_t(Achievement.DAILY_CHALLENGE5, "DAILY_CHALLENGE5", "Complete 100 daily challenge."),
+
+		new Achievement_t(Achievement.PUNCHING_BAG, "Who Said This Game Was Only For Legs?", "Punch the punching bag 5,000 times.")
 	};
 
 
@@ -215,6 +294,8 @@ public static class Constants
 	public static string totalDailyChallenges = "TotalDailyChallenges";
 	public static string totalCustomRoutines = "TotalCustomRoutines";
 	public static string totalCaloriesBurned = "TotalCaloriesBurned";
+	public static string punchingBagPunches = "PunchingBagPunches";
+
 
 	public static string dailyChallengeIDToken = "DailyChallengeID";
 

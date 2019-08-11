@@ -11,17 +11,19 @@ public class MP3PlayerControl : MonoBehaviour
 	private void Start()
 	{
 		// Set the current volume
-		this.UpdateVolumeLevel((int)(GameObject.FindWithTag("Music").GetComponent<AudioSource>().volume * 10));
+		AudioSource audioSource = GameObject.FindWithTag("Music").GetComponent<AudioSource>();
+		this.UpdateVolumeLevel((int)(audioSource.volume * 10));
+		this.UpdateSongName(audioSource.clip.name);
 	}
 
 	public void UpdateSongName(string sn)
 	{
-		songName.text = "Name: " + sn;
+		songName.text = sn;
 	}
 
 	public void UpdateVolumeLevel(int vol)
 	{
-		volumelevel.text = "Volume: " + vol.ToString();
+		volumelevel.text = vol.ToString();
 	}
 
 	

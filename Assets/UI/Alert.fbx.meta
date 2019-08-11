@@ -1,0 +1,172 @@
+fileFormatVersion: 2
+guid: 6fd5919d50d137f44831b8583305e8bd
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: Cube
+    100004: Cube_1
+    100006: Cube_2
+    100008: Polygon
+    100010: Polygon_1
+    100012: Polygon_2
+    100014: Polygon_3
+    100016: Polygon_4
+    100018: Polygon_5
+    100020: Polygon_6
+    100022: Polygon_7
+    400000: //RootNode
+    400002: Cube
+    400004: Cube_1
+    400006: Cube_2
+    400008: Polygon
+    400010: Polygon_1
+    400012: Polygon_2
+    400014: Polygon_3
+    400016: Polygon_4
+    400018: Polygon_5
+    400020: Polygon_6
+    400022: Polygon_7
+    2100000: AlertBG3
+    2100002: AlertUI
+    2100004: AlertBG2
+    2100006: AlertBG1.1
+    2300000: Cube
+    2300002: Cube_1
+    2300004: Cube_2
+    2300006: Polygon
+    2300008: Polygon_1
+    2300010: Polygon_2
+    2300012: Polygon_3
+    2300014: Polygon_4
+    2300016: Polygon_5
+    2300018: Polygon_6
+    2300020: Polygon_7
+    3300000: Cube
+    3300002: Cube_1
+    3300004: Cube_2
+    3300006: Polygon
+    3300008: Polygon_1
+    3300010: Polygon_2
+    3300012: Polygon_3
+    3300014: Polygon_4
+    3300016: Polygon_5
+    3300018: Polygon_6
+    3300020: Polygon_7
+    4300000: Cube_2
+    4300002: Polygon_7
+    4300004: Polygon_6
+    4300006: Polygon_5
+    4300008: Polygon_4
+    4300010: Polygon_3
+    4300012: Polygon_2
+    4300014: Cube_1
+    4300016: Polygon_1
+    4300018: Polygon
+    4300020: Cube
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: AlertBG1.1
+    second: {fileID: 2100000, guid: aad5711f23f6dea4887a4f8206b402d9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: AlertBG2
+    second: {fileID: 2100000, guid: 4f77965ee87859441b7066aea09b4917, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: AlertBG3
+    second: {fileID: 2100000, guid: d87c8068051112b4a9999b04d2311634, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: AlertUI
+    second: {fileID: 2100000, guid: 68208baaf81b0554cbc4e3b321232b9d, type: 2}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 0
+  tangentSpace:
+    normalSmoothAngle: 1
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

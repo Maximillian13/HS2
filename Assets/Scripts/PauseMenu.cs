@@ -19,6 +19,7 @@ public class PauseMenu : MonoBehaviour
 	private HeightCalibrator hCal;
 
 	private Vector3 pausePos;
+	private Vector3 pauseRot;
 
 	private void Start()
 	{
@@ -34,7 +35,8 @@ public class PauseMenu : MonoBehaviour
 		menuInterations[0] = this.transform.parent.Find("Controller (left)").GetComponent<WandControlMenuInteraction>();
 		menuInterations[1] = this.transform.parent.Find("Controller (right)").GetComponent<WandControlMenuInteraction>();
 
-		pausePos = new Vector3(0, .075f, -.1f);
+		pausePos = new Vector3(.1f, .15f, -.15f);
+		pauseRot = new Vector3(-45, 180, 0);
 	}
 
 	// Update is called once per frame
@@ -103,6 +105,7 @@ public class PauseMenu : MonoBehaviour
 		this.pauseMenu = newPauseMenu;
 		this.pauseMenu.transform.parent = this.transform;
 		this.pauseMenu.transform.localPosition = pausePos;
+		this.pauseMenu.transform.localEulerAngles = pauseRot;
 		this.pauseMenu.gameObject.SetActive(false);
 	}
 }

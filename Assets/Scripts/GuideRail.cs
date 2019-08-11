@@ -26,7 +26,7 @@ public class GuideRail : MonoBehaviour
         {
 			float coeff = this.transform.position.y > heightUp ? -1 : 1;
             this.transform.localPosition = new Vector3(this.transform.localPosition.x, this.transform.localPosition.y + (.8f * coeff * Time.deltaTime), this.transform.localPosition.z);
-			if(Vector3.Distance(this.transform.localPosition, new Vector3(this.transform.localPosition.x, heightUp, this.transform.localPosition.z)) < .05f)
+			if(Vector3.Distance(this.transform.localPosition, new Vector3(this.transform.localPosition.x, heightUp, this.transform.localPosition.z)) < .1f)
 			{
 				this.transform.localPosition = new Vector3(this.transform.localPosition.x, heightUp, this.transform.localPosition.z);
 				moveToCalPos = false;
@@ -38,13 +38,14 @@ public class GuideRail : MonoBehaviour
             this.transform.localPosition = new Vector3(this.transform.localPosition.x, this.transform.localPosition.y + (-.8f * Time.deltaTime), this.transform.localPosition.z);
         }
 
-        if(Time.time > counter + 1 && boxCol[0].enabled == false)
+        if(Time.time > counter + .75f && boxCol[0].enabled == false)
         {
             foreach(BoxCollider b in boxCol)
             {
                 b.enabled = true;
             }
-        }
+			counter = float.PositiveInfinity;
+		}
 	}
 
 	/// <summary>
@@ -59,12 +60,22 @@ public class GuideRail : MonoBehaviour
 	}
 
 	/// <summary>
+	/// Pause the colider for a short time to let the walls fly
+	/// </summary>
+	public void PauseBoxCols()
+	{
+		for (int i = 0; i < boxCol.Length; i++)
+			boxCol[i].enabled = false;
+        counter = Time.time;
+	}
+
+	/// <summary>
 	/// Lower the rail to the bottom position
 	/// </summary>
-    public void LowerRail()
+	public void LowerRail()
     {
+		this.PauseBoxCols();
         moveToCalPos = false;
 		moveToEnd = true;
-        counter = Time.time;
     }
 }

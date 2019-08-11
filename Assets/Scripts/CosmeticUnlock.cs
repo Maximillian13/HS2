@@ -13,57 +13,74 @@ public class CosmeticUnlock : MonoBehaviour
 	public GameObject[] lockedUnlockedGloves;
 	public Sprite[] lockedUnlockedSprite;
 	public int statMax;
+	public bool displayProgress;
 
-	public TextMeshPro[] descStrings;
+	public TextMeshPro[] descTexts;
+	public string unlockedDescString;
 
 	private bool unlocked;
 
 	private CosmeticSelectionButton button;
+	private BoxCollider boxCol;
 	private TextMeshPro statOutOfText;
 	private SpriteRenderer spriteRend;
 
 	private bool fadeOut;
 	private bool fadeIn;
 	private float alpha;
-	private const float SPEED = 4;
+	private const float SPEED = 2;
 
 	// Start is called before the first frame update
 	void Start()
     {
-		fadeOut = true;
 		alpha = 1;
-		spriteRend = this.transform.Find("Sprite").GetComponent<SpriteRenderer>();
+		if(this.transform.Find("Sprite") != null)
+			spriteRend = this.transform.Find("Sprite").GetComponent<SpriteRenderer>();
+		else
+			spriteRend = this.transform.parent.Find("Sprite").GetComponent<SpriteRenderer>();
+
 		if (forceUnlock == true && lockedUnlockedGloves.Length < 1)
 		{
 			unlocked = true;
+			descTexts[0].text = unlockedDescString;
 			return;
 		}
 
 		button = this.GetComponent<CosmeticSelectionButton>();
-		statOutOfText= this.transform.Find("StatsOutOf").GetComponent<TextMeshPro>();
+		boxCol = this.GetComponent<BoxCollider>();
+
+		if (displayProgress == true)
+		{
+			if (this.transform.Find("StatsOutOf") != null)
+				statOutOfText = this.transform.Find("StatsOutOf").GetComponent<TextMeshPro>();
+			else
+				statOutOfText = this.transform.parent.Find("StatsOutOf").GetComponent<TextMeshPro>();
+		}
 
 		if (SteamManager.Initialized == true)
 		{
 			bool steamAch = false;
 			SteamUserStats.GetAchievement(achivName, out steamAch);
-			Debug.Log(achivName + " unlocked = " + steamAch);
-
 			if(steamAch == true || forceUnlock == true)
 			{
 				unlocked = true;
-				button.enabled = true;
-				statOutOfText.text = statMax + "/" + statMax;
+				descTexts[0].text = unlockedDescString;
+				if (button != null)
+					button.enabled = true;
+				if(displayProgress == true)
+					statOutOfText.text = statMax + "/" + statMax;
 				spriteRend.sprite = lockedUnlockedSprite[1];
 				lockedUnlockedGloves[0].SetActive(false);
 				lockedUnlockedGloves[1].SetActive(true);
 			}
 			else
 			{
-				int sc;
-				SteamUserStats.GetStat(assocaitedStat, out sc);
-
-				button.enabled = false;
-				statOutOfText.text = sc + "/" + statMax;
+				if (button != null)
+					button.enabled = false;
+				if (boxCol != null)
+					boxCol.enabled = false;
+				if (displayProgress == true)
+					statOutOfText.text = AchivmentAndStatControl.GetStat(assocaitedStat) + "/" + statMax;
 				spriteRend.sprite = lockedUnlockedSprite[0];
 				lockedUnlockedGloves[0].SetActive(true);
 				lockedUnlockedGloves[1].SetActive(false);
@@ -73,24 +90,25 @@ public class CosmeticUnlock : MonoBehaviour
 
 	private void Update()
 	{
-		// Fade in or out the descriptive texts
-		if (fadeIn == true)
+		if (fadeIn == true || fadeOut == true)
 		{
-			alpha += SPEED * Time.deltaTime;
-			for (int i = 0; i < descStrings.Length; i++)
-				descStrings[i].color = new Color(1, 1, 1, alpha);
+			for (int i = 0; i < descTexts.Length; i++)
+				descTexts[i].color = new Color(1, 1, 1, alpha);
 			spriteRend.color = new Color(1, 1, 1, alpha);
-			if (alpha > 1)
-				fadeIn = false;
-		}
-		if (fadeOut == true)
-		{
-			alpha -= SPEED * Time.deltaTime;
-			for (int i = 0; i < descStrings.Length; i++)
-				descStrings[i].color = new Color(1, 1, 1, alpha);
-			spriteRend.color = new Color(1, 1, 1, alpha);
-			if (alpha > 1)
-				fadeIn = false;
+			if(statOutOfText != null && displayProgress == true)
+				statOutOfText.color = new Color(1, 1, 1, alpha);
+			if (fadeIn == true)
+			{
+				alpha += SPEED * Time.deltaTime;
+				if (alpha > 1.5f)
+					fadeIn = false;
+			}
+			if (fadeOut == true)
+			{
+				alpha -= SPEED * Time.deltaTime;
+				if (alpha < -1.5f)
+					fadeOut = false;
+			}
 		}
 	}
 
@@ -118,14 +136,4 @@ public class CosmeticUnlock : MonoBehaviour
 	{
 		return unlocked;
 	}
-
-	// Closes all sockets and kills all threads (This prevents unity from freezing)
-	//private void OnApplicationQuit()
-	//{
-	//	if (SteamManager.Initialized == true)
-	//	{
-	//		SteamAPI.RunCallbacks();
-	//		SteamAPI.Shutdown();
-	//	}
-	//}
 }

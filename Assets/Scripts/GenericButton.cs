@@ -96,12 +96,12 @@ public class GenericButton : MonoBehaviour, IInteractibleButton
 		if (isEnabled == false)
 			return;
 
-		master.ButtonPress(token);
 		if (highlightingWanted == true)
 		{
 			this.SelectHighLight();
 		}
 		selected = true;
+		master.ButtonPress(token, this);
 	}
 
 	public void SelectHighLight()
@@ -135,7 +135,7 @@ public class GenericButton : MonoBehaviour, IInteractibleButton
 		mr.enabled = false;
 		selected = false;
 		if (checkMaster == true)
-			master.ButtonPress(token);
+			master.ButtonPress(token, this);
 	}
 
 	/// <summary>
@@ -186,6 +186,11 @@ public class GenericButton : MonoBehaviour, IInteractibleButton
 	{
 		return this.selected;
 	}
+
+	//public bool IsHighlighted()
+	//{
+	//	return this.highlighted;
+	//}
 
 	public string GetToken()
 	{

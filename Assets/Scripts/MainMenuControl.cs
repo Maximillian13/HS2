@@ -36,6 +36,9 @@ public class MainMenuControl : MonoBehaviour
 
 	private MainMenuLevelLoader levelLoader;
 
+	private int levelToLoad;
+	private bool doingDailyChallenge;
+
 	private string CUSTOM_DATA_PATH;
 
 	// Start is called before the first frame update
@@ -44,18 +47,26 @@ public class MainMenuControl : MonoBehaviour
 		// Where the Custom Routine data should be located 
 		CUSTOM_DATA_PATH = Application.persistentDataPath + "/CustomRoutineData.txt";
 
+		// If we have the main game music destroy it 
+		GameObject oldMusic = GameObject.Find("KeepMusic");
+		if (oldMusic != null)
+			Destroy(oldMusic.gameObject);
+
 		// Delete old info about the custom routine
 		if (File.Exists(CUSTOM_DATA_PATH) == true)
 			File.Delete(CUSTOM_DATA_PATH);
 
 		// The position that the buttons will go to when transitioning
-		forwordPos = new Vector3(0, 1.375f, .8f);
-		backPos = new Vector3(0, 1.375f, 1.2f);
+		forwordPos = new Vector3(-.3f, 1.55f, .861f);
+		backPos = new Vector3(-.3f, 1.55f, 1.2f);
 		buttonTimer = float.PositiveInfinity;
 
 		// Active all button sets so we can get their components 
 		for (int i = 0; i < buttonSet.Length; i++)
-			buttonSet[i].SetActive(true);
+		{
+			if(buttonSet[i] != null)
+				buttonSet[i].SetActive(true);
+		}
 
 
 		// Get control objects
@@ -68,6 +79,7 @@ public class MainMenuControl : MonoBehaviour
 		gameModeSelector = buttonSet[4].transform.GetChild(0).GetComponent<WorkOutSelectControl>();
 
 		levelLoader = GameObject.Find("MainMenuLevelLoader").GetComponent<MainMenuLevelLoader>();
+		levelToLoad = -1;
 
 		// Set up to display the main menu (and deactivate all the others)
 		this.ActivateButtonSet("MainMenu");
@@ -75,10 +87,26 @@ public class MainMenuControl : MonoBehaviour
 		// Make sure weight is set properly 
 		if (PlayerPrefs.GetInt("PlayerWeight") == 0)
 			PlayerPrefs.SetInt("PlayerWeight", 160);
+
+		AchivmentAndStatControl.CheckAllAchivments();
 	}
 
 	void Update()
 	{
+
+		if(Input.GetKeyDown(KeyCode.X))
+		{
+			AchivmentAndStatControl.IncrementStat(Constants.totalSquatWallCount);
+			AchivmentAndStatControl.IncrementStat(Constants.highestSquatConsec, 1);
+			AchivmentAndStatControl.IncrementStat(Constants.totalCardioWallCount, 15);
+			AchivmentAndStatControl.IncrementStat(Constants.highestCardioConsec);
+			AchivmentAndStatControl.IncrementStat(Constants.totalDailyChallenges, 10);
+			AchivmentAndStatControl.IncrementStat(Constants.totalCustomRoutines, 10);
+			AchivmentAndStatControl.IncrementStat(Constants.punchingBagPunches, 10);
+			AchivmentAndStatControl.IncrementStat(Constants.highScore, 10);
+			UnityEngine.SceneManagement.SceneManager.LoadScene(1);
+		}
+
 		// Todo: For the love of god dont forget to delete this
 		// Reset all achievements
 		if (Input.GetKeyDown(KeyCode.Escape))
@@ -90,6 +118,8 @@ public class MainMenuControl : MonoBehaviour
 				Debug.Log("Achiv deleted");
 			}
 		}
+
+		
 
 		if (Input.GetKeyDown(KeyCode.Q))
 			this.TransitionToMenu("GameMode ClassicMode");
@@ -155,8 +185,11 @@ public class MainMenuControl : MonoBehaviour
 	private void ActivateButtonSet(string setToActivate)
 	{
 		// Disable all button sets 
-		for(int i = 0; i < buttonSet.Length; i++)
-			buttonSet[i].SetActive(false);
+		for (int i = 0; i < buttonSet.Length; i++)
+		{
+			if (buttonSet[i] != null)
+				buttonSet[i].SetActive(false);
+		}
 
 		// Activate the correct button set
 		// Goes to the main menu and deletes and custom data
@@ -184,6 +217,7 @@ public class MainMenuControl : MonoBehaviour
 		{
 			string nextToLoad = setToActivate.Split(' ')[1];
 			gameModeSelector.SetContinueButtonToken(nextToLoad);
+			gameModeSelector.SetSquatCardio(nextToLoad);
 			buttonSet[4].SetActive(true);
 		}
 
@@ -198,8 +232,6 @@ public class MainMenuControl : MonoBehaviour
 		if (setToActivate == "ArcadeMode")
 		{
 			buttonSet[1].SetActive(true);
-			// Make it squat mode 
-			PlayerPrefs.SetInt(Constants.cardioMode, 0);
 			gymSongStart.SetButtonToken("LoadLevel am");
 			gymSongBack.SetButtonToken("MainMenu");
 		}
@@ -243,7 +275,8 @@ public class MainMenuControl : MonoBehaviour
 
 			// Make the song file based off buttons
 			gymAndSongSelectControl.MakeSongFile(); 
-			Debug.Log(gymAndSongSelectControl.GetSelectedGym());
+			levelToLoad = gymAndSongSelectControl.GetSelectedGym();
+			doingDailyChallenge = false;
 		}
 
 		// Daily Challenge 
@@ -253,13 +286,13 @@ public class MainMenuControl : MonoBehaviour
 
 			// Make the song file based off the daily challenge
 			gymAndSongSelectControl.MakeSongFile(dailyChallengeControl.GetDailyChallengeSongs());
+			levelToLoad = dailyChallengeControl.GetGymIndex();
 
 			// Save the daily challenge info
 			string[] dailyC = dailyChallengeControl.GetDailyChallengeSummary();
 			this.WriteDataToFile(dailyC, CUSTOM_DATA_PATH);
 
-			// Save that we did a daily challenge 
-			dailyChallengeControl.IncrementDailyChallengeStat();
+			doingDailyChallenge = true;
 		}
 
 		// Custom Routine
@@ -269,10 +302,12 @@ public class MainMenuControl : MonoBehaviour
 
 			// Make the song file based off buttons
 			gymAndSongSelectControl.MakeSongFile();
+			levelToLoad = gymAndSongSelectControl.GetSelectedGym();
 
 			// Fill out the data for the custom routine
 			string[] custR = customRutineControl.GetCustomRutineSummary();
 			this.WriteDataToFile(custR, CUSTOM_DATA_PATH);
+			doingDailyChallenge = false;
 		}
 
 		// Arcade Mode
@@ -282,9 +317,11 @@ public class MainMenuControl : MonoBehaviour
 
 			// Make the song file based off buttons
 			gymAndSongSelectControl.MakeSongFile();
+			levelToLoad = gymAndSongSelectControl.GetSelectedGym();
+			doingDailyChallenge = false;
 		}
 
-		levelLoader.SetLoadIndex(2);
+		levelLoader.SetLoadIndex(levelToLoad);
 		levelLoader.OpenDoors();
 	}
 
@@ -305,22 +342,11 @@ public class MainMenuControl : MonoBehaviour
 		}
 	}
 
-	// Closes all sockets and kills all threads (This prevents unity from freezing)
-	//private void OnApplicationQuit()
-	//{
-	//	if (SteamManager.Initialized == true)
-	//	{
-	//		SteamAPI.RunCallbacks();
-	//		SteamAPI.Shutdown();
-	//	}
-	//}
-	//private void OnDestroy()
-	//{
-	//	if (SteamManager.Initialized == true)
-	//	{
-	//		SteamAPI.RunCallbacks();
-	//		SteamAPI.Shutdown();
-	//	}
-	//}
-
+	/// <summary>
+	/// Returns if we are currently doing a dialy challenge
+	/// </summary>
+	public bool IsDailyChal()
+	{
+		return this.doingDailyChallenge;
+	}
 }

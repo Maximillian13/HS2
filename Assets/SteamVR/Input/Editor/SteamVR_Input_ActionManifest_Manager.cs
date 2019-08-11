@@ -139,7 +139,6 @@ namespace Valve.VR
 
                         if (exists)
                         {
-                            //todo: should we overwrite?
                             currentDictionary[element.Key] = element.Value;
                         }
                         else
@@ -185,7 +184,6 @@ namespace Valve.VR
                 {
                     SteamVR_Input_ActionFile_Action existingAction = currentActionsFile.actions.First(actionInCurrent => newAction.name == actionInCurrent.name);
 
-                    //todo: better merge? should we overwrite?
                     existingAction.type = newAction.type;
                     existingAction.scope = newAction.scope;
                     existingAction.skeleton = newAction.skeleton;
@@ -263,8 +261,6 @@ namespace Valve.VR
                         if (currentBindingFile.bindings.Any(binding => binding.Key == importingActionList.Key))
                         {
                             var currentSetBinding = currentBindingFile.bindings.FirstOrDefault(binding => binding.Key == importingActionList.Key);
-
-                            //todo: better merge? if we don't have an exact copy of the item then we add a new one
 
                             foreach (var importingChord in importingActionList.Value.chords)
                             {
@@ -504,7 +500,6 @@ namespace Valve.VR
             SteamVR_Input.InitializeFile(true);
             SteamVR_Input_EditorWindow.ReopenWindow();
 
-            //todo: ask first?
             /*string dialogText = string.Format("{0} new action sets, {1} new actions, and {2} new localization strings have been added. Would you like to regenerate SteamVR Input code files?", sets, actions, locs);
 
             bool confirm = EditorUtility.DisplayDialog("SteamVR Input", dialogText, "Generate", "Cancel");
@@ -542,7 +537,6 @@ namespace Valve.VR
             SteamVR_Input.InitializeFile(true);
             SteamVR_Input_EditorWindow.ReopenWindow();
 
-            //todo: ask first?
             /*string dialogText = string.Format("{0} new action sets, {1} new actions, and {2} new localization strings have been added. Would you like to regenerate SteamVR Input code files?", sets, actions, locs);
 
             bool confirm = EditorUtility.DisplayDialog("SteamVR Input", dialogText, "Generate", "Cancel");
@@ -767,7 +761,6 @@ namespace Valve.VR
 
             //bool dontAskAgain = EditorPrefs.GetBool(dontAskAgainTemplate, false);
 
-            //todo: implement 'do not ask again'
             string dialogText = string.Format("We've found a partial SteamVR Input binding for '{0}' version '{1}'. Would you like to import it?", partial.name, partial.version);
 
             bool confirm = EditorUtility.DisplayDialog("SteamVR Input", dialogText, "Import", "Cancel");

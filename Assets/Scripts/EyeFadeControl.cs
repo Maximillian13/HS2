@@ -63,8 +63,6 @@ public class EyeFadeControl : MonoBehaviour
 		// Close eyes
 		if(close == true)
 		{
-			Debug.Log("Increasing Alpha");
-
 			if (music != null)
 			{
 				currentVolume /= 1.011f + Time.deltaTime;

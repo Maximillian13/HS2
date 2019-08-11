@@ -10,7 +10,6 @@ public class PersonalHighScore : MonoBehaviour
 
 	private int currentScore;
 
-	// Todo: make an arcade mode leaderbaord 
 	// Use this for initialization
 	void Start()
 	{

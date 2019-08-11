@@ -24,10 +24,10 @@ public class GymAndSongSelectControl : MonoBehaviour, IButtonMaster
 			songButtons[i].Select(); // Select all songs as default 
 	}
 
-	public void ButtonPress(string token)
+	public void ButtonPress(string token, GenericButton sender)
 	{
 		if (token.Contains("Gym"))
-			this.DeselectButtonSet(gymButtons);
+			this.DeselectButtonSet(gymButtons, sender);
 		else
 		{
 			GenericButton gb = this.FindButtonWithToken(token, songButtons);
@@ -71,10 +71,14 @@ public class GymAndSongSelectControl : MonoBehaviour, IButtonMaster
 	/// <summary>
 	/// Deselect the given button set
 	/// </summary>
-	private void DeselectButtonSet(GenericButton[] bSet)
+	private void DeselectButtonSet(GenericButton[] bSet, GenericButton excludeButton)
 	{
+		// Deselect all but the excluded button
 		for (int i = 0; i < bSet.Length; i++)
-			bSet[i].Deselect();
+		{
+			if (bSet[i] != excludeButton)
+				bSet[i].Deselect();
+		}
 	}
 
 	/// <summary>
@@ -117,7 +121,7 @@ public class GymAndSongSelectControl : MonoBehaviour, IButtonMaster
 				return i;
 		}
 
-		// Return -1 for random gym
+		// Return -1 for error
 		return -1;
 	}
 }

@@ -169,6 +169,7 @@ public class TeleportControl : MonoBehaviour
 				rig.position += translation;
 
 				// Play the sound
+				sound.pitch = Random.Range(.95f, 1.05f);
 				sound.Play();
 
 				// Get rid of the marker

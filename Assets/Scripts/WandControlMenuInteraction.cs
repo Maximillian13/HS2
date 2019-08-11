@@ -18,6 +18,9 @@ public class WandControlMenuInteraction : MonoBehaviour
 	private List<EmoteSelectionButton> emoteButtons = new List<EmoteSelectionButton>();
 
 
+	private AudioSource audioSorce;
+
+
 	// Set hand
 	private void Start()
 	{
@@ -25,6 +28,8 @@ public class WandControlMenuInteraction : MonoBehaviour
 			hand = SteamVR_Input_Sources.LeftHand;
 		else
 			hand = SteamVR_Input_Sources.RightHand;
+
+		audioSorce = this.GetComponent<AudioSource>();
 	}
 
 	// Called every frame
@@ -37,10 +42,12 @@ public class WandControlMenuInteraction : MonoBehaviour
 		if (SteamVR_Actions._default.TriggerPress.GetStateDown(hand))
 		{
 			// If we are just interacting with exactly 1 button
-			if(collidedButtons.Count == 1)
+			if (collidedButtons.Count == 1)
+			{
 				collidedButtons[0].PressButton(); // Go to the button script and do what it says
-			if (collidedButtons.Count > 1)
-				Debug.Log("BigBoy");
+				audioSorce.pitch = Random.Range(.95f, 1.05f);
+				audioSorce.Play();
+			}
 		}
 
 		// If the track pad is pressed (For emote selection)
@@ -60,7 +67,6 @@ public class WandControlMenuInteraction : MonoBehaviour
 		// If its a button
 		if (collidedButton != null)
 		{
-			Debug.Log("Enter");
 			// Highlight it
 			collidedButton.HighLight(true);
 			// Add the button to the list 
@@ -80,6 +86,35 @@ public class WandControlMenuInteraction : MonoBehaviour
 		}
 	}
 
+	// Enters button
+	void OnTriggerStay(Collider other)
+	{
+		// Find what its touching
+		IInteractibleButton collidedButton = other.GetComponent<IInteractibleButton>();
+		// If its a button
+		if (collidedButton != null)
+		{
+			// Highlight it
+			collidedButton.HighLight(true);
+			// Add the button to the list 
+			if(collidedButtons.Contains(collidedButton) == false)
+				collidedButtons.Add(collidedButton);
+		}
+
+
+		// Emote button list
+		EmoteSelectionButton emoteButton = other.GetComponent<EmoteSelectionButton>();
+		// If its a button
+		if (emoteButton != null)
+		{
+			// Highlight it
+			emoteButton.HighLight(true);
+			// Add the button to the list 
+			if (emoteButtons.Contains(emoteButton) == false)
+				emoteButtons.Add(emoteButton);
+		}
+	}
+
 	// Leaves button
 	void OnTriggerExit(Collider other)
 	{
@@ -88,8 +123,6 @@ public class WandControlMenuInteraction : MonoBehaviour
 		// If its a button
 		if (collidedButton != null)
 		{
-			Debug.Log("Exit");
-
 			// Set the color to be un-highlighted
 			collidedButton.HighLight(false);
 			// Remove the button from the list

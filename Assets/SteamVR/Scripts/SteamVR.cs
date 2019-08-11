@@ -368,7 +368,7 @@ namespace Valve.VR
                 Debug.LogError("<b>[SteamVR]</b> Microsoft Edge sometimes has issues with opening localhost webpages. You may need to manually open the controller binding UI from SteamVR if it did not load successfully. SteamVR Menu -> Devices -> Controller Input Binding. Press play in your application to get it running then select it under Current Application.");
             }
 #endif
-            Application.OpenURL(bindingurl); //todo: update with the actual api call
+            Application.OpenURL(bindingurl); 
         }
 
 

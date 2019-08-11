@@ -17,50 +17,16 @@ public class StatWall : MonoBehaviour
 		// If we connect to steam fill out with stats 
 		if (SteamManager.Initialized == true)
 		{
-			int statValue = -1;
-			SteamUserStats.GetStat(Constants.totalSquatWallCount, out statValue);
-			statSummary = "Total Squat Walls Passed: " + statValue + "\n";
-
-			SteamUserStats.GetStat(Constants.highestSquatConsec, out statValue);
-			statSummary += "Classic Mode Highest Consecutive Squats: " + statValue + "\n";
-
-			SteamUserStats.GetStat(Constants.totalCardioWallCount, out statValue);
-			statSummary += "Total Cardio Walls Passed: " + statValue + "\n";
-
-			SteamUserStats.GetStat(Constants.highestCardioConsec, out statValue);
-			statSummary += "Classic Mode Highest Consecutive Cardio Walls: " + statValue + "\n";
-
-			SteamUserStats.GetStat(Constants.totalDailyChallenges, out statValue);
-			statSummary += "Number of Daily Challenges Completed: " + statValue + "\n";
-
-			SteamUserStats.GetStat(Constants.totalCustomRoutines, out statValue);
-			statSummary += "Number of Custom Routines Played: " + statValue + "\n";
-
-			SteamUserStats.GetStat(Constants.totalCaloriesBurned, out statValue);
-			statSummary += "Total Calories Burned: " + statValue + "\n";
-
-			SteamUserStats.GetStat(Constants.highScore, out statValue);
-			statSummary += "Arcade Mode High Score: " + statValue;
+			statSummary = "Total Squat Walls Passed: " + AchivmentAndStatControl.GetStat(Constants.totalSquatWallCount) + "\n";
+			statSummary += "Classic Mode Highest Consecutive Squats: " + AchivmentAndStatControl.GetStat(Constants.highestSquatConsec) + "\n";
+			statSummary += "Total Cardio Walls Passed: " + AchivmentAndStatControl.GetStat(Constants.totalCardioWallCount) + "\n";
+			statSummary += "Classic Mode Highest Consecutive Cardio Walls: " + AchivmentAndStatControl.GetStat(Constants.highestCardioConsec) + "\n";
+			statSummary += "Number of Daily Challenges Completed: " + AchivmentAndStatControl.GetStat(Constants.totalDailyChallenges) + "\n";
+			statSummary += "Number of Custom Routines Played: " + AchivmentAndStatControl.GetStat(Constants.totalCustomRoutines) + "\n";
+			statSummary += "Punching Bag Hits: " + AchivmentAndStatControl.GetStat(Constants.punchingBagPunches) + "\n";
+			statSummary += "Arcade Mode High Score: " + AchivmentAndStatControl.GetStat(Constants.highScore);
 		}
 
 		statText.text = statSummary;
 	}
-
-	// Closes all sockets and kills all threads (This prevents unity from freezing)
-	//private void OnApplicationQuit()
-	//{
-	//	if (SteamManager.Initialized == true)
-	//	{
-	//		SteamAPI.RunCallbacks();
-	//		SteamAPI.Shutdown();
-	//	}
-	//}
-	//private void OnDestroy()
-	//{
-	//	if (SteamManager.Initialized == true)
-	//	{
-	//		SteamAPI.RunCallbacks();
-	//		SteamAPI.Shutdown();
-	//	}
-	//}
 }

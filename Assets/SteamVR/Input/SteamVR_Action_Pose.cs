@@ -617,7 +617,7 @@ namespace Valve.VR
             EVRInputError err = OpenVR.Input.GetPoseActionData(handle, universeOrigin, secondsFromNow, ref tempPoseActionData, poseActionData_size, inputSourceHandle);
             if (err != EVRInputError.None)
             {
-                Debug.LogError("<b>[SteamVR]</b> GetPoseActionData error (" + fullPath + "): " + err.ToString() + " handle: " + handle.ToString()); //todo: this should be an error
+                Debug.LogError("<b>[SteamVR]</b> GetPoseActionData error (" + fullPath + "): " + err.ToString() + " handle: " + handle.ToString()); 
 
                 velocityAtTime = Vector3.zero;
                 angularVelocityAtTime = Vector3.zero;
@@ -640,7 +640,7 @@ namespace Valve.VR
             EVRInputError err = OpenVR.Input.GetPoseActionData(handle, universeOrigin, secondsFromNow, ref tempPoseActionData, poseActionData_size, inputSourceHandle);
             if (err != EVRInputError.None)
             {
-                Debug.LogError("<b>[SteamVR]</b> GetPoseActionData error (" + fullPath + "): " + err.ToString() + " handle: " + handle.ToString()); //todo: this should be an error
+                Debug.LogError("<b>[SteamVR]</b> GetPoseActionData error (" + fullPath + "): " + err.ToString() + " handle: " + handle.ToString()); 
 
                 velocityAtTime = Vector3.zero;
                 angularVelocityAtTime = Vector3.zero;

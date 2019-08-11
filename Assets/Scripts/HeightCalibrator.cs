@@ -7,22 +7,32 @@ public class HeightCalibrator : MonoBehaviour
 {
     // Fields
     public Transform head; // The transform of the headset
-    public TextMeshPro infoBoard; // Letting the sure know the calibration stuff
     public HandPlacment hp; // Hand placement so the hands know when the game is started
-	public GuideRail guideRailControl; // The control for how high the guide rail should go
+	private GuideRail guideRailControl; // The control for how high the guide rail should go
 	public CheckUp checkUp; // To set how high the squatter must go to have the next wall count 
     private float calHeight; // The float y where the head is 
     private float timer; // For calibration 
     private const float CALIBRATION_TIME = 7; // How long it takes for the this to calibrate the height 
 
-    const float MIN_HEIGHT = 1.5f;		// The minimum height the calibration can be
+	private GameObject infoBoard; // Letting the sure know the calibration stuff
+	private GameObject[] texts = new GameObject[6];
+
+	const float MIN_HEIGHT = 1.5f;		// The minimum height the calibration can be
 	const float MAX_HEIGHT = 2.5f;		// The max height the calibration can be
 
 
 	void Start()
     {
-        // Do this after the amount of calibration time
-        this.StartCoroutine(this.LateStart(CALIBRATION_TIME));
+		infoBoard = this.transform.GetChild(0).gameObject;
+		for (int i = 0; i < texts.Length; i++)
+			texts[i] = infoBoard.transform.GetChild(i).gameObject;
+
+		for (int i = 1; i < texts.Length; i++)
+			texts[i].SetActive(false);
+
+		// Do this after the amount of calibration time
+		this.StartCoroutine(this.LateStart(CALIBRATION_TIME));
+		guideRailControl = GameObject.Find("GYM").transform.Find("SquatTrack").Find("SquatBars").GetComponent<GuideRail>();
     }
 
     // Late start
@@ -47,31 +57,35 @@ public class HeightCalibrator : MonoBehaviour
     {
 		if (Input.GetKeyDown(KeyCode.P))
 			this.ChangeHeight(.1f);
+		if (infoBoard == null)
+			return;
+
         timer += Time.deltaTime;
-        if(timer < 4)
-        {
-            infoBoard.text = "CALIBRATING...\nSTAND STRAIGHT\nAND STAY STILL.";
-        }
         if(timer > 4 && timer < 5)
         {
-            infoBoard.text = "3...";
+			texts[3].SetActive(true);
         }
         if (timer > 5 && timer < 6)
         {
-            infoBoard.text = "2...";
-        }
+			texts[3].SetActive(false);
+			texts[2].SetActive(true);
+		}
         if (timer > 6 && timer < 7)
         {
-            infoBoard.text = "1...";
-        }
+			texts[2].SetActive(false);
+			texts[1].SetActive(true);
+		}
         if (timer > 7 && timer < 8)
         {
-            infoBoard.text = "CALIBRATED.\nTHANK YOU.";
+			texts[0].SetActive(false);
+			texts[1].SetActive(false);
+			texts[4].SetActive(true);
+			texts[5].SetActive(true);
         }
         if (timer > 8 && timer < 9)
         {
-            // Hide the board and start the game
-            infoBoard.gameObject.SetActive(false);
+			// Hide the board and start the game
+			infoBoard.GetComponent<ShrinkAndDestroy>().ShrinkDestroySpeed(1.03f);
             hp.GameStarted();
         }
     }

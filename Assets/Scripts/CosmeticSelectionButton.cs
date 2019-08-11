@@ -20,7 +20,13 @@ public class CosmeticSelectionButton : MonoBehaviour, IInteractibleButton
 	{
 		mr = this.GetComponent<MeshRenderer>();
 		mr.enabled = false;
-		master = this.transform.parent.GetComponent<CosmeticSelectionControl>();
+		Transform mTrans = this.transform;
+		while (master == null)
+		{
+			mTrans = mTrans.parent;
+			if(mTrans.GetComponent<CosmeticSelectionControl>() != null)
+				master = mTrans.GetComponent<CosmeticSelectionControl>();
+		}
 		handTypeCont[0] = GameObject.Find("[CameraRig]").transform.Find("Controller (left)").GetComponent<HandTypeController>();
 		handTypeCont[1] = GameObject.Find("[CameraRig]").transform.Find("Controller (right)").GetComponent<HandTypeController>();
 		playerBodyCont = GameObject.Find("Player").GetComponent<PlayerModelControl>();

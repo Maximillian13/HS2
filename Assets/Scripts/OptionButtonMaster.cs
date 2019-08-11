@@ -125,12 +125,12 @@ public class OptionButtonMaster : MonoBehaviour, IButtonMaster
 
 	}
 
-	public void ButtonPress(string buttonToken)
+	public void ButtonPress(string buttonToken, GenericButton sender)
 	{
 		// Set the dom hand
 		if (buttonToken == "DomLeft" || buttonToken == "DomRight")
 		{
-			this.DeslectDomHandButtons();
+			this.DeslectDomHandButtons(sender);
 			this.DomHandPress(buttonToken);
 		}
 
@@ -162,8 +162,6 @@ public class OptionButtonMaster : MonoBehaviour, IButtonMaster
 	{
 		if (val == prevVolVal)
 			return;
-
-		Debug.Log("Vol Set to: " + val);
 
 		// Save the prev value so we dont do this every update only on val change 
 		prevVolVal = val;
@@ -197,16 +195,19 @@ public class OptionButtonMaster : MonoBehaviour, IButtonMaster
 	private void CalorieCounterPress()
 	{
 		int useCalCounterInt = PlayerPrefs.GetInt("UseCalorieCounter") == 0 ? 1 : 0;
-		Debug.Log(useCalCounterInt);
 		PlayerPrefs.SetInt("UseCalorieCounter", useCalCounterInt);
 	}
 
 	/// <summary>
 	/// Deselect all the warm up buttons 
 	/// </summary>
-	private void DeslectDomHandButtons()
+	private void DeslectDomHandButtons(GenericButton excludeButton)
 	{
+		// Deselect all but the excluded button
 		for (int i = 0; i < domHandButtons.Length; i++)
-			domHandButtons[i].Deselect();
+		{
+			if (domHandButtons[i] != excludeButton)
+				domHandButtons[i].Deselect();
+		}
 	}
 }

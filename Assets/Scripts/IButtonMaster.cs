@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface IButtonMaster
 {
-	void ButtonPress(string token);
+	void ButtonPress(string token, GenericButton sender);
 }

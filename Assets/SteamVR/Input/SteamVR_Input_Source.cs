@@ -66,7 +66,7 @@ namespace Valve.VR
                 if (err != EVRInputError.None)
                     Debug.LogError("<b>[SteamVR]</b> GetInputSourceHandle (" + path + ") error: " + err.ToString());
 
-                if (enumNames[enumIndex] == SteamVR_Input_Sources.Any.ToString()) //todo: temporary hack
+                if (enumNames[enumIndex] == SteamVR_Input_Sources.Any.ToString()) 
                 {
                     inputSourceHandlesBySource.Add((SteamVR_Input_Sources)enumIndex, 0);
                     inputSourceSourcesByHandle.Add(0, (SteamVR_Input_Sources)enumIndex);

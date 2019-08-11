@@ -53,6 +53,14 @@ public class WandControlGeneralInteraction : MonoBehaviour
 			}
 		}
 
+		if (SteamVR_Actions._default.TriggerPress.GetState(hand))
+		{
+			if (interactingItem != null)
+			{
+				boxColl.enabled = false;
+			}
+		}
+
 		// If you release the trigger button
 		if (SteamVR_Actions._default.TriggerPress.GetStateUp(hand))
 		{

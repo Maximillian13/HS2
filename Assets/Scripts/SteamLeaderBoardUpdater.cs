@@ -36,7 +36,6 @@ public class SteamLeaderBoardUpdater : MonoBehaviour
 			{
 				SteamAPICall_t handle = SteamUserStats.UploadLeaderboardScore(m_SteamLeaderboard, ELeaderboardUploadScoreMethod.k_ELeaderboardUploadScoreMethodKeepBest, (int)50, null, 0);
 				LeaderboardScoreUploaded.Set(handle);
-				Debug.Log("Scores uploaded");
 				//print("UploadLeaderboardScore(" + m_SteamLeaderboard + ", ELeaderboardUploadScoreMethod.k_ELeaderboardUploadScoreMethodForceUpdate, " + (int)100 + ", null, 0) - " + handle);
 			}
 		}
@@ -48,7 +47,6 @@ public class SteamLeaderBoardUpdater : MonoBehaviour
 		{
 			SteamAPICall_t handle = SteamUserStats.UploadLeaderboardScore(m_SteamLeaderboard, ELeaderboardUploadScoreMethod.k_ELeaderboardUploadScoreMethodKeepBest, (int)numOfSquats, null, 0);
 			LeaderboardScoreUploaded.Set(handle);
-			Debug.Log("Scores uploaded");
 			SteamAPI.RunCallbacks();
 		}
 	}
@@ -66,23 +64,4 @@ public class SteamLeaderBoardUpdater : MonoBehaviour
 			m_SteamLeaderboard = pCallback.m_hSteamLeaderboard;
 		}
 	}
-
-	// Closes all sockets and kills all threads (This prevents unity from freezing)
-	//private void OnApplicationQuit()
-	//{
-	//	if (SteamManager.Initialized == true)
-	//	{
-	//		SteamAPI.RunCallbacks();
-	//		SteamAPI.Shutdown();
-	//	}
-	//}
-	//private void OnDestroy()
-	//{
-	//	if (SteamManager.Initialized == true)
-	//	{
-	//		SteamAPI.RunCallbacks();
-	//		SteamAPI.Shutdown();
-	//	}
-	//}
-
 }

@@ -1,0 +1,159 @@
+fileFormatVersion: 2
+guid: 0123bde0a7e26a44ca33d36618bf16f2
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: TitleARCADEa
+    100002: TitleClassic_A
+    100004: TitleCUSTOMa
+    100006: TitleDAILYa
+    100008: //RootNode
+    100010: TitleCardioA
+    100012: TitleSquatA
+    400000: TitleARCADEa
+    400002: TitleClassic_A
+    400004: TitleCUSTOMa
+    400006: TitleDAILYa
+    400008: //RootNode
+    400010: TitleCardioA
+    400012: TitleSquatA
+    2100000: a0_ui_CUSTOMa
+    2100002: a0_ui_DAILYa
+    2100004: a0_ui_ARCADEa
+    2100006: a0_ui_CLASSik
+    2100008: a0_ui_Squat
+    2100010: a0_ui_Cardio
+    2300000: TitleARCADEa
+    2300002: TitleClassic_A
+    2300004: TitleCUSTOMa
+    2300006: TitleDAILYa
+    2300008: TitleCardioA
+    2300010: TitleSquatA
+    3300000: TitleARCADEa
+    3300002: TitleClassic_A
+    3300004: TitleCUSTOMa
+    3300006: TitleDAILYa
+    3300008: TitleCardioA
+    3300010: TitleSquatA
+    4300000: TitleCUSTOMa
+    4300002: TitleDAILYa
+    4300004: TitleARCADEa
+    4300006: TitleClassic_A
+    4300008: TitleSquatA
+    4300010: TitleCardioA
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: a0_ui_ARCADEa
+    second: {fileID: 2100000, guid: 185bdaafeb07c1548b0f385a566bebef, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: a0_ui_CLASSik
+    second: {fileID: 2100000, guid: a1849bfb5310f1b49a96cce6b1951e48, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: a0_ui_CUSTOMa
+    second: {fileID: 2100000, guid: 65971203f78b4fd469e6c1f7cb329b40, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: a0_ui_Cardio
+    second: {fileID: 2100000, guid: 22117367ac52a134cbe213ad1eac1d03, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: a0_ui_DAILYa
+    second: {fileID: 2100000, guid: 108c32ab04745394d9de0d0efd184c24, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: a0_ui_Squat
+    second: {fileID: 2100000, guid: d25201503ef478e4f95c575db54b3b1d, type: 2}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 0
+  tangentSpace:
+    normalSmoothAngle: 1
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

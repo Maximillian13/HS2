@@ -52,7 +52,6 @@ public class PressAnyButtonToContinueWarning : MonoBehaviour
 					alpha = 1;
 				}
 
-				// Todo: if new buttons added. Add presses here 
 				// Let the user know they can skip
 				pressAnyButtonToContinue.color = new Color(pressAnyButtonToContinue.color.r, pressAnyButtonToContinue.color.g, pressAnyButtonToContinue.color.b, alphaBTC);
 				if (SteamVR_Actions._default.TriggerPress.GetStateDown(SteamVR_Input_Sources.Any) ||

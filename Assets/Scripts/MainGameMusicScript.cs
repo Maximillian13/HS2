@@ -32,11 +32,16 @@ public class MainGameMusicScript : MonoBehaviour
         GameObject[] musicGameObjects = GameObject.FindGameObjectsWithTag("Music");
         if (musicGameObjects.Length > 1)
         {
-            // Just to make sure
-            if (musicGameObjects[1] != null)
-                Destroy(musicGameObjects[1]); // Destroy the newest one
+			for (int i = 0; i < musicGameObjects.Length; i++)
+				if (musicGameObjects[i].name != "KeepMusic")
+					Destroy(musicGameObjects[i]);
         }
         DontDestroyOnLoad(this.gameObject);
+
+		// Rename so we destroy the new one next time through 
+		this.gameObject.name = "KeepMusic";
+
+		this.GetComponent<MusicVolumeControl>().AudioSetUp();
 
 		audioSorce = this.GetComponent<AudioSource>();
 
@@ -46,9 +51,7 @@ public class MainGameMusicScript : MonoBehaviour
 			return;
 
 		// Get the MP3 player
-		GameObject mp3T = GameObject.Find("MP3Trigger");
-		if (mp3T != null)
-			mp3 = mp3T.transform.Find("MP3Player").GetComponent<MP3PlayerControl>();
+		mp3 = GameObject.FindWithTag("Mp3Player").GetComponent<MP3PlayerControl>();
 
 		// Make lists
 		//masterSongList = new List<AudioClip>();
@@ -70,7 +73,7 @@ public class MainGameMusicScript : MonoBehaviour
 		catch (FileNotFoundException e)
 		{
 			Debug.Log(e.FileName + " Not found!!!");
-			workingSongList.Add(Resources.Load<AudioClip>("Sounds/Music/Sgo"));
+			workingSongList.Add(Resources.Load<AudioClip>("Sounds/Music/Sgo 2"));
 		}
 
 		// Randomize the working list 
@@ -91,8 +94,11 @@ public class MainGameMusicScript : MonoBehaviour
 
 	private void Update()
 	{
+		//Debug.Log("Null boy: " + (mp3 == null));
+		//if(mp3 == null)
+		//	mp3 = GameObject.FindWithTag("Mp3Player").GetComponent<MP3PlayerControl>();
 		// If we finished playing a song, move to the next one
-		if(audioSorce != null)
+		if (audioSorce != null)
 		{
 			// If the music has stopped playing, start the next one
 			if (audioSorce.isPlaying == false)
@@ -127,6 +133,10 @@ public class MainGameMusicScript : MonoBehaviour
 		if (audioSorce.isActiveAndEnabled == true)
 			audioSorce.Play();
 
+		// Try to find the mp3 
+		if (mp3 == null)
+			mp3 = this.TryToFindMp3();
+
 		// If the we have the MP3 player display the new song 
 		if (mp3 != null)
 			mp3.UpdateSongName(workingSongList[songIndex].name);
@@ -153,6 +163,10 @@ public class MainGameMusicScript : MonoBehaviour
 		if (audioSorce.isActiveAndEnabled == true)
 			audioSorce.Play();
 
+		// Try to find the mp3 
+		if (mp3 == null)
+			mp3 = this.TryToFindMp3();
+
 		// If the we have the MP3 player display the new song 
 		if (mp3 != null)
 			mp3.UpdateSongName(workingSongList[songIndex].name);
@@ -161,34 +175,16 @@ public class MainGameMusicScript : MonoBehaviour
 		currentSognPlayTime = 0;
 	}
 
-	// Todo: Delete when comfy with new system (and delete unnecessary related code in this class)
-	// Not used currently 
-	//private void PickSongAndPlayRandom()
-	//{
-	//	// IF we did not pick any songs
-	//	if (masterSongList.Count == 0)
-	//		return;
-
-	//	// If we have ran through all the songs and are going to start the loop again 
-	//	if (workingSongList.Count == 0)
-	//		this.ListDeepCopy(masterSongList, ref workingSongList);
-
-	//	// Pick a random song from the working list, then remove it from the list
-	//	int rand = Random.Range(0, workingSongList.Count);
-	//	audioSorce.clip = workingSongList[rand];
-	//	if(audioSorce.isActiveAndEnabled == true)
-	//		audioSorce.Play();
-
-	//	workingSongList.RemoveAt(rand);
-	//}
-
-	// Make a deep copy from a master list to a working list 
-	//private void ListDeepCopy(List<AudioClip> mList, ref List<AudioClip> wList)
-	//{
-	//	wList = new List<AudioClip>();
-	//	for (int i = 0; i < mList.Count; i++)
-	//		wList.Add(mList[i]);
-	//}
+	/// <summary>
+	/// Try to find the mp3
+	/// </summary>
+	private MP3PlayerControl TryToFindMp3()
+	{
+		GameObject mp3GO = GameObject.FindWithTag("Mp3Player");
+		if (mp3GO != null)
+			return mp3GO.GetComponent<MP3PlayerControl>();
+		return null;
+	}
 
 	private List<AudioClip> RandomizeList(List<AudioClip> list)
 	{

@@ -143,7 +143,6 @@ namespace Valve.VR
         /// <summary>Event fires whenever this action is executed</summary>
         public event SteamVR_Action_Vibration.ExecuteHandler onExecute;
 
-        //todo: fix the active state of out actions
         /// <summary>Returns true if this action is bound and the ActionSet is active</summary>
         public override bool active { get { return activeBinding && setActive; } }
 

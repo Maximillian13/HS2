@@ -42,7 +42,7 @@ public class WandControlMP3 : MonoBehaviour
 			hand = SteamVR_Input_Sources.RightHand;
 		}
 
-		GameObject musicGo = GameObject.Find("Music");
+		GameObject musicGo = GameObject.FindWithTag("Music");
 		if (musicGo != null)
 		{
 			musicControl = musicGo.GetComponent<MainGameMusicScript>();
@@ -125,10 +125,10 @@ public class WandControlMP3 : MonoBehaviour
 		if (SteamVR_Actions._default.TriggerPress.GetState(hand) && holdingMp3 == true)
 		{
 			alphaTimer += Time.deltaTime / 2;
-			mp3Transform.localScale = Vector3.Lerp(mp3Transform.localScale, Vector3.one, alphaTimer);
+			mp3Transform.localScale = Vector3.Lerp(mp3Transform.localScale, Vector3.one * 1.2f, alphaTimer);
 
 			// Update position to stay with hand
-			mp3Transform.position = this.transform.position;
+			mp3Transform.position = this.transform.position + new Vector3(-.025f, .05f, -.025f);
 			mp3Transform.localEulerAngles = this.transform.localEulerAngles;
 
 			// If we press the track pad
