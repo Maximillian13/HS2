@@ -97,7 +97,6 @@ namespace Steamworks {
 		}
 #endif
 
-		// TODO - Should be IDisposable
 		// We can't use an ICustomMarshaler because Unity dies when MarshalManagedToNative() gets called with a generic type.
 		public class SteamParamStringArray {
 			// The pointer to each AllocHGlobal() string
@@ -152,7 +151,6 @@ namespace Steamworks {
 		}
 	}
 
-	// TODO - Should be IDisposable
 	// MatchMaking Key-Value Pair Marshaller
 	public class MMKVPMarshaller {
 		private IntPtr m_pNativeArray;

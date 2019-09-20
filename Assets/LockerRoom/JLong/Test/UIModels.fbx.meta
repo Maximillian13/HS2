@@ -1,0 +1,1356 @@
+fileFormatVersion: 2
+guid: c860096a8a68b704ebb7ca2cca812d59
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: 909_1
+    100002: 909_1_2
+    100004: Background
+    100006: Background_2
+    100008: Background_3
+    100010: Background_4
+    100012: Background_5
+    100014: Background_6
+    100016: Background_7
+    100018: Background_8
+    100020: BackgroundA
+    100022: BackgroundB
+    100024: BackgroundC
+    100026: BGND2
+    100028: BGND2_1
+    100030: BGND2_2
+    100032: BGND2_2_2
+    100034: BGND2_3
+    100036: BGND2_3_2
+    100038: BGND2_4
+    100040: BGND2_4_2
+    100042: BGND2_5
+    100044: BGND2_5_2
+    100046: BGND2_6
+    100048: BGND2_6_2
+    100050: BGND2_7
+    100052: BGND2_7_2
+    100054: BGND2_8
+    100056: BGND2_9
+    100058: BoardBreakLenght
+    100060: BoardBreakLenght_2
+    100062: BoardBreakLenght_3
+    100064: BoardWalls2Break
+    100066: BUTT_01
+    100068: BUTT_01_2
+    100070: BUTT_01_3
+    100072: BUTT_02
+    100074: BUTT_02_2
+    100076: BUTT_02_3
+    100078: BUTT_03
+    100080: BUTT_03_2
+    100082: BUTT_03_3
+    100084: BUTT_04
+    100086: BUTT_04_2
+    100088: BUTT_Arcade
+    100090: BUTT_Arrow
+    100092: BUTT_Arrow_1
+    100094: BUTT_Arrow_2
+    100096: BUTT_BACK
+    100098: BUTT_BACK_2
+    100100: BUTT_BACK_3
+    100102: BUTT_BACK_4
+    100104: BUTT_BACK_5
+    100106: BUTT_BACK_6
+    100108: BUTT_BACK_7
+    100110: BUTT_CARDIO
+    100112: BUTT_CARDIO_2
+    100114: BUTT_CARDIO_3
+    100116: BUTT_Challenge
+    100118: BUTT_Classic
+    100120: BUTT_Custom
+    100122: BUTT_DOWN
+    100124: BUTT_DOWN_1
+    100126: BUTT_DOWN_2
+    100128: BUTT_DOWN_3
+    100130: BUTT_No
+    100132: BUTT_No_1
+    100134: BUTT_No_2
+    100136: BUTT_No_3
+    100138: BUTT_PLAY
+    100140: BUTT_PLAY_2
+    100142: BUTT_PLAY_3
+    100144: BUTT_PLAY_4
+    100146: BUTT_PLAY_5
+    100148: BUTT_PLAY_6
+    100150: BUTT_PLAY_7
+    100152: BUTT_Random
+    100154: BUTT_Random_1
+    100156: BUTT_Random_1_2
+    100158: BUTT_Random_2
+    100160: BUTT_SQUAT
+    100162: BUTT_SQUAT_2
+    100164: BUTT_SQUAT_3
+    100166: BUTT_UP
+    100168: BUTT_UP_1
+    100170: BUTT_UP_2
+    100172: BUTT_UP_3
+    100174: BUTT_Yes
+    100176: BUTT_Yes_1
+    100178: BUTT_Yes_2
+    100180: BUTT_Yes_3
+    100182: ChallengeScreen
+    100184: Cloner
+    100186: Cloner_2
+    100188: Cloner_3
+    100190: CustomWorkoutSel
+    100192: DoorsOpen
+    100194: FinaScreen1
+    100196: GREAT
+    100198: GymSelectArcade
+    100200: GymSelectClassic
+    100202: HaveA
+    100204: LOGO
+    100206: MainScreen
+    100208: Symmetry
+    100210: Symmetry_2
+    100212: Symmetry_2_2
+    100214: Symmetry_2_3
+    100216: Symmetry_3
+    100218: Symmetry_3_2
+    100220: Title
+    100222: Title2
+    100224: Title2_1
+    100226: Title2_2
+    100228: Title2_3
+    100230: Title_10
+    100232: Title_11
+    100234: Title_12
+    100236: Title_2
+    100238: Title_3
+    100240: Title_4
+    100242: Title_5
+    100244: Title_6
+    100246: Title_7
+    100248: Title_8
+    100250: Title_9
+    100252: TitleBreakLenght
+    100254: TitleBreaks
+    100256: TitleHandGuard
+    100258: TitleLives
+    100260: TitleSpeed
+    100262: TitleSwitch
+    100264: TitleWalls2Break
+    100266: TitleWarmup
+    100268: //RootNode
+    100270: Window
+    100272: WORKOUT
+    100274: WorkoutTypeClassic
+    100276: WorkoutTypeCustom
+    100278: WorkoutTypeDaily
+    100280: TitleBreaksB
+    100282: BGND2_10
+    100284: BUTT_No_4
+    100286: BUTT_Yes_4
+    100288: TitleClassic_A
+    100290: Symmetry_1
+    400000: 909_1
+    400002: 909_1_2
+    400004: Background
+    400006: Background_2
+    400008: Background_3
+    400010: Background_4
+    400012: Background_5
+    400014: Background_6
+    400016: Background_7
+    400018: Background_8
+    400020: BackgroundA
+    400022: BackgroundB
+    400024: BackgroundC
+    400026: BGND2
+    400028: BGND2_1
+    400030: BGND2_2
+    400032: BGND2_2_2
+    400034: BGND2_3
+    400036: BGND2_3_2
+    400038: BGND2_4
+    400040: BGND2_4_2
+    400042: BGND2_5
+    400044: BGND2_5_2
+    400046: BGND2_6
+    400048: BGND2_6_2
+    400050: BGND2_7
+    400052: BGND2_7_2
+    400054: BGND2_8
+    400056: BGND2_9
+    400058: BoardBreakLenght
+    400060: BoardBreakLenght_2
+    400062: BoardBreakLenght_3
+    400064: BoardWalls2Break
+    400066: BUTT_01
+    400068: BUTT_01_2
+    400070: BUTT_01_3
+    400072: BUTT_02
+    400074: BUTT_02_2
+    400076: BUTT_02_3
+    400078: BUTT_03
+    400080: BUTT_03_2
+    400082: BUTT_03_3
+    400084: BUTT_04
+    400086: BUTT_04_2
+    400088: BUTT_Arcade
+    400090: BUTT_Arrow
+    400092: BUTT_Arrow_1
+    400094: BUTT_Arrow_2
+    400096: BUTT_BACK
+    400098: BUTT_BACK_2
+    400100: BUTT_BACK_3
+    400102: BUTT_BACK_4
+    400104: BUTT_BACK_5
+    400106: BUTT_BACK_6
+    400108: BUTT_BACK_7
+    400110: BUTT_CARDIO
+    400112: BUTT_CARDIO_2
+    400114: BUTT_CARDIO_3
+    400116: BUTT_Challenge
+    400118: BUTT_Classic
+    400120: BUTT_Custom
+    400122: BUTT_DOWN
+    400124: BUTT_DOWN_1
+    400126: BUTT_DOWN_2
+    400128: BUTT_DOWN_3
+    400130: BUTT_No
+    400132: BUTT_No_1
+    400134: BUTT_No_2
+    400136: BUTT_No_3
+    400138: BUTT_PLAY
+    400140: BUTT_PLAY_2
+    400142: BUTT_PLAY_3
+    400144: BUTT_PLAY_4
+    400146: BUTT_PLAY_5
+    400148: BUTT_PLAY_6
+    400150: BUTT_PLAY_7
+    400152: BUTT_Random
+    400154: BUTT_Random_1
+    400156: BUTT_Random_1_2
+    400158: BUTT_Random_2
+    400160: BUTT_SQUAT
+    400162: BUTT_SQUAT_2
+    400164: BUTT_SQUAT_3
+    400166: BUTT_UP
+    400168: BUTT_UP_1
+    400170: BUTT_UP_2
+    400172: BUTT_UP_3
+    400174: BUTT_Yes
+    400176: BUTT_Yes_1
+    400178: BUTT_Yes_2
+    400180: BUTT_Yes_3
+    400182: ChallengeScreen
+    400184: Cloner
+    400186: Cloner_2
+    400188: Cloner_3
+    400190: CustomWorkoutSel
+    400192: DoorsOpen
+    400194: FinaScreen1
+    400196: GREAT
+    400198: GymSelectArcade
+    400200: GymSelectClassic
+    400202: HaveA
+    400204: LOGO
+    400206: MainScreen
+    400208: Symmetry
+    400210: Symmetry_2
+    400212: Symmetry_2_2
+    400214: Symmetry_2_3
+    400216: Symmetry_3
+    400218: Symmetry_3_2
+    400220: Title
+    400222: Title2
+    400224: Title2_1
+    400226: Title2_2
+    400228: Title2_3
+    400230: Title_10
+    400232: Title_11
+    400234: Title_12
+    400236: Title_2
+    400238: Title_3
+    400240: Title_4
+    400242: Title_5
+    400244: Title_6
+    400246: Title_7
+    400248: Title_8
+    400250: Title_9
+    400252: TitleBreakLenght
+    400254: TitleBreaks
+    400256: TitleHandGuard
+    400258: TitleLives
+    400260: TitleSpeed
+    400262: TitleSwitch
+    400264: TitleWalls2Break
+    400266: TitleWarmup
+    400268: //RootNode
+    400270: Window
+    400272: WORKOUT
+    400274: WorkoutTypeClassic
+    400276: WorkoutTypeCustom
+    400278: WorkoutTypeDaily
+    400280: TitleBreaksB
+    400282: BGND2_10
+    400284: BUTT_No_4
+    400286: BUTT_Yes_4
+    400288: TitleClassic_A
+    400290: Symmetry_1
+    2100000: a0_ui_BGND
+    2100002: Main
+    2100004: a0_ui_VOID
+    2100006: a0_ui_CustomIcon
+    2100008: a0_ui_Challenge
+    2100010: a0_ui_Arcade
+    2100012: a0_ui_cLASSIC
+    2100014: a0_ui_Logo
+    2100016: a0_ui_WorkoutType
+    2100018: a0_ui_Play
+    2100020: a0_ui_Back
+    2100022: a0_ui_Lives
+    2100024: a0_ui_w
+    2100026: a0_ui_707
+    2100028: a0_ui_SCO2
+    2100030: a0_ui_ComeYall
+    2100032: a0_ui_909
+    2100034: a0_ui_01
+    2100036: a0_ui_02
+    2100038: a0_ui_03
+    2100040: a0_ui_04
+    2100042: a0_ui_RandomIcon
+    2100044: a0_ui_GymSelekt
+    2100046: a0_ui_SongSelekt
+    2100048: ChallengeText
+    2100050: BreakText
+    2100052: a0_ui_Arrow
+    2100054: a0_ui_CardioOpenings
+    2100056: a0_ui_Thickness
+    2100058: a0_ui_Warmup
+    2100060: a0_ui_Walls2Break
+    2100062: a0_ui_No
+    2100064: a0_ui_Yes
+    2100066: a0_ui_HandGuard
+    2100068: a0_ui_Minus
+    2100070: a0_ui_Plus
+    2100072: a0_ui_ModeSW
+    2100074: BreakLenght
+    2100076: a0_ui_LivesLet
+    2100078: a0_ui_SpeedMul
+    2100080: a0_ui_BGND2
+    2100082: a0_ui_DOORS
+    2100084: a0_ui_Have
+    2100086: a0_ui_Great
+    2100088: a0_ui_wowkout
+    2100090: a0_ui_BGND3
+    2100092: a0_ui_Breaks
+    2100094: a0_ui_AdjustWallHeight
+    2100096: a0_ui_80s
+    2300000: 909_1
+    2300002: 909_1_2
+    2300004: Background
+    2300006: Background_2
+    2300008: Background_3
+    2300010: Background_4
+    2300012: Background_5
+    2300014: Background_6
+    2300016: Background_7
+    2300018: Background_8
+    2300020: BackgroundA
+    2300022: BackgroundB
+    2300024: BackgroundC
+    2300026: BGND2
+    2300028: BGND2_1
+    2300030: BGND2_2
+    2300032: BGND2_2_2
+    2300034: BGND2_3
+    2300036: BGND2_3_2
+    2300038: BGND2_4
+    2300040: BGND2_4_2
+    2300042: BGND2_5
+    2300044: BGND2_5_2
+    2300046: BGND2_6
+    2300048: BGND2_6_2
+    2300050: BGND2_7
+    2300052: BGND2_7_2
+    2300054: BGND2_8
+    2300056: BGND2_9
+    2300058: BoardBreakLenght
+    2300060: BoardBreakLenght_2
+    2300062: BoardBreakLenght_3
+    2300064: BoardWalls2Break
+    2300066: BUTT_01
+    2300068: BUTT_01_2
+    2300070: BUTT_01_3
+    2300072: BUTT_02
+    2300074: BUTT_02_2
+    2300076: BUTT_02_3
+    2300078: BUTT_03
+    2300080: BUTT_03_2
+    2300082: BUTT_03_3
+    2300084: BUTT_04
+    2300086: BUTT_04_2
+    2300088: BUTT_Arcade
+    2300090: BUTT_Arrow
+    2300092: BUTT_Arrow_1
+    2300094: BUTT_Arrow_2
+    2300096: BUTT_BACK
+    2300098: BUTT_BACK_2
+    2300100: BUTT_BACK_3
+    2300102: BUTT_BACK_4
+    2300104: BUTT_BACK_5
+    2300106: BUTT_BACK_6
+    2300108: BUTT_BACK_7
+    2300110: BUTT_CARDIO
+    2300112: BUTT_CARDIO_2
+    2300114: BUTT_CARDIO_3
+    2300116: BUTT_Challenge
+    2300118: BUTT_Classic
+    2300120: BUTT_Custom
+    2300122: BUTT_DOWN
+    2300124: BUTT_DOWN_1
+    2300126: BUTT_DOWN_2
+    2300128: BUTT_DOWN_3
+    2300130: BUTT_No
+    2300132: BUTT_No_1
+    2300134: BUTT_No_2
+    2300136: BUTT_No_3
+    2300138: BUTT_PLAY
+    2300140: BUTT_PLAY_2
+    2300142: BUTT_PLAY_3
+    2300144: BUTT_PLAY_4
+    2300146: BUTT_PLAY_5
+    2300148: BUTT_PLAY_6
+    2300150: BUTT_PLAY_7
+    2300152: BUTT_Random
+    2300154: BUTT_Random_1
+    2300156: BUTT_Random_1_2
+    2300158: BUTT_Random_2
+    2300160: BUTT_SQUAT
+    2300162: BUTT_SQUAT_2
+    2300164: BUTT_SQUAT_3
+    2300166: BUTT_UP
+    2300168: BUTT_UP_1
+    2300170: BUTT_UP_2
+    2300172: BUTT_UP_3
+    2300174: BUTT_Yes
+    2300176: BUTT_Yes_1
+    2300178: BUTT_Yes_2
+    2300180: BUTT_Yes_3
+    2300182: DoorsOpen
+    2300184: GREAT
+    2300186: HaveA
+    2300188: LOGO
+    2300190: Symmetry
+    2300192: Symmetry_2
+    2300194: Symmetry_2_2
+    2300196: Symmetry_2_3
+    2300198: Symmetry_3
+    2300200: Symmetry_3_2
+    2300202: Title
+    2300204: Title2
+    2300206: Title2_1
+    2300208: Title2_2
+    2300210: Title2_3
+    2300212: Title_10
+    2300214: Title_11
+    2300216: Title_12
+    2300218: Title_2
+    2300220: Title_3
+    2300222: Title_4
+    2300224: Title_5
+    2300226: Title_6
+    2300228: Title_7
+    2300230: Title_8
+    2300232: Title_9
+    2300234: TitleBreakLenght
+    2300236: TitleBreaks
+    2300238: TitleHandGuard
+    2300240: TitleLives
+    2300242: TitleSpeed
+    2300244: TitleSwitch
+    2300246: TitleWalls2Break
+    2300248: TitleWarmup
+    2300250: Window
+    2300252: WORKOUT
+    2300254: TitleBreaksB
+    2300256: BGND2_10
+    2300258: BUTT_No_4
+    2300260: BUTT_Yes_4
+    2300262: TitleClassic_A
+    2300264: Symmetry_1
+    3300000: 909_1
+    3300002: 909_1_2
+    3300004: Background
+    3300006: Background_2
+    3300008: Background_3
+    3300010: Background_4
+    3300012: Background_5
+    3300014: Background_6
+    3300016: Background_7
+    3300018: Background_8
+    3300020: BackgroundA
+    3300022: BackgroundB
+    3300024: BackgroundC
+    3300026: BGND2
+    3300028: BGND2_1
+    3300030: BGND2_2
+    3300032: BGND2_2_2
+    3300034: BGND2_3
+    3300036: BGND2_3_2
+    3300038: BGND2_4
+    3300040: BGND2_4_2
+    3300042: BGND2_5
+    3300044: BGND2_5_2
+    3300046: BGND2_6
+    3300048: BGND2_6_2
+    3300050: BGND2_7
+    3300052: BGND2_7_2
+    3300054: BGND2_8
+    3300056: BGND2_9
+    3300058: BoardBreakLenght
+    3300060: BoardBreakLenght_2
+    3300062: BoardBreakLenght_3
+    3300064: BoardWalls2Break
+    3300066: BUTT_01
+    3300068: BUTT_01_2
+    3300070: BUTT_01_3
+    3300072: BUTT_02
+    3300074: BUTT_02_2
+    3300076: BUTT_02_3
+    3300078: BUTT_03
+    3300080: BUTT_03_2
+    3300082: BUTT_03_3
+    3300084: BUTT_04
+    3300086: BUTT_04_2
+    3300088: BUTT_Arcade
+    3300090: BUTT_Arrow
+    3300092: BUTT_Arrow_1
+    3300094: BUTT_Arrow_2
+    3300096: BUTT_BACK
+    3300098: BUTT_BACK_2
+    3300100: BUTT_BACK_3
+    3300102: BUTT_BACK_4
+    3300104: BUTT_BACK_5
+    3300106: BUTT_BACK_6
+    3300108: BUTT_BACK_7
+    3300110: BUTT_CARDIO
+    3300112: BUTT_CARDIO_2
+    3300114: BUTT_CARDIO_3
+    3300116: BUTT_Challenge
+    3300118: BUTT_Classic
+    3300120: BUTT_Custom
+    3300122: BUTT_DOWN
+    3300124: BUTT_DOWN_1
+    3300126: BUTT_DOWN_2
+    3300128: BUTT_DOWN_3
+    3300130: BUTT_No
+    3300132: BUTT_No_1
+    3300134: BUTT_No_2
+    3300136: BUTT_No_3
+    3300138: BUTT_PLAY
+    3300140: BUTT_PLAY_2
+    3300142: BUTT_PLAY_3
+    3300144: BUTT_PLAY_4
+    3300146: BUTT_PLAY_5
+    3300148: BUTT_PLAY_6
+    3300150: BUTT_PLAY_7
+    3300152: BUTT_Random
+    3300154: BUTT_Random_1
+    3300156: BUTT_Random_1_2
+    3300158: BUTT_Random_2
+    3300160: BUTT_SQUAT
+    3300162: BUTT_SQUAT_2
+    3300164: BUTT_SQUAT_3
+    3300166: BUTT_UP
+    3300168: BUTT_UP_1
+    3300170: BUTT_UP_2
+    3300172: BUTT_UP_3
+    3300174: BUTT_Yes
+    3300176: BUTT_Yes_1
+    3300178: BUTT_Yes_2
+    3300180: BUTT_Yes_3
+    3300182: DoorsOpen
+    3300184: GREAT
+    3300186: HaveA
+    3300188: LOGO
+    3300190: Symmetry
+    3300192: Symmetry_2
+    3300194: Symmetry_2_2
+    3300196: Symmetry_2_3
+    3300198: Symmetry_3
+    3300200: Symmetry_3_2
+    3300202: Title
+    3300204: Title2
+    3300206: Title2_1
+    3300208: Title2_2
+    3300210: Title2_3
+    3300212: Title_10
+    3300214: Title_11
+    3300216: Title_12
+    3300218: Title_2
+    3300220: Title_3
+    3300222: Title_4
+    3300224: Title_5
+    3300226: Title_6
+    3300228: Title_7
+    3300230: Title_8
+    3300232: Title_9
+    3300234: TitleBreakLenght
+    3300236: TitleBreaks
+    3300238: TitleHandGuard
+    3300240: TitleLives
+    3300242: TitleSpeed
+    3300244: TitleSwitch
+    3300246: TitleWalls2Break
+    3300248: TitleWarmup
+    3300250: Window
+    3300252: WORKOUT
+    3300254: TitleBreaksB
+    3300256: BGND2_10
+    3300258: BUTT_No_4
+    3300260: BUTT_Yes_4
+    3300262: TitleClassic_A
+    3300264: Symmetry_1
+    4300000: Background
+    4300002: BUTT_Custom
+    4300004: BUTT_Challenge
+    4300006: BUTT_Arcade
+    4300008: BUTT_Classic
+    4300010: Title
+    4300012: Title_2
+    4300014: Background_2
+    4300016: BUTT_PLAY
+    4300018: BUTT_BACK
+    4300020: BUTT_CARDIO
+    4300022: BUTT_SQUAT
+    4300024: Title_3
+    4300026: BGND2
+    4300028: Symmetry_3
+    4300030: Symmetry
+    4300032: Symmetry_2
+    4300034: 909_1
+    4300036: BUTT_01
+    4300038: BUTT_02
+    4300040: BUTT_03
+    4300042: BUTT_04
+    4300044: BUTT_Random
+    4300046: Title_4
+    4300048: Title2
+    4300050: Background_3
+    4300052: BUTT_PLAY_2
+    4300054: BUTT_BACK_2
+    4300056: Title_5
+    4300058: BGND2_2
+    4300060: BUTT_Random_1
+    4300062: Symmetry_3_2
+    4300064: Symmetry_2_2
+    4300066: Symmetry_2_3
+    4300068: 909_1_2
+    4300070: BUTT_01_2
+    4300072: BUTT_02_2
+    4300074: BUTT_03_2
+    4300076: BUTT_04_2
+    4300078: BUTT_Random_2
+    4300080: Title_6
+    4300082: Title2_2
+    4300084: Background_4
+    4300086: BUTT_PLAY_3
+    4300088: BUTT_BACK_3
+    4300090: Title_7
+    4300092: BGND2_3
+    4300094: BUTT_Random_1_2
+    4300096: Title_8
+    4300098: Background_5
+    4300100: BUTT_PLAY_4
+    4300102: BUTT_BACK_4
+    4300104: BUTT_CARDIO_2
+    4300106: BUTT_SQUAT_2
+    4300108: Title_9
+    4300110: BGND2_4
+    4300112: Title_10
+    4300114: Background_6
+    4300116: BUTT_PLAY_5
+    4300118: BUTT_BACK_5
+    4300120: BUTT_CARDIO_3
+    4300122: BUTT_SQUAT_3
+    4300124: Title_11
+    4300126: BGND2_5
+    4300128: Window
+    4300130: Background_7
+    4300132: BUTT_PLAY_6
+    4300134: BUTT_BACK_6
+    4300136: LOGO
+    4300138: BoardBreakLenght_3
+    4300140: BoardBreakLenght_2
+    4300142: BoardWalls2Break
+    4300144: BGND2_9
+    4300146: BGND2_8
+    4300148: BGND2_7
+    4300150: BoardBreakLenght
+    4300152: BGND2_6
+    4300154: BGND2_5_2
+    4300156: BGND2_4_2
+    4300158: BGND2_3_2
+    4300160: BGND2_2_2
+    4300162: BGND2_1
+    4300164: BGND2_6_2
+    4300166: BUTT_01_3
+    4300168: Background_8
+    4300170: BUTT_PLAY_7
+    4300172: BUTT_BACK_7
+    4300174: Title_12
+    4300176: BGND2_7_2
+    4300178: BUTT_Arrow
+    4300180: BUTT_Arrow_1
+    4300182: BUTT_Arrow_2
+    4300184: Title2_1
+    4300186: BUTT_02_3
+    4300188: BUTT_03_3
+    4300190: Title2_3
+    4300192: TitleWarmup
+    4300194: TitleBreaks
+    4300196: BUTT_No
+    4300198: BUTT_Yes
+    4300200: TitleHandGuard
+    4300202: BUTT_DOWN
+    4300204: BUTT_UP
+    4300206: TitleSwitch
+    4300208: BUTT_No_1
+    4300210: BUTT_Yes_1
+    4300212: BUTT_No_2
+    4300214: BUTT_Yes_2
+    4300216: BUTT_No_3
+    4300218: BUTT_Yes_3
+    4300220: TitleBreakLenght
+    4300222: BUTT_DOWN_1
+    4300224: BUTT_UP_1
+    4300226: TitleWalls2Break
+    4300228: BUTT_DOWN_2
+    4300230: BUTT_UP_2
+    4300232: TitleLives
+    4300234: BUTT_DOWN_3
+    4300236: BUTT_UP_3
+    4300238: TitleSpeed
+    4300240: BackgroundA
+    4300242: DoorsOpen
+    4300244: BackgroundB
+    4300246: HaveA
+    4300248: GREAT
+    4300250: WORKOUT
+    4300252: BackgroundC
+    4300254: TitleBreaksB
+    4300256: TitleClassic_A
+    4300258: BGND2_10
+    4300260: BUTT_No_4
+    4300262: BUTT_Yes_4
+    4300264: Symmetry_1
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BreakLenght
+    second: {fileID: 2100000, guid: 40c2e452d25540d49b401ef3f1408685, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BreakText
+    second: {fileID: 2100000, guid: 5a70d53f0020c324ca02501fb9ff6cb2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ChallengeText
+    second: {fileID: 2100000, guid: 15dd09e37a0defd458e8c428efc6c456, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Main
+    second: {fileID: 2100000, guid: 1713822dc79c0fc4ab338fa5c2f88412, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: a0_ui_01
+    second: {fileID: 2100000, guid: 75664b0ab9c00ce4e8ec7e9c4975bba2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: a0_ui_02
+    second: {fileID: 2100000, guid: 48eb6bbe2d9a4f440b65b7466b355c0a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: a0_ui_03
+    second: {fileID: 2100000, guid: c52ba55a64d38a74499065cbe2903957, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: a0_ui_04
+    second: {fileID: 2100000, guid: ecb678d0a441060468dc54878b2e3c4a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: a0_ui_707
+    second: {fileID: 2100000, guid: 5eef067823686214c9c4ab39afc4cc50, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: a0_ui_80s
+    second: {fileID: 2100000, guid: 63a0b71451822b444b89db2a233177a4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: a0_ui_909
+    second: {fileID: 2100000, guid: a561b884a0a753b499d273f5985f6306, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: a0_ui_AdjustWallHeight
+    second: {fileID: 2100000, guid: 36202c201eaa61d4f98572aecf4757b0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: a0_ui_Arcade
+    second: {fileID: 2100000, guid: 46bdc749ccddf9349a87bdf8ada9aac3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: a0_ui_Arrow
+    second: {fileID: 2100000, guid: 4bd37def87f68814390445ab81920eeb, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: a0_ui_BGND
+    second: {fileID: 2100000, guid: dedbb4bc72b5e644f8ff297350a6ae3b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: a0_ui_BGND2
+    second: {fileID: 2100000, guid: 6911697656078cc4fb485c4aca15050d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: a0_ui_BGND3
+    second: {fileID: 2100000, guid: 9cfd067ab2a4dc4488593bd6654968ca, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: a0_ui_Back
+    second: {fileID: 2100000, guid: c106d5d55c510f14b85f2ecc85025fe3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: a0_ui_Breaks
+    second: {fileID: 2100000, guid: cf3c72b7a4a2ed748a9a0e9d8b6e419d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: a0_ui_CardioOpenings
+    second: {fileID: 2100000, guid: d8ca52f6ae32393409e1712d119b1e8e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: a0_ui_Challenge
+    second: {fileID: 2100000, guid: 59ec4ce3a0177b04ba63c6cdba3d0326, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: a0_ui_ComeYall
+    second: {fileID: 2100000, guid: 78cb4742752c2124793f76c61ea570f8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: a0_ui_CustomIcon
+    second: {fileID: 2100000, guid: 2e168cbd995119646867bb10ae82286f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: a0_ui_DOORS
+    second: {fileID: 2100000, guid: 070a9451d7b8a004c89cf60effe11dff, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: a0_ui_Great
+    second: {fileID: 2100000, guid: 27ec5187ed2e0c449a111f55004903de, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: a0_ui_GymSelekt
+    second: {fileID: 2100000, guid: bbd66dc4a6333b2409c480c6fd0ff236, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: a0_ui_HandGuard
+    second: {fileID: 2100000, guid: 21c691c86f2c8ea4893d21aa1348b211, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: a0_ui_Have
+    second: {fileID: 2100000, guid: cd155c6f1e41c0c4b9fbb3aa784ee4c3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: a0_ui_Lives
+    second: {fileID: 2100000, guid: de5e6cd37af36b342ac8fc497784a131, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: a0_ui_LivesLet
+    second: {fileID: 2100000, guid: cec6d6eb8dcfd65439c4bf41d1d90224, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: a0_ui_Logo
+    second: {fileID: 2100000, guid: 6233bdfb392491044a1bbf685cee6657, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: a0_ui_Minus
+    second: {fileID: 2100000, guid: 86a4c0b652b1e7e41a446b688b7b8c1e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: a0_ui_ModeSW
+    second: {fileID: 2100000, guid: 74ba1c735ab04804c864fb20c17c0940, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: a0_ui_No
+    second: {fileID: 2100000, guid: 05f5d242c9b412940be69c19397ffde2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: a0_ui_Play
+    second: {fileID: 2100000, guid: 112195ce6ffb9b440a2b320bb0db972f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: a0_ui_Plus
+    second: {fileID: 2100000, guid: 989a9598775ac374a8185aa5b21b02d9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: a0_ui_RandomIcon
+    second: {fileID: 2100000, guid: 842275b6cb286ab4b9b1a436818e23e4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: a0_ui_SCO2
+    second: {fileID: 2100000, guid: d1fbfee37d5c50740b870b93d0a77bf2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: a0_ui_SongSelekt
+    second: {fileID: 2100000, guid: bf533bd3a9c003c48b96c33968c5689e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: a0_ui_SpeedMul
+    second: {fileID: 2100000, guid: 74fd7fffe86d0d342833d19062e15a88, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: a0_ui_Thickness
+    second: {fileID: 2100000, guid: 6ed6e07595579044aac4fdb3a9aed2f6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: a0_ui_VOID
+    second: {fileID: 2100000, guid: af17072fe8e3f684abcf0f096787fe59, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: a0_ui_Walls2Break
+    second: {fileID: 2100000, guid: d5c9ee3916e11624f91fb6bed4029312, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: a0_ui_Warmup
+    second: {fileID: 2100000, guid: c814badb300af0f4392e97da2e4a1db9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: a0_ui_WorkoutType
+    second: {fileID: 2100000, guid: 469ef815fb033d446851f5a17d214ff2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: a0_ui_Yes
+    second: {fileID: 2100000, guid: 95deb8f458c866743b192b2c4076bb41, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: a0_ui_cLASSIC
+    second: {fileID: 2100000, guid: 60ab8391097f88a4490f3dc5e5190af8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: a0_ui_w
+    second: {fileID: 2100000, guid: f46cb7b2fadd50b45aaa17084e22ba9f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: a0_ui_wowkout
+    second: {fileID: 2100000, guid: eb224c61814a82d40a7eb2e6fed22537, type: 2}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: SquatColor
+    second: {fileID: 2800000, guid: 364c8fb663d168b49ba156a4cd8f9287, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: UI 00 copy
+    second: {fileID: 2800000, guid: c938d82ab2606294a913a7b8e65e5965, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: UI 01 copy
+    second: {fileID: 2800000, guid: 6e9cd6391d48aba4cb43ffa37f80dd5e, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: UI 02 copy
+    second: {fileID: 2800000, guid: d5c65dc8149342c4b87d478a7c968a2d, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: UI 03 copy
+    second: {fileID: 2800000, guid: 33e7193f89dbb5e44b1e724326b3215c, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: UI 04 copy
+    second: {fileID: 2800000, guid: 3dee38e1189f7fb428054feeeeac7ebf, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: UI 05 copy
+    second: {fileID: 2800000, guid: 504b7398d8592eb4b93c1fdf5841cee8, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: UI 06 copy
+    second: {fileID: 2800000, guid: deb3883d0b2fccb4e9e813e7d7292bdb, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: UI 07 copy
+    second: {fileID: 2800000, guid: 3d8362e8623b25f43a82457cf1d68da0, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: UI 08 copy
+    second: {fileID: 2800000, guid: 39c8c699623502845885c0d4b5a6534e, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: UI 09 copy
+    second: {fileID: 2800000, guid: c61c4a6e118391849b60eefa28ae3408, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: UI 707 copy
+    second: {fileID: 2800000, guid: ee6b934307aa5614ea55bdb42b5f9d69, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: UI 909 copy
+    second: {fileID: 2800000, guid: 131180efb72c5ed4aa2f4b9b9c3cda11, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: UI Arcadetitle copy
+    second: {fileID: 2800000, guid: b18d2aa67ebc43c4db430e7f3925d51d, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: UI Back copy
+    second: {fileID: 2800000, guid: 4dfe182a60262d74592f4cd9e7bdb6c6, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: UI Breaks copy
+    second: {fileID: 2800000, guid: c18d872512170e4458db93965ed67e0f, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: UI CardioOpenings copy
+    second: {fileID: 2800000, guid: 893d7275288f73649b6d510e31c67d23, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: UI Classic copy
+    second: {fileID: 2800000, guid: f1954143bb583884192ea3c2bbe139d3, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: UI ComeOnYAll copy
+    second: {fileID: 2800000, guid: 178d5641fe43beb4d849c31d41941e32, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: UI Custom copy
+    second: {fileID: 2800000, guid: 48ed010b210cbfc4a83398dda34397e4, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: UI CustomROutine copy
+    second: {fileID: 2800000, guid: f1560c75c86c6a946a9abde5207a89d6, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: UI DailyTitle copy
+    second: {fileID: 2800000, guid: 27a0bb58a73d5864da4217480c2b02ad, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: UI GymSelect copy
+    second: {fileID: 2800000, guid: 8771f3f8a7581da468fb8423e76dbca0, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: UI Lives copy
+    second: {fileID: 2800000, guid: c5d8bf6f419c93d4ca9ed2ea259ede58, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: UI LivesLet copy
+    second: {fileID: 2800000, guid: ea1d7abc6c6e5b349b2d661ecd510f19, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: UI No copy
+    second: {fileID: 2800000, guid: fce5ab09f68939d44bc0910ecf77b8d6, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: UI Play copy
+    second: {fileID: 2800000, guid: 0e573c2482d2c0f43876a5dc26f21f44, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: UI Plus copy
+    second: {fileID: 2800000, guid: 572f4d34ba19d13468680f6138efa37b, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: UI Random copy
+    second: {fileID: 2800000, guid: c68b47d49aa5fd741b1e88b6fd108e1b, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: UI SCO2 copy
+    second: {fileID: 2800000, guid: 0002bb146a406d64daea9b078d0e590e, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: UI SongSelect copy
+    second: {fileID: 2800000, guid: 417d2cfaf5dbed748bb0ba76aab467c4, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: UI SpeedMul copy
+    second: {fileID: 2800000, guid: 638ff8ef64ed31c4b80d276714dd6cd2, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: UI Thickness copy
+    second: {fileID: 2800000, guid: cba0baa4680a87c49b2be9508aeaf012, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: UI Warmup copy
+    second: {fileID: 2800000, guid: 5fb6b00a68bcd5a48bac21a2aaf30e26, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: UI WorkoutType copy
+    second: {fileID: 2800000, guid: a9e69c5d43d64e44181d07df613b64aa, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: UI Yes copy
+    second: {fileID: 2800000, guid: 56fb6357c7860e04aa9b98f938930281, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: UI challenge copy
+    second: {fileID: 2800000, guid: 69caea8cebdff1f4d9197609632dc0ce, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: UI dot copy
+    second: {fileID: 2800000, guid: d7674f1468eba6b45808a221fc90fd0c, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: UI minus copy
+    second: {fileID: 2800000, guid: c13539ea5b23c5c479266516632f47c4, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: UI-Background
+    second: {fileID: 2800000, guid: 5baa4b3cec7623049bca841c5070646c, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: UI-BreakLenght-copy
+    second: {fileID: 2800000, guid: 4f213647fb6405e41b88fa91f1a512c9, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: UI-Custom-copy
+    second: {fileID: 2800000, guid: ef76b9be9ec56b34194008dd89ecd92f, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: UI-Great
+    second: {fileID: 2800000, guid: 1fbbe5d7fc3be724e9784f67ecf82171, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: UI-HandGuard-copy
+    second: {fileID: 2800000, guid: 3e2d76d42ba33c74ebf814f0130a7ec0, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: UI-HaveA
+    second: {fileID: 2800000, guid: 99d0f1f1ed01808459b57cafe76a9b76, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: UI-Random
+    second: {fileID: 2800000, guid: 9dbc5af49c9120247b23f361f636223e, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: UI-WORKOUT
+    second: {fileID: 2800000, guid: 26fb79ec6f7cffe4695f7db16433ab69, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: UI-Walls2Break-copy
+    second: {fileID: 2800000, guid: 0d916b7a4cfb7214d9e89857dcad9f87, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: UI-mode-switch-copy
+    second: {fileID: 2800000, guid: af76b9a0d48f5694bbaa3e777773882c, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: UIFInBGND
+    second: {fileID: 2800000, guid: 85f871d6fffd6084bb5cf565ecfae688, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: UI_Arcade copy
+    second: {fileID: 2800000, guid: 8092d12ede310ee4d81329267c593ab2, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: UI_Arrow
+    second: {fileID: 2800000, guid: e638fc8b8240a3243b317b29fa25a22e, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: UI_BGN2
+    second: {fileID: 2800000, guid: 78ee14abc77919143849b348aad8cde5, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: UI_Classic
+    second: {fileID: 2800000, guid: 25a02db6725b85647bbb63a411428628, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: UI_Doors
+    second: {fileID: 2800000, guid: b8403237be140894588b5d00bf06e35e, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: UItexture
+    second: {fileID: 2800000, guid: fb011ef779c613345a5895be2fbaabac, type: 3}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 0
+  tangentSpace:
+    normalSmoothAngle: 1
+    normalImportMode: 1
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

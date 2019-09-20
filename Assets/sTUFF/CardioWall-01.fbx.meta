@@ -1,0 +1,280 @@
+fileFormatVersion: 2
+guid: 149f1e97420ad9d46a511626229f2681
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: Center01
+    100004: Center_fracture
+    100006: Center_fracturepart1
+    100008: Center_fracturepart1_2
+    100010: Center_fracturepart1_3
+    100012: Center_fracturepart1_4
+    100014: Center_fracturepart2
+    100016: Center_fracturepart2_2
+    100018: CGlass_fracturepart1
+    100020: CGlass_fracturepart1_2
+    100022: CGlass_fracturepart2
+    100024: Left01
+    100026: Left_fracture
+    100028: Left_fracturepart1
+    100030: Left_fracturepart1_2
+    100032: Left_fracturepart1_3
+    100034: Left_fracturepart2
+    100036: Left_fracturepart2_2
+    100038: LGlass_fracturepart1
+    100040: LGlass_fracturepart1_2
+    100042: LGlass_fracturepart2
+    100044: RGlass_fracturepart1
+    100046: RGlass_fracturepart1_2
+    100048: RGlass_fracturepart2
+    100050: Right01
+    100052: Right_fracturepart1
+    100054: Right_fracturepart2
+    100056: Right_fracturepart2_2
+    100058: Right_fracturepart2_3
+    100060: Right_fracturepart2_4
+    100062: RightFracture
+    100064: RRight_fracturepart1
+    400000: //RootNode
+    400002: Center01
+    400004: Center_fracture
+    400006: Center_fracturepart1
+    400008: Center_fracturepart1_2
+    400010: Center_fracturepart1_3
+    400012: Center_fracturepart1_4
+    400014: Center_fracturepart2
+    400016: Center_fracturepart2_2
+    400018: CGlass_fracturepart1
+    400020: CGlass_fracturepart1_2
+    400022: CGlass_fracturepart2
+    400024: Left01
+    400026: Left_fracture
+    400028: Left_fracturepart1
+    400030: Left_fracturepart1_2
+    400032: Left_fracturepart1_3
+    400034: Left_fracturepart2
+    400036: Left_fracturepart2_2
+    400038: LGlass_fracturepart1
+    400040: LGlass_fracturepart1_2
+    400042: LGlass_fracturepart2
+    400044: RGlass_fracturepart1
+    400046: RGlass_fracturepart1_2
+    400048: RGlass_fracturepart2
+    400050: Right01
+    400052: Right_fracturepart1
+    400054: Right_fracturepart2
+    400056: Right_fracturepart2_2
+    400058: Right_fracturepart2_3
+    400060: Right_fracturepart2_4
+    400062: RightFracture
+    400064: RRight_fracturepart1
+    2100000: M_Bright
+    2100002: Neon
+    2100004: MivingNeon
+    2100006: M_glass
+    2100008: M_GRAYS
+    2100010: Darkness
+    2300000: Center01
+    2300002: Center_fracturepart1
+    2300004: Center_fracturepart1_2
+    2300006: Center_fracturepart1_3
+    2300008: Center_fracturepart1_4
+    2300010: Center_fracturepart2
+    2300012: Center_fracturepart2_2
+    2300014: CGlass_fracturepart1
+    2300016: CGlass_fracturepart1_2
+    2300018: CGlass_fracturepart2
+    2300020: Left01
+    2300022: Left_fracturepart1
+    2300024: Left_fracturepart1_2
+    2300026: Left_fracturepart1_3
+    2300028: Left_fracturepart2
+    2300030: Left_fracturepart2_2
+    2300032: LGlass_fracturepart1
+    2300034: LGlass_fracturepart1_2
+    2300036: LGlass_fracturepart2
+    2300038: RGlass_fracturepart1
+    2300040: RGlass_fracturepart1_2
+    2300042: RGlass_fracturepart2
+    2300044: Right01
+    2300046: Right_fracturepart1
+    2300048: Right_fracturepart2
+    2300050: Right_fracturepart2_2
+    2300052: Right_fracturepart2_3
+    2300054: Right_fracturepart2_4
+    2300056: RRight_fracturepart1
+    3300000: Center01
+    3300002: Center_fracturepart1
+    3300004: Center_fracturepart1_2
+    3300006: Center_fracturepart1_3
+    3300008: Center_fracturepart1_4
+    3300010: Center_fracturepart2
+    3300012: Center_fracturepart2_2
+    3300014: CGlass_fracturepart1
+    3300016: CGlass_fracturepart1_2
+    3300018: CGlass_fracturepart2
+    3300020: Left01
+    3300022: Left_fracturepart1
+    3300024: Left_fracturepart1_2
+    3300026: Left_fracturepart1_3
+    3300028: Left_fracturepart2
+    3300030: Left_fracturepart2_2
+    3300032: LGlass_fracturepart1
+    3300034: LGlass_fracturepart1_2
+    3300036: LGlass_fracturepart2
+    3300038: RGlass_fracturepart1
+    3300040: RGlass_fracturepart1_2
+    3300042: RGlass_fracturepart2
+    3300044: Right01
+    3300046: Right_fracturepart1
+    3300048: Right_fracturepart2
+    3300050: Right_fracturepart2_2
+    3300052: Right_fracturepart2_3
+    3300054: Right_fracturepart2_4
+    3300056: RRight_fracturepart1
+    4300000: Center01
+    4300002: Right01
+    4300004: Left01
+    4300006: CGlass_fracturepart1
+    4300008: CGlass_fracturepart1_2
+    4300010: CGlass_fracturepart2
+    4300012: Center_fracturepart1
+    4300014: Center_fracturepart1_2
+    4300016: Center_fracturepart2
+    4300018: Center_fracturepart1_3
+    4300020: Center_fracturepart1_4
+    4300022: Center_fracturepart2_2
+    4300024: LGlass_fracturepart1
+    4300026: LGlass_fracturepart1_2
+    4300028: LGlass_fracturepart2
+    4300030: Left_fracturepart1
+    4300032: Left_fracturepart1_2
+    4300034: Left_fracturepart2
+    4300036: Left_fracturepart1_3
+    4300038: Left_fracturepart2_2
+    4300040: RGlass_fracturepart1
+    4300042: RGlass_fracturepart1_2
+    4300044: RGlass_fracturepart2
+    4300046: RRight_fracturepart1
+    4300048: Right_fracturepart2
+    4300050: Right_fracturepart2_2
+    4300052: Right_fracturepart1
+    4300054: Right_fracturepart2_3
+    4300056: Right_fracturepart2_4
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Darkness
+    second: {fileID: 2100000, guid: ae71ce77a7994734d972dbe8cb0970d3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_Bright
+    second: {fileID: 2100000, guid: 81a2fc02b27477143bec82d796e92552, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_GRAYS
+    second: {fileID: 2100000, guid: d1de4b293338edc4684483aa3f701879, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_glass
+    second: {fileID: 2100000, guid: 33f0e796421dbd24b84cbe43b64cfc78, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MivingNeon
+    second: {fileID: 2100000, guid: 9b8dcc9dd17e95a49b11f86552745ef1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Neon
+    second: {fileID: 2100000, guid: 7ca085cc1a081b642902cd44a5af52a9, type: 2}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 0
+  tangentSpace:
+    normalSmoothAngle: 1
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

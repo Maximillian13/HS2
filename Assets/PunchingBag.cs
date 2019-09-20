@@ -4,17 +4,7 @@ using UnityEngine;
 
 public class PunchingBag : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+	public StatWall statWall;
 
 	private void OnTriggerEnter(Collider other)
 	{
@@ -22,6 +12,7 @@ public class PunchingBag : MonoBehaviour
 		{
 			AchivmentAndStatControl.IncrementStat(Constants.punchingBagPunches);
 			AchivmentAndStatControl.CheckPunchingBagAchiv();
+			statWall.ReloadStats();
 		}
 	}
 }
